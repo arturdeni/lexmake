@@ -1,0 +1,203 @@
+/* ===== ESTILOS GLOBALES - LEXMAKE ===== */
+
+/* Reset básico */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px; /* Base para rem */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-hanken);
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
+  color: var(--color-black);
+  background-color: var(--color-grey);
+  font-weight: 400;
+}
+
+/* === TIPOGRAFÍA === */
+
+/* Headings normales */
+h1 {
+  font-family: var(--font-hanken);
+  font-size: var(--h1-size);
+  line-height: var(--h1-line-height);
+  font-weight: 500;
+  font-style: normal;
+}
+
+h2 {
+  font-family: var(--font-hanken);
+  font-size: var(--h2-size);
+  line-height: var(--h2-line-height);
+  font-weight: 500;
+  font-style: normal;
+}
+
+h3 {
+  font-family: var(--font-hanken);
+  font-size: var(--h3-size);
+  line-height: var(--h3-line-height);
+  font-weight: 500;
+  font-style: normal;
+}
+
+h4 {
+  font-family: var(--font-hanken);
+  font-size: var(--h4-size);
+  line-height: var(--h4-line-height);
+  font-weight: 500;
+  font-style: normal;
+}
+
+h5 {
+  font-family: var(--font-hanken);
+  font-size: var(--h5-size);
+  line-height: var(--h5-line-height);
+  font-weight: 500;
+  font-style: normal;
+}
+
+h6 {
+  font-family: var(--font-hanken);
+  font-size: var(--h6-size);
+  line-height: var(--h6-line-height);
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Body text */
+p,
+body {
+  font-family: var(--font-hanken);
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* === CLASES PARA VERSIONES CURSIVAS === */
+
+/* Headings cursivos */
+.h1-cursiva {
+  font-family: var(--font-gallery);
+  font-size: var(--h1-cursiva-size);
+  line-height: var(--h1-cursiva-line-height);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.h2-cursiva {
+  font-family: var(--font-gallery);
+  font-size: var(--h2-cursiva-size);
+  line-height: var(--h2-cursiva-line-height);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.h3-cursiva {
+  font-family: var(--font-gallery);
+  font-size: var(--h3-cursiva-size);
+  line-height: var(--h3-cursiva-line-height);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.body-cursiva {
+  font-family: var(--font-gallery);
+  font-size: var(--body-cursiva-size);
+  line-height: var(--body-cursiva-line-height);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* === UTILIDADES === */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Colores de texto */
+.text-black {
+  color: var(--color-black);
+}
+
+.text-grey {
+  color: var(--color-grey);
+}
+
+.text-lime {
+  color: var(--color-lime);
+}
+
+/* Backgrounds */
+.bg-black {
+  background-color: var(--color-black);
+}
+
+.bg-grey {
+  background-color: var(--color-grey);
+}
+
+.bg-lime {
+  background-color: var(--color-lime);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* Reducir base en móvil */
+  }
+
+  h1 {
+    font-size: calc(var(--h1-size) * 0.6);
+    line-height: calc(var(--h1-line-height) * 0.6);
+  }
+
+  h2 {
+    font-size: calc(var(--h2-size) * 0.6);
+    line-height: calc(var(--h2-line-height) * 0.6);
+  }
+
+  h3 {
+    font-size: calc(var(--h3-size) * 0.7);
+    line-height: calc(var(--h3-line-height) * 0.7);
+  }
+
+  .h1-cursiva {
+    font-size: calc(var(--h1-cursiva-size) * 0.6);
+    line-height: calc(var(--h1-cursiva-line-height) * 0.6);
+  }
+
+  .h2-cursiva {
+    font-size: calc(var(--h2-cursiva-size) * 0.6);
+    line-height: calc(var(--h2-cursiva-line-height) * 0.6);
+  }
+
+  .h3-cursiva {
+    font-size: calc(var(--h3-cursiva-size) * 0.7);
+    line-height: calc(var(--h3-cursiva-line-height) * 0.7);
+  }
+}

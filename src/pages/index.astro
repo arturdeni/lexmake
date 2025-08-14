@@ -1,16 +1,182 @@
 ---
-
+// src/pages/index.astro
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LexMake - Style Guide Test</title>
+
+    <!-- Google Fonts - Hanken Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Adobe Fonts - Gallery (necesitarás tu Adobe Fonts kit) -->
+    <!-- <link rel="stylesheet" href="https://use.typekit.net/TU_KIT_ID.css"> -->
+  </head>
+
+  <body>
+    <div class="container">
+      <section style="padding: 2rem 0;">
+        <h1>LexMake Style Guide</h1>
+        <p>Guía de estilos en desarrollo</p>
+      </section>
+
+      <!-- COLORES -->
+      <section
+        style="padding: 2rem 0; border-bottom: 1px solid var(--color-black);"
+      >
+        <h2>COLORES</h2>
+        <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+          <div
+            style="width: 100px; height: 100px; background-color: var(--color-grey); border: 1px solid var(--color-black);"
+          >
+          </div>
+          <div
+            style="width: 100px; height: 100px; background-color: var(--color-black);"
+          >
+          </div>
+          <div
+            style="width: 100px; height: 100px; background-color: var(--color-lime);"
+          >
+          </div>
+        </div>
+        <p>Grey: #EDEDED | Black: #000000 | Lime: #D5FF00</p>
+      </section>
+
+      <!-- TIPOGRAFÍAS NORMALES -->
+      <section
+        style="padding: 2rem 0; border-bottom: 1px solid var(--color-black);"
+      >
+        <h2>TIPOGRAFÍAS - NORMALES</h2>
+
+        <div style="margin: 1rem 0;">
+          <h1>Heading 1</h1>
+          <small>H1 120/85 Hanken Grotesk Medium</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <h2>Heading 2</h2>
+          <small>H2 95/79 Hanken Grotesk Medium</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <h3>Heading 3</h3>
+          <small>H3 50/36 Hanken Grotesk Medium</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <h4>Heading 4</h4>
+          <small>H4 40/32 Hanken Grotesk Medium</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <h5>Heading 5</h5>
+          <small>H5 24 Hanken Grotesk Medium</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <h6>Heading 6</h6>
+          <small>H6 24/19 Hanken Grotesk Medium</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <p>
+            Body text normal - Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit.
+          </p>
+          <small>Body 15/15 Hanken Grotesk</small>
+        </div>
+      </section>
+
+      <!-- TIPOGRAFÍAS CURSIVAS -->
+      <section
+        style="padding: 2rem 0; border-bottom: 1px solid var(--color-black);"
+      >
+        <h2>TIPOGRAFÍAS - CURSIVAS</h2>
+        <p style="color: #666; margin-bottom: 1rem;">
+          * Nota: Gallery font pendiente de configurar
+        </p>
+
+        <div style="margin: 1rem 0;">
+          <h1 class="h1-cursiva">Heading 1 Cursiva</h1>
+          <small>H1 CURSIVA 120/94 Gallery Italic</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <h2 class="h2-cursiva">Heading 2 Cursiva</h2>
+          <small>H2 CURSIVA 95/79 Gallery Italic</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <h3 class="h3-cursiva">Heading 3 Cursiva</h3>
+          <small>H3 CURSIVA 50/36 Gallery Italic</small>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <p class="body-cursiva">
+            Body cursiva - Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit.
+          </p>
+          <small>Body cursiva 15/15 Gallery Italic</small>
+        </div>
+      </section>
+
+      <!-- BOTONES -->
+      <section style="padding: 2rem 0;">
+        <h2>BOTONES</h2>
+        <div
+          style="display: flex; gap: 1rem; margin: 1rem 0; align-items: center;"
+        >
+          <div style="text-align: center;">
+            <div
+              style="border: 1px solid var(--color-black); padding: 0.5rem 1rem; display: inline-block;"
+            >
+              <div
+                style="font-size: 20px; font-family: var(--font-hanken); font-weight: 500;"
+              >
+                MENÚ
+              </div>
+              <div
+                style="font-size: 30px; font-family: var(--font-gallery); font-style: italic;"
+              >
+                BUTTON
+              </div>
+            </div>
+            <small>Normal State</small>
+          </div>
+
+          <div style="text-align: center;">
+            <div
+              style="border: 1px solid var(--color-black); padding: 0.5rem 1rem; display: inline-block; background: var(--color-black); color: var(--color-grey);"
+            >
+              <div
+                style="font-size: 20px; font-family: var(--font-hanken); font-weight: 500;"
+              >
+                MENÚ
+              </div>
+              <div
+                style="font-size: 20px; font-family: var(--font-gallery); font-style: normal;"
+              >
+                BUTTON
+              </div>
+            </div>
+            <small>Hover State</small>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
 </html>
+
+<style>
+  /* Importar variables y estilos globales */
+  @import "../styles/variables.css";
+  @import "../styles/global.css";
+</style>
