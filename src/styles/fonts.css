@@ -1,0 +1,30 @@
+/* ===== FUENTES LOCALES - LEXMAKE ===== */
+
+/* Hanken Grotesk Light */
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("/fonts/HankenGrotesk-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Hanken Grotesk Medium */
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("/fonts/HankenGrotesk-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Si tienes más variantes, agrégalas aquí */
+/* Ejemplo para cuando tengas Gallery:
+@font-face {
+  font-family: 'Gallery';
+  src: url('/fonts/Gallery-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+*/

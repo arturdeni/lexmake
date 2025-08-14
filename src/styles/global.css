@@ -30,7 +30,7 @@ h1 {
   font-family: var(--font-hanken);
   font-size: var(--h1-size);
   line-height: var(--h1-line-height);
-  font-weight: 500;
+  font-weight: 500; /* Medium */
   font-style: normal;
 }
 
@@ -38,7 +38,7 @@ h2 {
   font-family: var(--font-hanken);
   font-size: var(--h2-size);
   line-height: var(--h2-line-height);
-  font-weight: 500;
+  font-weight: 500; /* Medium */
   font-style: normal;
 }
 
@@ -46,7 +46,7 @@ h3 {
   font-family: var(--font-hanken);
   font-size: var(--h3-size);
   line-height: var(--h3-line-height);
-  font-weight: 500;
+  font-weight: 500; /* Medium */
   font-style: normal;
 }
 
@@ -54,7 +54,7 @@ h4 {
   font-family: var(--font-hanken);
   font-size: var(--h4-size);
   line-height: var(--h4-line-height);
-  font-weight: 500;
+  font-weight: 500; /* Medium */
   font-style: normal;
 }
 
@@ -62,7 +62,7 @@ h5 {
   font-family: var(--font-hanken);
   font-size: var(--h5-size);
   line-height: var(--h5-line-height);
-  font-weight: 500;
+  font-weight: 500; /* Medium */
   font-style: normal;
 }
 
@@ -70,7 +70,7 @@ h6 {
   font-family: var(--font-hanken);
   font-size: var(--h6-size);
   line-height: var(--h6-line-height);
-  font-weight: 500;
+  font-weight: 500; /* Medium */
   font-style: normal;
 }
 
@@ -80,7 +80,7 @@ body {
   font-family: var(--font-hanken);
   font-size: var(--body-size);
   line-height: var(--body-line-height);
-  font-weight: 400;
+  font-weight: 300; /* Light */
   font-style: normal;
 }
 
