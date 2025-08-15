@@ -15,6 +15,10 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+import "../styles/fonts.css";
+import "../styles/variables.css";
+import "../styles/global.css";
 ---
 
 <!doctype html>
@@ -66,11 +70,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       type="font/woff2"
       crossorigin
     />
-
-    <!-- CSS Styles -->
-    <link rel="stylesheet" href="/src/styles/fonts.css" />
-    <link rel="stylesheet" href="/src/styles/variables.css" />
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
 
   <body>
