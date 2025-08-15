@@ -1,0 +1,251 @@
+---
+// src/components/Layout/Header.astro
+import Navigation from "./Navigation.astro";
+---
+
+<header class="header">
+  <div class="header__container">
+    <!-- Logo -->
+    <div class="header__logo">
+      <a href="/" class="logo-link">
+        <img src="/logo.svg" alt="LexMake" class="logo" />
+      </a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <Navigation />
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-toggle" aria-label="Toggle mobile menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-overlay">
+    <nav class="mobile-nav">
+      <ul class="mobile-nav__list">
+        <li><a href="/services" class="mobile-nav__link">SERVICES</a></li>
+        <li><a href="/portfolio" class="mobile-nav__link">PORTFOLIO</a></li>
+        <li><a href="/resources" class="mobile-nav__link">RESOURCES</a></li>
+        <li><a href="/contact" class="mobile-nav__button">CONTACT</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: var(--color-grey);
+  }
+
+  .header__container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    height: 80px; /* Altura fija del header */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  /* === LOGO === */
+  .header__logo {
+    flex-shrink: 0;
+  }
+
+  .logo-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .logo {
+    height: 40px; /* Ajusta según el tamaño de tu logo */
+    width: auto;
+    display: block;
+  }
+
+  /* === MOBILE TOGGLE === */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    gap: 6px;
+    position: relative;
+    z-index: 11;
+  }
+
+  .hamburger-line {
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-black);
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  /* Animación de hamburger a cruz */
+  .mobile-toggle.active {
+    gap: 9px;
+  }
+
+  .mobile-toggle.active .hamburger-line:first-child {
+    transform: rotate(45deg) translate(4px, 4px);
+  }
+
+  .mobile-toggle.active .hamburger-line:last-child {
+    transform: rotate(-45deg) translate(4px, -4px);
+  }
+
+  /* === MOBILE OVERLAY === */
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-grey);
+    z-index: 9;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+    transition: all 0.4s ease;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-nav {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px; /* Espacio para el header */
+  }
+
+  .mobile-nav__list {
+    list-style: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  .mobile-nav__link {
+    font-family: var(--font-hanken);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-black);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+    padding: var(--spacing-md);
+  }
+
+  .mobile-nav__link:hover {
+    font-family: var(--font-gallery);
+    font-style: italic;
+  }
+
+  .mobile-nav__button {
+    font-family: var(--font-hanken);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-grey);
+    background-color: var(--color-black);
+    text-decoration: none;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: 1px solid var(--color-black);
+    display: inline-block;
+    margin-top: var(--spacing-lg);
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav__button:hover {
+    background-color: var(--color-grey);
+    color: var(--color-black);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .mobile-toggle {
+      display: flex;
+    }
+
+    /* Agregar padding-top al body para compensar el header fixed */
+    :global(body) {
+      padding-top: 80px;
+    }
+  }
+
+  @media (min-width: 769px) {
+    /* En desktop, agregar padding-top al body */
+    :global(body) {
+      padding-top: 80px;
+    }
+  }
+</style>
+
+<script>
+  // Funcionalidad del menú móvil
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileToggle = document.querySelector(".mobile-toggle");
+    const mobileOverlay = document.querySelector(".mobile-overlay");
+    const body = document.body;
+
+    if (mobileToggle && mobileOverlay) {
+      mobileToggle.addEventListener("click", () => {
+        const isActive = mobileToggle.classList.contains("active");
+
+        if (isActive) {
+          // Cerrar menú
+          mobileToggle.classList.remove("active");
+          mobileOverlay.classList.remove("active");
+          body.style.overflow = "";
+        } else {
+          // Abrir menú
+          mobileToggle.classList.add("active");
+          mobileOverlay.classList.add("active");
+          body.style.overflow = "hidden";
+        }
+      });
+
+      // Cerrar menú al hacer click en los links
+      const mobileLinks = document.querySelectorAll(
+        ".mobile-nav__link, .mobile-nav__button"
+      );
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileToggle.classList.remove("active");
+          mobileOverlay.classList.remove("active");
+          body.style.overflow = "";
+        });
+      });
+
+      // Cerrar menú con ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileToggle.classList.contains("active")) {
+          mobileToggle.classList.remove("active");
+          mobileOverlay.classList.remove("active");
+          body.style.overflow = "";
+        }
+      });
+    }
+  });
+</script>

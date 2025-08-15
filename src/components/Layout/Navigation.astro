@@ -1,0 +1,97 @@
+---
+// src/components/Layout/Navigation.astro
+// Navegación principal para desktop
+---
+
+<nav class="navigation">
+  <ul class="nav-list">
+    <li class="nav-item">
+      <a href="/services" class="nav-link">SERVICES</a>
+    </li>
+    <li class="nav-item">
+      <a href="/portfolio" class="nav-link">PORTFOLIO</a>
+    </li>
+    <li class="nav-item">
+      <a href="/resources" class="nav-link">RESOURCES</a>
+    </li>
+  </ul>
+
+  <!-- Botón Contact (placeholder hasta crear componente Button) -->
+  <a href="/contact" class="contact-button">CONTACT</a>
+</nav>
+
+<style>
+  .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 0 var(--container-padding);
+    pointer-events: none; /* Para que no interfiera con clics */
+  }
+
+  .navigation > * {
+    pointer-events: auto; /* Reactivar eventos para elementos hijos */
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    font-family: var(--font-hanken);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-black);
+    text-decoration: none;
+    padding: var(--spacing-sm) 0;
+    display: block;
+  }
+
+  .nav-link:hover {
+    font-family: var(--font-gallery);
+    font-style: italic;
+  }
+
+  /* Botón Contact alineado a la derecha */
+  .contact-button {
+    font-family: var(--font-hanken);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-grey);
+    background-color: var(--color-black);
+    text-decoration: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 1px solid var(--color-black);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  .contact-button:hover {
+    background-color: var(--color-grey);
+    color: var(--color-black);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .navigation {
+      display: none;
+    }
+  }
+</style>

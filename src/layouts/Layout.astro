@@ -19,6 +19,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 import "../styles/fonts.css";
 import "../styles/variables.css";
 import "../styles/global.css";
+
+// Importar componentes
+import Header from "../components/Layout/Header.astro";
 ---
 
 <!doctype html>
@@ -74,9 +77,7 @@ import "../styles/global.css";
 
   <body>
     <!-- Header/Navigation -->
-    <header id="header">
-      <!-- Navigation component irá aquí -->
-    </header>
+    <Header />
 
     <!-- Main Content -->
     <main id="main">
@@ -109,7 +110,6 @@ import "../styles/global.css";
   }
 
   /* Preparar para animaciones GSAP */
-  #header,
   #main,
   #footer {
     will-change: transform;
