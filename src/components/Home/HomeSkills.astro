@@ -1,0 +1,322 @@
+---
+// src/components/Home/HomeSkills.astro
+---
+
+<section class="home-skills">
+  <div class="home-skills__container">
+    <!-- Título de la sección -->
+    <div class="home-skills__header">
+      <h3 class="home-skills__title">
+        <span>DESIGN</span>
+        <span class="h3-cursiva">Portfolio</span>
+      </h3>
+    </div>
+
+    <!-- Grid de imágenes del portfolio (placeholder) -->
+    <div class="home-skills__portfolio-grid">
+      <div class="portfolio-item">
+        <div class="portfolio-placeholder">Project 1</div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-placeholder">Project 2</div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-placeholder">Project 3</div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-placeholder">Project 4</div>
+      </div>
+    </div>
+
+    <!-- Botón Ver Más -->
+    <div class="home-skills__view-more">
+      <a href="/portfolio" class="view-more-link">
+        <span class="h3-cursiva">VER MÁS</span>
+      </a>
+    </div>
+
+    <!-- Sección MY SKILLS -->
+    <div class="home-skills__skills-section">
+      <h4 class="skills-header">MY SKILLS</h4>
+
+      <div class="skills-grid">
+        <!-- Fila 1 -->
+        <div class="skill-item skill-item--large">Photoshop</div>
+        <div class="skill-item skill-item--cursive">Adobe illustrator</div>
+
+        <!-- Fila 2 -->
+        <div class="skill-item skill-item--large">AFTER EFFECTS</div>
+        <div class="skill-item skill-item--cursive">Prepimer Pro</div>
+        <div class="skill-item skill-item--large">Dimensions</div>
+
+        <!-- Fila 3 -->
+        <div class="skill-item skill-item--cursive">indesign</div>
+        <div class="skill-item skill-item--large">FIGMA</div>
+        <div class="skill-item skill-item--cursive">Strikingly</div>
+        <div class="skill-item skill-item--large">WORDPRESS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-skills {
+    background-color: var(--color-grey);
+    position: relative;
+    z-index: 10; /* Para pasar por encima del hero sticky */
+    margin-top: -300px; /* Para superponer con el hero */
+    padding: var(--spacing-xxxl) 0;
+  }
+
+  .home-skills__container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxxl);
+  }
+
+  /* === HEADER === */
+  .home-skills__header {
+    text-align: left;
+  }
+
+  .home-skills__title {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+  }
+
+  .home-skills__title span:first-child {
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  /* === PORTFOLIO GRID === */
+  .home-skills__portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .portfolio-item {
+    aspect-ratio: 4/3;
+    background-color: var(--color-black);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .portfolio-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-grey);
+    font-family: var(--font-hanken);
+    font-weight: 500;
+  }
+
+  /* === VER MÁS === */
+  .home-skills__view-more {
+    text-align: right;
+    margin-bottom: var(--spacing-xxl);
+  }
+
+  .view-more-link {
+    text-decoration: none;
+    color: var(--color-black);
+    font-size: var(--h3-size);
+    line-height: var(--h3-line-height);
+    transition: all 0.3s ease;
+  }
+
+  .view-more-link:hover {
+    opacity: 0.7;
+  }
+
+  /* === SKILLS SECTION === */
+  .home-skills__skills-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  .skills-header {
+    text-align: center;
+    margin: 0;
+    font-size: var(--h5-size);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  /* === SKILLS GRID === */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg) var(--spacing-xl);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .skill-item {
+    font-size: var(--h4-size);
+    line-height: 1.2;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .skill-item--large {
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    font-style: normal;
+    text-transform: uppercase;
+  }
+
+  .skill-item--cursive {
+    font-family: var(--font-gallery);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 1024px) {
+    .home-skills__portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skills-grid {
+      gap: var(--spacing-md) var(--spacing-lg);
+    }
+
+    .skill-item {
+      font-size: calc(var(--h4-size) * 0.8);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home-skills {
+      padding: var(--spacing-xl) 0;
+    }
+
+    .home-skills__container {
+      gap: var(--spacing-xl);
+    }
+
+    .home-skills__title {
+      flex-direction: column;
+      gap: 0;
+      text-align: center;
+    }
+
+    .home-skills__portfolio-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+
+    .home-skills__view-more {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .view-more-link {
+      font-size: calc(var(--h3-size) * 0.7);
+    }
+
+    .skills-grid {
+      flex-direction: column;
+      gap: var(--spacing-md);
+      text-align: center;
+    }
+
+    .skill-item {
+      font-size: calc(var(--h4-size) * 0.7);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .skill-item {
+      font-size: calc(var(--h4-size) * 0.6);
+    }
+  }
+
+  /* === PREPARAR PARA ANIMACIONES GSAP === */
+  .home-skills__title span {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .portfolio-item {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  .view-more-link {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .skills-header {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .skill-item {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  /* Clase para cuando GSAP haya cargado */
+  .home-skills.gsap-loaded .home-skills__title span,
+  .home-skills.gsap-loaded .portfolio-item,
+  .home-skills.gsap-loaded .view-more-link,
+  .home-skills.gsap-loaded .skills-header,
+  .home-skills.gsap-loaded .skill-item {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+
+  /* Stagger delays para animación secuencial */
+  .home-skills.gsap-loaded .portfolio-item:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+  .home-skills.gsap-loaded .portfolio-item:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+  .home-skills.gsap-loaded .portfolio-item:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+  .home-skills.gsap-loaded .portfolio-item:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+
+  .home-skills.gsap-loaded .skill-item:nth-child(odd) {
+    transition-delay: 0.1s;
+  }
+  .home-skills.gsap-loaded .skill-item:nth-child(even) {
+    transition-delay: 0.2s;
+  }
+</style>
+
+<script>
+  // Script básico para home-skills
+  document.addEventListener("DOMContentLoaded", () => {
+    const homeSkills = document.querySelector(".home-skills");
+
+    // Fallback si GSAP no está cargado aún
+    setTimeout(() => {
+      if (homeSkills && !homeSkills.classList.contains("gsap-loaded")) {
+        homeSkills.classList.add("gsap-loaded");
+      }
+    }, 500); // Delay un poco más para que se vea la animación
+  });
+</script>

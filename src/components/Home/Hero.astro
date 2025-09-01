@@ -1,0 +1,285 @@
+---
+// src/components/Home/Hero.astro
+---
+
+<section class="hero">
+  <!-- Contenedor de títulos que se quedará sticky -->
+  <div class="hero__sticky-container">
+    <div class="hero__content">
+      <!-- Textos laterales (solo desktop) -->
+      <div class="hero__side-text hero__side-text--left">
+        <h5>From<br />Barcelona</h5>
+      </div>
+
+      <div class="hero__side-text hero__side-text--right">
+        <h5>visual solutions<br />with soul</h5>
+      </div>
+
+      <!-- Título principal centrado -->
+      <h1 class="hero__title">
+        <span class="hero__title-line">Elevating</span>
+        <span class="hero__title-line">
+          <span class="hero__title-line--cursive">ideas</span> through
+        </span>
+        <span class="hero__title-line">
+          timeless <span class="hero__title-line--cursive">design</span>
+        </span>
+      </h1>
+
+      <!-- Subtítulo en español -->
+      <h5 class="hero__subtitle">
+        Diseño atemporal para pensadores modernos,<br />
+        líderes creativos y mentes visionarias.
+      </h5>
+    </div>
+  </div>
+
+  <!-- Imágenes que se mueven con scroll -->
+  <div class="hero__images">
+    <div class="hero__image hero__image--1">
+      <div class="image-placeholder">Image 1</div>
+    </div>
+    <div class="hero__image hero__image--2">
+      <div class="image-placeholder">Image 2</div>
+    </div>
+    <div class="hero__image hero__image--3">
+      <div class="image-placeholder">Image 3</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    /* Altura total para permitir scroll */
+    height: 250vh; /* viewport height para scroll */
+  }
+
+  /* === CONTENEDOR STICKY === */
+  .hero__sticky-container {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    padding-top: 180px;
+  }
+
+  .hero__content {
+    max-width: var(--max-width);
+    width: 100%;
+    padding: 0 var(--container-padding);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-xl);
+  }
+
+  /* === TEXTOS LATERALES === */
+  .hero__side-text {
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50%);
+    text-align: right;
+  }
+
+  .hero__side-text--left {
+    left: 75px;
+  }
+
+  .hero__side-text--right {
+    right: 75px;
+    text-align: left;
+  }
+
+  .hero__side-text h5 {
+    margin: 0;
+  }
+
+  /* === TÍTULO PRINCIPAL === */
+  .hero__title {
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    max-width: 800px;
+  }
+
+  .hero__title-line {
+    display: block; /* Cada línea en su propia fila */
+  }
+
+  .hero__title-line--cursive {
+    font-family: var(--font-gallery);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* === SUBTÍTULO === */
+  .hero__subtitle {
+    margin: 0;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  /* === IMÁGENES === */
+  .hero__images {
+    position: absolute;
+    top: 70vh;
+    left: 0;
+    right: 0;
+    z-index: 3; /* Por encima del sticky container */
+  }
+
+  .hero__image {
+    position: absolute;
+    width: 300px;
+    height: 400px;
+  }
+
+  .hero__image--1 {
+    top: 0;
+    left: 10%;
+  }
+
+  .hero__image--2 {
+    top: 200px;
+    right: 15%;
+  }
+
+  .hero__image--3 {
+    top: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-black);
+    opacity: 0.5;
+    color: var(--color-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-black);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 1024px) {
+    /* Ocultar textos laterales en tablet */
+    .hero__side-text {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero__sticky-container {
+      top: 35px;
+      padding-top: 40px;
+    }
+
+    /* Ajustar título para mobile */
+    .hero__title {
+      max-width: 100%;
+    }
+
+    .hero__subtitle {
+      max-width: 100%;
+    }
+
+    /* Ajustar imágenes para mobile */
+    .hero__image {
+      width: 200px;
+      height: 280px;
+    }
+
+    .hero__image--1 {
+      left: 5%;
+    }
+
+    .hero__image--2 {
+      right: 5%;
+    }
+
+    .hero__image--3 {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero__subtitle {
+      br {
+        display: none; /* Quitar saltos de línea forzados en móvil muy pequeño */
+      }
+    }
+
+    .hero__image {
+      width: 150px;
+      height: 220px;
+    }
+  }
+
+  /* === PREPARAR PARA ANIMACIONES GSAP === */
+  .hero__title-line {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .hero__subtitle {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero__side-text {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .hero__side-text--right {
+    transform: translateX(20px);
+  }
+
+  .hero__image {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  /* Clase para cuando GSAP haya cargado */
+  .hero.gsap-loaded .hero__title-line,
+  .hero.gsap-loaded .hero__subtitle,
+  .hero.gsap-loaded .hero__side-text,
+  .hero.gsap-loaded .hero__image {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+</style>
+
+<script>
+  // Script básico para hero
+  document.addEventListener("DOMContentLoaded", () => {
+    const hero = document.querySelector(".hero");
+
+    // Fallback si GSAP no está cargado aún
+    setTimeout(() => {
+      if (hero && !hero.classList.contains("gsap-loaded")) {
+        hero.classList.add("gsap-loaded");
+      }
+    }, 100);
+
+    // Log para debug del sticky behavior
+    window.addEventListener("scroll", () => {
+      const stickyContainer = document.querySelector(".hero__sticky-container");
+      const scrollY = window.scrollY;
+      console.log("Scroll Y:", scrollY);
+    });
+  });
+</script>

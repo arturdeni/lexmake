@@ -1,5 +1,4 @@
 /* ===== VARIABLES CSS - LEXMAKE ===== */
-
 :root {
   /* === COLORES === */
   --color-grey: #ededed;
@@ -14,32 +13,32 @@
   /* Base: 16px = 1rem */
 
   /* Headings normales */
-  --h1-size: 120px; /* H1 120/85 */
-  --h1-cursiva-size: 120px; /* H1 CURSIVA 120/94 */
+  --h1-size: 90px;
+  --h1-cursiva-size: 90px;
 
-  --h2-size: 95px; /* H2 95/79 */
-  --h2-cursiva-size: 95px; /* H2 CURSIVA 95/79 */
+  --h2-size: 72px;
+  --h2-cursiva-size: 72px;
 
-  --h3-size: 50px; /* H3 50/36 */
-  --h3-cursiva-size: 50px; /* H3 CURSIVA 50/36 */
+  --h3-size: 45px;
+  --h3-cursiva-size: 45px;
 
-  --h4-size: 40px; /* H4 40/32 */
-  --h5-size: 24px; /* H5 24 */
-  --h6-size: 24px; /* H6 24/19 */
+  --h4-size: 32px;
+  --h5-size: 20px;
+  --h6-size: 18px;
 
-  --body-size: 15px; /* Body 15/15 */
-  --body-cursiva-size: 15px; /* Body cursiva 15/15 */
+  --body-size: 15px;
+  --body-cursiva-size: 15px;
 
   /* === LINE HEIGHTS === */
-  --h1-line-height: 95px;
-  --h1-cursiva-line-height: 94px;
-  --h2-line-height: 79px;
-  --h2-cursiva-line-height: 79px;
+  --h1-line-height: 70px;
+  --h1-cursiva-line-height: 70px;
+  --h2-line-height: 58px;
+  --h2-cursiva-line-height: 58px;
   --h3-line-height: 36px;
   --h3-cursiva-line-height: 36px;
-  --h4-line-height: 32px;
-  --h5-line-height: 1.2;
-  --h6-line-height: 19px;
+  --h4-line-height: 28px;
+  --h5-line-height: 20px;
+  --h6-line-height: 18px;
   --body-line-height: 15px;
   --body-cursiva-line-height: 15px;
 
