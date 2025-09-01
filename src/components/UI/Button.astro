@@ -1,0 +1,155 @@
+---
+// src/components/UI/Button.astro
+export interface Props {
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  variant?: "primary" | "secondary";
+  size?: "default" | "small" | "large";
+  disabled?: boolean;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  href,
+  type = "button",
+  variant = "primary",
+  size = "default",
+  disabled = false,
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+// Definir el elemento (a o button)
+const Element = href ? "a" : "button";
+const elementProps = href ? { href, ...rest } : { type, disabled, ...rest };
+---
+
+<Element
+  class={`lexmake-button lexmake-button--${variant} lexmake-button--${size} ${className}`}
+  {...elementProps}
+>
+  <span class="lexmake-button__text">
+    <slot />
+  </span>
+</Element>
+
+<style>
+  .lexmake-button {
+    /* Base styles */
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--color-black);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+
+    /* Remove default button styles */
+    background: none;
+    outline: none;
+
+    /* Para el efecto slide */
+    z-index: 1;
+  }
+
+  /* Pseudo-elemento para el efecto slide */
+  .lexmake-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-grey);
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .lexmake-button:hover::before {
+    left: 0;
+  }
+
+  /* Text wrapper para mantener el z-index correcto */
+  .lexmake-button__text {
+    position: relative;
+    z-index: 2;
+    display: block;
+    transition: color 0.3s ease;
+  }
+
+  /* === VARIANT: PRIMARY === */
+  .lexmake-button--primary {
+    background-color: var(--color-black);
+    color: var(--color-grey);
+  }
+
+  .lexmake-button--primary:hover {
+    color: var(--color-black);
+  }
+
+  /* === VARIANT: SECONDARY === */
+  .lexmake-button--secondary {
+    background-color: var(--color-grey);
+    color: var(--color-black);
+  }
+
+  .lexmake-button--secondary::before {
+    background-color: var(--color-black);
+  }
+
+  .lexmake-button--secondary:hover {
+    color: var(--color-grey);
+  }
+
+  /* === SIZES === */
+  .lexmake-button--default {
+    font-size: 20px;
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  .lexmake-button--small {
+    font-size: 16px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .lexmake-button--large {
+    font-size: 24px;
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+
+  /* === DISABLED STATE === */
+  .lexmake-button:disabled,
+  .lexmake-button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .lexmake-button--default {
+      font-size: 18px;
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .lexmake-button--large {
+      font-size: 20px;
+      padding: var(--spacing-md) var(--spacing-lg);
+    }
+  }
+
+  /* === FOCUS STATES === */
+  .lexmake-button:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 2px;
+  }
+
+  /* === ACTIVE STATES === */
+  .lexmake-button:active {
+    transform: translateY(1px);
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 // src/components/Layout/Navigation.astro
 // Navegación principal para desktop
+import Button from "../UI/Button.astro";
 ---
 
 <nav class="navigation">
@@ -16,8 +17,8 @@
     </li>
   </ul>
 
-  <!-- Botón Contact (placeholder hasta crear componente Button) -->
-  <a href="/contact" class="contact-button">CONTACT</a>
+  <!-- Botón Contact usando el componente Button -->
+  <Button href="/contact" class="contact-button-wrapper">CONTACT</Button>
 </nav>
 
 <style>
@@ -51,6 +52,7 @@
 
   .nav-item {
     position: relative;
+    min-width: 120px;
   }
 
   .nav-link {
@@ -68,24 +70,9 @@
     font-style: italic;
   }
 
-  /* Botón Contact alineado a la derecha */
-  .contact-button {
-    font-family: var(--font-hanken);
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--color-grey);
-    background-color: var(--color-black);
-    text-decoration: none;
-    padding: var(--spacing-md) var(--spacing-lg);
-    border: 1px solid var(--color-black);
-    transition: all 0.3s ease;
-    white-space: nowrap;
+  /* Wrapper para el botón Contact alineado a la derecha */
+  .contact-button-wrapper {
     margin-left: auto;
-  }
-
-  .contact-button:hover {
-    background-color: var(--color-grey);
-    color: var(--color-black);
   }
 
   /* === RESPONSIVE === */
