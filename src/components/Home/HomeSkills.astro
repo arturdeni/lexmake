@@ -12,27 +12,37 @@
       </h3>
     </div>
 
-    <!-- Grid de imágenes del portfolio (placeholder) -->
+    <!-- Grid de imágenes del portfolio -->
     <div class="home-skills__portfolio-grid">
       <div class="portfolio-item">
-        <div class="portfolio-placeholder">Project 1</div>
+        <img
+          src="/assets/portfolio/lexmake-portfolio-1.webp"
+          alt="Portfolio Project 1"
+        />
       </div>
       <div class="portfolio-item">
-        <div class="portfolio-placeholder">Project 2</div>
+        <img
+          src="/assets/portfolio/lexmake-portfolio-2.webp"
+          alt="Portfolio Project 2"
+        />
       </div>
       <div class="portfolio-item">
-        <div class="portfolio-placeholder">Project 3</div>
+        <img
+          src="/assets/portfolio/lexmake-portfolio-3.webp"
+          alt="Portfolio Project 3"
+        />
       </div>
       <div class="portfolio-item">
-        <div class="portfolio-placeholder">Project 4</div>
+        <img
+          src="/assets/portfolio/lexmake-portfolio-4.webp"
+          alt="Portfolio Project 4"
+        />
       </div>
     </div>
 
     <!-- Botón Ver Más -->
     <div class="home-skills__view-more">
-      <a href="/portfolio" class="view-more-link">
-        <span class="h3-cursiva">VER MÁS</span>
-      </a>
+      <a href="/portfolio" class="view-more-link">VER MÁS</a>
     </div>
 
     <!-- Sección MY SKILLS -->
@@ -65,7 +75,7 @@
     position: relative;
     z-index: 10; /* Para pasar por encima del hero sticky */
     margin-top: -300px; /* Para superponer con el hero */
-    padding: var(--spacing-xxxl) 0;
+    padding: var(--spacing-xl) 0;
   }
 
   .home-skills__container {
@@ -74,7 +84,6 @@
     padding: 0 var(--container-padding);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xxxl);
   }
 
   /* === HEADER === */
@@ -83,10 +92,9 @@
   }
 
   .home-skills__title {
-    margin: 0;
+    margin: var(--spacing-lg);
     display: flex;
     align-items: baseline;
-    gap: var(--spacing-md);
   }
 
   .home-skills__title span:first-child {
@@ -99,26 +107,20 @@
   .home-skills__portfolio-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
   }
 
   .portfolio-item {
     aspect-ratio: 4/3;
     background-color: var(--color-black);
-    border-radius: 8px;
     overflow: hidden;
   }
 
-  .portfolio-placeholder {
+  .portfolio-item img {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-grey);
-    font-family: var(--font-hanken);
-    font-weight: 500;
+    object-fit: cover;
+    display: block;
   }
 
   /* === VER MÁS === */
@@ -127,23 +129,12 @@
     margin-bottom: var(--spacing-xxl);
   }
 
-  .view-more-link {
-    text-decoration: none;
-    color: var(--color-black);
-    font-size: var(--h3-size);
-    line-height: var(--h3-line-height);
-    transition: all 0.3s ease;
-  }
-
-  .view-more-link:hover {
-    opacity: 0.7;
-  }
-
   /* === SKILLS SECTION === */
   .home-skills__skills-section {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
   }
 
   .skills-header {
@@ -213,6 +204,7 @@
       flex-direction: column;
       gap: 0;
       text-align: center;
+      margin: 0 var(--spacing-lg);
     }
 
     .home-skills__portfolio-grid {
@@ -223,10 +215,6 @@
     .home-skills__view-more {
       text-align: center;
       margin-bottom: var(--spacing-xl);
-    }
-
-    .view-more-link {
-      font-size: calc(var(--h3-size) * 0.7);
     }
 
     .skills-grid {
@@ -247,76 +235,106 @@
   }
 
   /* === PREPARAR PARA ANIMACIONES GSAP === */
-  .home-skills__title span {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .portfolio-item {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  .view-more-link {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  .skills-header {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .skill-item {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  /* Clase para cuando GSAP haya cargado */
-  .home-skills.gsap-loaded .home-skills__title span,
-  .home-skills.gsap-loaded .portfolio-item,
-  .home-skills.gsap-loaded .view-more-link,
-  .home-skills.gsap-loaded .skills-header,
-  .home-skills.gsap-loaded .skill-item {
-    opacity: 1;
-    transform: none;
-    transition:
-      opacity 0.6s ease,
-      transform 0.6s ease;
-  }
-
-  /* Stagger delays para animación secuencial */
-  .home-skills.gsap-loaded .portfolio-item:nth-child(1) {
-    transition-delay: 0.1s;
-  }
-  .home-skills.gsap-loaded .portfolio-item:nth-child(2) {
-    transition-delay: 0.2s;
-  }
-  .home-skills.gsap-loaded .portfolio-item:nth-child(3) {
-    transition-delay: 0.3s;
-  }
-  .home-skills.gsap-loaded .portfolio-item:nth-child(4) {
-    transition-delay: 0.4s;
-  }
-
-  .home-skills.gsap-loaded .skill-item:nth-child(odd) {
-    transition-delay: 0.1s;
-  }
-  .home-skills.gsap-loaded .skill-item:nth-child(even) {
-    transition-delay: 0.2s;
-  }
+  /* Por defecto los elementos son visibles */
+  /* GSAP los ocultará antes de animar con gsap.set() */
 </style>
 
 <script>
-  // Script básico para home-skills
-  document.addEventListener("DOMContentLoaded", () => {
-    const homeSkills = document.querySelector(".home-skills");
+  // Importar GSAP y ScrollTrigger
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-    // Fallback si GSAP no está cargado aún
-    setTimeout(() => {
-      if (homeSkills && !homeSkills.classList.contains("gsap-loaded")) {
-        homeSkills.classList.add("gsap-loaded");
-      }
-    }, 500); // Delay un poco más para que se vea la animación
-  });
+  // Registrar el plugin ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Función para inicializar las animaciones
+  const initHomeSkillsAnimations = () => {
+    // Verificar que el elemento existe
+    const homeSkills = document.querySelector(".home-skills");
+    if (!homeSkills) return;
+
+    // Establecer estado inicial de los elementos (ocultos)
+    gsap.set(".home-skills__title span", { opacity: 0, y: 30 });
+    gsap.set(".portfolio-item", { opacity: 0, y: 50 });
+    gsap.set(".view-more-link", { opacity: 0, y: 20 });
+    gsap.set(".skills-header", { opacity: 0, y: 30 });
+    gsap.set(".skill-item", { opacity: 0, y: 20 });
+
+    // Animar el título
+    gsap.to(".home-skills__title span", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".home-skills__title",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar los items del portfolio con stagger
+    gsap.to(".portfolio-item", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".home-skills__portfolio-grid",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar el botón "Ver más"
+    gsap.to(".view-more-link", {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".view-more-link",
+        start: "top 85%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar el header de skills
+    gsap.to(".skills-header", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".skills-header",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar los skill items con stagger
+    gsap.to(".skill-item", {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".skills-grid",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    console.log("HomeSkills animations initialized");
+  };
+
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHomeSkillsAnimations);
+  } else {
+    initHomeSkillsAnimations();
+  }
 </script>

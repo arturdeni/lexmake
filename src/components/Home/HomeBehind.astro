@@ -1,0 +1,226 @@
+---
+// src/components/Home/HomeBehind.astro
+---
+
+<section class="home-behind">
+  <div class="home-behind__container">
+    <div class="home-behind__content">
+      <!-- Imagen izquierda -->
+      <div class="home-behind__image">
+        <img src="/assets/behind/lexmake-behind.gif" alt="Behind lexmake" />
+      </div>
+
+      <!-- Texto derecha -->
+      <div class="home-behind__text">
+        <h3 class="home-behind__title">
+          <span>Behind</span>
+          <span class="h3-cursiva">lexmake</span>
+        </h3>
+
+        <p class="home-behind__description">
+          Hola, soy Alexia — la mente, el pulso y el caos creativo detrás de
+          Lexmake.
+        </p>
+
+        <p class="home-behind__description">
+          Fundé este estudio con una idea muy sencilla (y un poco ambiciosa):
+          que el diseño de calidad no debería ser un lujo reservado para unos
+          pocos con presupuestos infinitos y reuniones eternas. Todos, desde
+          marcas personales que apenas arrancan hasta empresas consolidadas,
+          merecen verse tan increíbles como lo que ofrecen.
+        </p>
+
+        <p class="home-behind__description">
+          Mi superpoder es traducir lo que tienes en la cabeza (aunque venga con
+          notas de voz, dibujos en servilletas o frases como "algo minimalista
+          pero que impacte") en una identidad visual clara, coherente y
+          memorable. En Lexmake no solo diseñamos. Creamos experiencias que
+          cuentan historias, sin clichés ni plantillas genéricas.
+        </p>
+
+        <p class="home-behind__description body-cursiva">
+          Porque sí: un buen diseño puede (y debe) emocionar, conectar y, por
+          qué no, dejar a tu competencia un poquito nerviosa
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-behind {
+    background-color: var(--color-white);
+    position: relative;
+    z-index: 15;
+    padding: var(--spacing-xxxl) 0;
+    margin-top: var(--spacing-xxxl);
+  }
+
+  .home-behind__container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+  }
+
+  /* === CONTENT LAYOUT === */
+  .home-behind__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xxl);
+    align-items: end;
+  }
+
+  /* === IMAGE === */
+  .home-behind__image {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background-color: var(--color-grey);
+    overflow: hidden;
+  }
+
+  .home-behind__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* === TEXT === */
+  .home-behind__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .home-behind__title {
+    margin: 0 0 var(--spacing-lg) 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .home-behind__title span:first-child {
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  .home-behind__description {
+    font-size: var(--body-size);
+    margin: 0;
+    color: var(--color-black);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 1024px) {
+    .home-behind__content {
+      gap: var(--spacing-xxl);
+    }
+
+    .home-behind__description {
+      font-size: calc(var(--body-size) * 0.95);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home-behind {
+      padding: var(--spacing-xl) 0;
+    }
+
+    .home-behind__content {
+      grid-template-columns: 1fr;
+    }
+
+    .home-behind__image {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .home-behind__text {
+      padding-top: 0;
+    }
+
+    .home-behind__title {
+      justify-content: center;
+    }
+
+    .home-behind__description {
+      text-align: center;
+    }
+  }
+
+  /* === PREPARAR PARA ANIMACIONES GSAP === */
+  /* Por defecto los elementos son visibles */
+  /* GSAP los ocultará antes de animar con gsap.set() */
+</style>
+
+<script>
+  // Importar GSAP y ScrollTrigger
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  // Registrar el plugin ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Función para inicializar las animaciones
+  const initHomeBehindAnimations = () => {
+    // Verificar que el elemento existe
+    const homeBehind = document.querySelector(".home-behind");
+    if (!homeBehind) return;
+
+    // Establecer estado inicial de los elementos (ocultos)
+    gsap.set(".home-behind__image", { opacity: 0, y: 50 });
+    gsap.set(".home-behind__title span", { opacity: 0, y: 30 });
+    gsap.set(".home-behind__description", { opacity: 0, y: 20 });
+
+    // Animar la imagen
+    gsap.to(".home-behind__image", {
+      opacity: 1,
+      y: 0,
+      duration: 0.9,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".home-behind__image",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar el título con stagger entre los spans
+    gsap.to(".home-behind__title span", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".home-behind__title",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar los párrafos de descripción con stagger
+    gsap.to(".home-behind__description", {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".home-behind__text",
+        start: "top 75%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    console.log("HomeBehind animations initialized");
+  };
+
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHomeBehindAnimations);
+  } else {
+    initHomeBehindAnimations();
+  }
+</script>
