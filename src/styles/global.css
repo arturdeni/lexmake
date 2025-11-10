@@ -120,7 +120,8 @@ body {
 }
 
 /* Enlaces "Ver Más" */
-.view-more-link {
+.view-more-link,
+.normal-link {
   text-decoration: none;
   font-family: var(--font-gallery);
   font-size: 25px;
@@ -132,7 +133,8 @@ body {
   position: relative;
 }
 
-.view-more-link::after {
+.view-more-link::after,
+.normal-link::after {
   content: "";
   position: absolute;
   left: 0;
@@ -143,7 +145,8 @@ body {
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.view-more-link:hover::after {
+.view-more-link:hover::after,
+.normal-link:hover::after {
   width: 100%;
 }
 
