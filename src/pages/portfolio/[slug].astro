@@ -1,0 +1,243 @@
+---
+// src/pages/portfolio/[slug].astro
+import Layout from "../../layouts/Layout.astro";
+import {
+  hygraph,
+  GET_PROJECT_BY_SLUG,
+  GET_ALL_PROJECTS,
+} from "../../lib/hygraph.ts";
+import type { ProjectResponse, ProjectsResponse } from "../../types/project.ts";
+
+// Esta función genera todas las rutas estáticas en build time
+export async function getStaticPaths() {
+  const data = await hygraph.request<ProjectsResponse>(GET_ALL_PROJECTS);
+
+  return data.projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
+}
+
+// Obtener el slug de la URL
+const { slug } = Astro.params;
+
+// Fetch del proyecto específico
+const data = await hygraph.request<ProjectResponse>(GET_PROJECT_BY_SLUG, {
+  slug,
+});
+const project = data.project;
+
+// Si no existe el proyecto, mostrar 404
+if (!project) {
+  return Astro.redirect("/404");
+}
+---
+
+<Layout
+  title={`${project.title} - Portfolio`}
+  description={project.description}
+>
+  <main class="project-detail">
+    <!-- Hero del proyecto -->
+    <section class="project-hero">
+      <div class="project-hero__container">
+        <!-- Información del proyecto en 2 columnas -->
+        <div class="project-header">
+          <!-- Columna izquierda: Título y Categoría -->
+          <div class="project-header__left">
+            <h1 class="project-title">{project.title}</h1>
+            <h4 class="project-category">{project.category}</h4>
+          </div>
+
+          <!-- Columna derecha: Descripción -->
+          <div class="project-header__right">
+            <p class="project-description">{project.description}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería de imágenes -->
+    <section class="project-gallery">
+      <div class="gallery-grid">
+        {
+          project.images &&
+            project.images.map((image) => (
+              <div class="gallery-item">
+                <img src={image.url} alt={project.title} loading="lazy" />
+              </div>
+            ))
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .project-detail {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /* === HERO === */
+  .project-hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-4xl) var(--container-padding) var(--spacing-xxxl);
+  }
+
+  .project-hero__container {
+    width: 100%;
+  }
+
+  /* Header con 2 columnas */
+  .project-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4xl);
+    align-items: start;
+  }
+
+  .project-header__left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-title {
+    font-family: var(--font-hanken);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--color-black);
+  }
+
+  .project-category {
+    font-family: var(--font-hanken);
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-black);
+    margin: 0;
+  }
+
+  .project-header__right {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .project-description {
+    font-family: var(--font-hanken);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-black);
+    margin: 0;
+  }
+
+  /* === GALERÍA === */
+  .project-gallery {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: var(--spacing-md);
+    width: 100%;
+  }
+
+  .gallery-item {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* Layout específico para las 7 imágenes */
+  .gallery-item:nth-child(1) {
+    grid-area: 1 / 1 / 4 / 5;
+  }
+
+  .gallery-item:nth-child(2) {
+    grid-area: 1 / 5 / 4 / 10;
+  }
+
+  .gallery-item:nth-child(3) {
+    grid-area: 4 / 1 / 6 / 4;
+  }
+
+  .gallery-item:nth-child(4) {
+    grid-area: 6 / 1 / 9 / 4;
+  }
+
+  .gallery-item:nth-child(5) {
+    grid-area: 4 / 4 / 9 / 7;
+  }
+
+  .gallery-item:nth-child(6) {
+    grid-area: 4 / 7 / 6 / 10;
+  }
+
+  .gallery-item:nth-child(7) {
+    grid-area: 6 / 7 / 9 / 10;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .project-hero {
+      padding: var(--spacing-md) var(--container-padding);
+    }
+
+    .project-header {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .project-gallery {
+      padding: 0 var(--container-padding);
+      overflow: hidden;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      gap: var(--spacing-sm);
+    }
+
+    /* Layout mobile: 2 columnas */
+    .gallery-item:nth-child(1) {
+      grid-area: auto;
+      grid-column: span 2;
+    }
+
+    .gallery-item:nth-child(2) {
+      grid-area: auto;
+      grid-column: span 2;
+    }
+
+    .gallery-item:nth-child(3),
+    .gallery-item:nth-child(4) {
+      grid-area: auto;
+      grid-column: span 1;
+    }
+
+    .gallery-item:nth-child(5) {
+      grid-area: auto;
+      grid-column: span 2;
+    }
+
+    .gallery-item:nth-child(6),
+    .gallery-item:nth-child(7) {
+      grid-area: auto;
+      grid-column: span 1;
+    }
+  }
+</style>

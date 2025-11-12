@@ -1,0 +1,293 @@
+---
+// src/pages/portfolio.astro
+import Layout from "../../layouts/Layout.astro";
+import { hygraph, GET_ALL_PROJECTS } from "../../lib/hygraph.ts";
+import type { ProjectsResponse } from "../../types/project.ts";
+
+// Fetch proyectos desde Hygraph
+const data = await hygraph.request<ProjectsResponse>(GET_ALL_PROJECTS);
+const projects = data.projects;
+
+// Definir patrones de grid (anchos de columnas por fila)
+// Cada array representa una fila con los anchos de sus columnas
+const gridPatterns = [
+  [66.66, 33.33], // Fila 1: 2/3 + 1/3
+  [33.33, 33.33, 33.33], // Fila 2: 1/3 + 1/3 + 1/3
+  [40, 60], // Fila 3: 40% + 60%
+  [25, 45, 30], // Fila 4: 25% + 45% + 30%
+  [50, 50], // Fila 5: 50% + 50%
+  [60, 40], // Fila 6: 60% + 40%
+];
+
+// Distribuir proyectos en filas seg�n los patrones
+interface ProjectRow {
+  projects: typeof projects;
+  widths: number[];
+}
+
+const rows: ProjectRow[] = [];
+let projectIndex = 0;
+
+// Iterar sobre los patrones y asignar proyectos
+while (projectIndex < projects.length) {
+  const patternIndex = rows.length % gridPatterns.length;
+  const pattern = gridPatterns[patternIndex];
+
+  const rowProjects = projects.slice(
+    projectIndex,
+    projectIndex + pattern.length
+  );
+
+  if (rowProjects.length > 0) {
+    rows.push({
+      projects: rowProjects,
+      widths: pattern.slice(0, rowProjects.length),
+    });
+  }
+
+  projectIndex += pattern.length;
+}
+---
+
+<Layout
+  title="Portfolio - LexMake"
+  description="Explora mis proyectos de diseño gráfico y soluciones creativas."
+>
+  <main class="portfolio">
+    <!-- Hero Section -->
+    <section class="portfolio-hero">
+      <h2 class="portfolio-title">
+        DESIGN<br />
+        <span class="portfolio-title-italic">Portfolio</span>
+      </h2>
+      <p class="portfolio-subtitle">Mis proyectos</p>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="portfolio-grid">
+      {
+        rows.map((row) => (
+          <div class="grid-row">
+            {row.projects.map((project, index) => (
+              <a
+                href={`/portfolio/${project.slug}`}
+                class="project-card"
+                style={`width: ${row.widths[index]}%`}
+              >
+                <div class="project-image-wrapper">
+                  <img
+                    src={project.mainImage.url}
+                    alt={project.title}
+                    class="project-image"
+                    loading="lazy"
+                  />
+                  <div class="project-overlay">
+                    <div class="project-info">
+                      <span class="project-category">{project.category}</span>
+                      <h2 class="project-title">{project.title}</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="project-info-mobile">
+                  <span class="project-category">{project.category}</span>
+                  <h2 class="project-title">{project.title}</h2>
+                </div>
+              </a>
+            ))}
+          </div>
+        ))
+      }
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .portfolio {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /* === HERO SECTION === */
+  .portfolio-hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-4xl) var(--container-padding);
+    text-align: center;
+  }
+
+  .portfolio-title {
+    font-family: var(--font-hanken);
+    margin: 0;
+    color: var(--color-black);
+  }
+
+  .portfolio-title-italic {
+    font-family: var(--font-gallery);
+    font-style: italic;
+    display: block;
+  }
+
+  .portfolio-subtitle {
+    font-family: var(--font-hanken);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-black);
+    margin-top: var(--spacing-xl);
+  }
+
+  /* === PORTFOLIO GRID === */
+  .portfolio-grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .grid-row {
+    display: flex;
+    height: 355px;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .project-card {
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    aspect-ratio: 4 / 3;
+    cursor: pointer;
+  }
+
+  .project-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .project-info-mobile {
+    display: none;
+  }
+
+  .project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .project-card:hover .project-image {
+    transform: scale(1.05);
+  }
+
+  /* Overlay con informaci�n del proyecto */
+  .project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--spacing-xl);
+  }
+
+  .project-card:hover .project-overlay {
+    opacity: 1;
+  }
+
+  .project-info {
+    color: white;
+    width: 100%;
+  }
+
+  .project-category {
+    font-family: var(--font-hanken);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    opacity: 0.8;
+  }
+
+  .project-title {
+    font-family: var(--font-hanken);
+    font-size: clamp(18px, 2vw, 28px);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .portfolio-hero {
+      padding: var(--spacing-2xl) var(--container-padding);
+    }
+
+    .portfolio-grid {
+      margin: var(--spacing-md);
+    }
+
+    .grid-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+      height: auto;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .project-card {
+      width: 100% !important;
+      aspect-ratio: auto;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .project-image-wrapper {
+      overflow: hidden;
+    }
+
+    /* Ocultar overlay en móvil */
+    .project-overlay {
+      display: none;
+    }
+
+    /* Mostrar información debajo de la imagen */
+    .project-info-mobile {
+      display: block;
+      padding: 0;
+    }
+
+    .project-info-mobile .project-category {
+      font-family: var(--font-hanken);
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 0;
+      color: var(--color-black);
+      opacity: 0.6;
+    }
+
+    .project-info-mobile .project-title {
+      font-family: var(--font-hanken);
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1.3;
+      color: var(--color-black);
+    }
+  }
+</style>

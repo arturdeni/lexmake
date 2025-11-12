@@ -64,6 +64,7 @@
   /* === CTA === */
   .home-closing__cta {
     text-transform: uppercase;
+    margin-top: var(--spacing-xxl);
   }
 
   /* === RESPONSIVE === */
@@ -84,6 +85,10 @@
 
     .home-closing__text {
       font-size: calc(var(--h3-size) * 0.75);
+    }
+
+    .home-closing__cta {
+      margin-top: var(--spacing-xxxl);
     }
   }
 
@@ -136,8 +141,6 @@
         toggleActions: "play none none none",
       },
     });
-
-    console.log("HomeClosing animations initialized");
   };
 
   // Ejecutar cuando el DOM esté listo

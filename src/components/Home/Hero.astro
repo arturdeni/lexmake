@@ -211,6 +211,10 @@
   }
 
   @media (max-width: 480px) {
+    .hero {
+      margin-top: 80px;
+    }
+
     .hero__subtitle {
       br {
         display: none; /* Quitar saltos de línea forzados en móvil muy pequeño */
@@ -277,12 +281,5 @@
         hero.classList.add("gsap-loaded");
       }
     }, 100);
-
-    // Log para debug del sticky behavior
-    window.addEventListener("scroll", () => {
-      const stickyContainer = document.querySelector(".hero__sticky-container");
-      const scrollY = window.scrollY;
-      console.log("Scroll Y:", scrollY);
-    });
   });
 </script>
