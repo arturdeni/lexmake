@@ -1,0 +1,83 @@
+---
+// src/pages/solutions/index.astro
+import Layout from "../../layouts/Layout.astro";
+import SolutionsFolders from "../../components/Solutions/SolutionsFolders.astro";
+import WorkPlan from "../../components/Solutions/WorkPlan.astro";
+import PortfolioCTA from "../../components/Common/PortfolioCTA.astro";
+---
+
+<Layout
+  title="Solutions - LexMake"
+  description="Soluciones visuales creativas y estrat�gicas."
+>
+  <main class="solutions">
+    <!-- Hero Section -->
+    <section class="solutions-hero">
+      <h2 class="solutions-title">
+        <span class="solutions-title-italic">visual</span>
+        solutions<br />
+        THAT WORKS
+      </h2>
+      <p class="solutions-subtitle">Soluciones a medida</p>
+    </section>
+
+    <SolutionsFolders />
+
+    <WorkPlan />
+
+    <div class="solutions__portfolio-cta-container">
+      <PortfolioCTA />
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .solutions {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /* === HERO SECTION === */
+  .solutions-hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-4xl) var(--container-padding);
+    text-align: center;
+  }
+
+  .solutions-title {
+    font-family: var(--font-hanken);
+    margin: 0;
+    color: var(--color-black);
+  }
+
+  .solutions-title-italic {
+    font-family: var(--font-gallery);
+    font-style: italic;
+    display: inline-block;
+  }
+
+  .solutions-subtitle {
+    font-family: var(--font-hanken);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-black);
+    margin: var(--spacing-xl);
+  }
+
+  .solutions__portfolio-cta-container {
+    position: relative;
+    background-color: var(--color-gray);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    z-index: 10;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .solutions-hero {
+      padding: var(--spacing-2xl) var(--container-padding);
+    }
+  }
+</style>

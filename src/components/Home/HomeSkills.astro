@@ -1,49 +1,11 @@
 ---
 // src/components/Home/HomeSkills.astro
+import PortfolioCTA from "../Common/PortfolioCTA.astro";
 ---
 
 <section class="home-skills">
   <div class="home-skills__container">
-    <!-- Título de la sección -->
-    <div class="home-skills__header">
-      <h3 class="home-skills__title">
-        <span>DESIGN</span>
-        <span class="h3-cursiva">Portfolio</span>
-      </h3>
-    </div>
-
-    <!-- Grid de imágenes del portfolio -->
-    <div class="home-skills__portfolio-grid">
-      <div class="portfolio-item">
-        <img
-          src="/assets/portfolio/lexmake-portfolio-1.webp"
-          alt="Portfolio Project 1"
-        />
-      </div>
-      <div class="portfolio-item">
-        <img
-          src="/assets/portfolio/lexmake-portfolio-2.webp"
-          alt="Portfolio Project 2"
-        />
-      </div>
-      <div class="portfolio-item">
-        <img
-          src="/assets/portfolio/lexmake-portfolio-3.webp"
-          alt="Portfolio Project 3"
-        />
-      </div>
-      <div class="portfolio-item">
-        <img
-          src="/assets/portfolio/lexmake-portfolio-4.webp"
-          alt="Portfolio Project 4"
-        />
-      </div>
-    </div>
-
-    <!-- Botón Ver Más -->
-    <div class="home-skills__view-more">
-      <a href="/portfolio" class="view-more-link">VER MÁS</a>
-    </div>
+    <PortfolioCTA />
 
     <!-- Sección MY SKILLS -->
     <div class="home-skills__skills-section">
@@ -84,49 +46,6 @@
     padding: 0 var(--container-padding);
     display: flex;
     flex-direction: column;
-  }
-
-  /* === HEADER === */
-  .home-skills__header {
-    text-align: left;
-  }
-
-  .home-skills__title {
-    margin: var(--spacing-lg);
-    display: flex;
-    align-items: baseline;
-  }
-
-  .home-skills__title span:first-child {
-    font-family: var(--font-hanken);
-    font-weight: 500;
-    font-style: normal;
-  }
-
-  /* === PORTFOLIO GRID === */
-  .home-skills__portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin-bottom: var(--spacing-xl);
-  }
-
-  .portfolio-item {
-    aspect-ratio: 4/3;
-    background-color: var(--color-black);
-    overflow: hidden;
-  }
-
-  .portfolio-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* === VER MÁS === */
-  .home-skills__view-more {
-    text-align: right;
-    margin-bottom: var(--spacing-xxl);
   }
 
   /* === SKILLS SECTION === */
@@ -178,10 +97,6 @@
 
   /* === RESPONSIVE === */
   @media (max-width: 1024px) {
-    .home-skills__portfolio-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
     .skills-grid {
       gap: var(--spacing-md) var(--spacing-lg);
     }
@@ -198,23 +113,6 @@
 
     .home-skills__container {
       gap: 0:
-    }
-
-    .home-skills__title {
-      flex-direction: column;
-      gap: 0;
-      text-align: center;
-      margin: var(--spacing-lg);
-    }
-
-    .home-skills__portfolio-grid {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-md);
-    }
-
-    .home-skills__view-more {
-      text-align: center;
-      margin-bottom: var(--spacing-xl);
     }
 
     .skills-grid {
@@ -248,57 +146,13 @@
 
   // Función para inicializar las animaciones
   const initHomeSkillsAnimations = () => {
-    // Verificar que el elemento existe
+    // Verificar que el elemento exists
     const homeSkills = document.querySelector(".home-skills");
     if (!homeSkills) return;
 
     // Establecer estado inicial de los elementos (ocultos)
-    gsap.set(".home-skills__title span", { opacity: 0, y: 30 });
-    gsap.set(".portfolio-item", { opacity: 0, y: 50 });
-    gsap.set(".view-more-link", { opacity: 0, y: 20 });
     gsap.set(".skills-header", { opacity: 0, y: 30 });
     gsap.set(".skill-item", { opacity: 0, y: 20 });
-
-    // Animar el título
-    gsap.to(".home-skills__title span", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-skills__title",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Animar los items del portfolio con stagger
-    gsap.to(".portfolio-item", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-skills__portfolio-grid",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Animar el botón "Ver más"
-    gsap.to(".view-more-link", {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".view-more-link",
-        start: "top 85%",
-        toggleActions: "play none none none",
-      },
-    });
 
     // Animar el header de skills
     gsap.to(".skills-header", {

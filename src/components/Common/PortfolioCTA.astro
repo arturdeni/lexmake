@@ -1,0 +1,188 @@
+---
+// src/components/Common/PortfolioCTA.astro
+---
+
+<!-- Título de la sección -->
+<div class="portfolio-cta__header">
+  <h3 class="portfolio-cta__title">
+    <span>DESIGN</span>
+    <span class="h3-cursiva">Portfolio</span>
+  </h3>
+</div>
+
+<!-- Grid de imágenes del portfolio -->
+<div class="portfolio-cta__grid">
+  <div class="portfolio-cta__item">
+    <img
+      src="/assets/portfolio/lexmake-portfolio-1.webp"
+      alt="Portfolio Project 1"
+    />
+  </div>
+  <div class="portfolio-cta__item">
+    <img
+      src="/assets/portfolio/lexmake-portfolio-2.webp"
+      alt="Portfolio Project 2"
+    />
+  </div>
+  <div class="portfolio-cta__item">
+    <img
+      src="/assets/portfolio/lexmake-portfolio-3.webp"
+      alt="Portfolio Project 3"
+    />
+  </div>
+  <div class="portfolio-cta__item">
+    <img
+      src="/assets/portfolio/lexmake-portfolio-4.webp"
+      alt="Portfolio Project 4"
+    />
+  </div>
+</div>
+
+<!-- Botón Ver Más -->
+<div class="portfolio-cta__view-more">
+  <a href="/portfolio" class="view-more-link">VER MÁS</a>
+</div>
+
+<style>
+  /* === HEADER === */
+  .portfolio-cta__header {
+    text-align: left;
+  }
+
+  .portfolio-cta__title {
+    margin: var(--spacing-lg);
+    display: flex;
+    align-items: baseline;
+  }
+
+  .portfolio-cta__title span:first-child {
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  /* === PORTFOLIO GRID === */
+  .portfolio-cta__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .portfolio-cta__item {
+    aspect-ratio: 4/3;
+    background-color: var(--color-black);
+    overflow: hidden;
+  }
+
+  .portfolio-cta__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* === VER MÁS === */
+  .portfolio-cta__view-more {
+    text-align: right;
+    margin-bottom: var(--spacing-xxl);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 1024px) {
+    .portfolio-cta__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .portfolio-cta__title {
+      flex-direction: column;
+      gap: 0;
+      text-align: center;
+      margin: var(--spacing-lg);
+    }
+
+    .portfolio-cta__grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+
+    .portfolio-cta__view-more {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+    }
+  }
+
+  /* === PREPARAR PARA ANIMACIONES GSAP === */
+  /* Por defecto los elementos son visibles */
+  /* GSAP los ocultará antes de animar con gsap.set() */
+</style>
+
+<script>
+  // Importar GSAP y ScrollTrigger
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  // Registrar el plugin ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Función para inicializar las animaciones
+  const initPortfolioCTAAnimations = () => {
+    // Verificar que el elemento existe
+    const portfolioCTA = document.querySelector(".portfolio-cta__grid");
+    if (!portfolioCTA) return;
+
+    // Establecer estado inicial de los elementos (ocultos)
+    gsap.set(".portfolio-cta__title span", { opacity: 0, y: 30 });
+    gsap.set(".portfolio-cta__item", { opacity: 0, y: 50 });
+    gsap.set(".view-more-link", { opacity: 0, y: 20 });
+
+    // Animar el título
+    gsap.to(".portfolio-cta__title span", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".portfolio-cta__title",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar los items del portfolio con stagger
+    gsap.to(".portfolio-cta__item", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".portfolio-cta__grid",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar el botón "Ver más"
+    gsap.to(".view-more-link", {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".view-more-link",
+        start: "top 85%",
+        toggleActions: "play none none none",
+      },
+    });
+  };
+
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPortfolioCTAAnimations);
+  } else {
+    initPortfolioCTAAnimations();
+  }
+</script>

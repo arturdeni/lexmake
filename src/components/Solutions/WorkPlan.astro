@@ -1,0 +1,164 @@
+---
+// WorkPlan Component
+const workSteps = [
+  "01/ Videollamada inicial",
+  "02/ Recepción de información",
+  "03/ Concepto de marca",
+  "04/ Feedback o correcciones",
+  "05/ Identidad visual",
+  "06/ Feedback o correcciones",
+  "07/ Recursos gráficos",
+  "08/ Feedback o correcciones",
+  "09/ Entrega de archivos finales",
+  "10/ Pago del 60% restante",
+  "11/ Videollamada de cierre (opcional)",
+];
+---
+
+<section class="work-plan">
+  <div class="work-plan__container">
+    <h3 class="work-plan__title">
+      <span class="h3-cursiva">Plan de</span>
+      <span>trabajo</span>
+    </h3>
+
+    <ul class="work-plan__list">
+      {workSteps.map((step) => <li class="work-plan__item">{step}</li>)}
+    </ul>
+
+    <div class="work-plan__cta">
+      <a href="#" class="normal-link">¡EMPEZAR!</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .work-plan {
+    background-color: var(--color-grey);
+    padding: var(--spacing-4xl) 0;
+    position: relative;
+    z-index: 10;
+    margin-top: -90vh;
+  }
+
+  .work-plan__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+  }
+
+  .work-plan__title {
+    margin-bottom: var(--spacing-xxl);
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .work-plan__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .work-plan__item {
+    font-family: var(--font-hanken);
+    font-size: var(--h5-size);
+    line-height: var(--h5-line-height);
+    font-weight: 300;
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--color-black);
+  }
+
+  .work-plan__cta {
+    margin-top: var(--spacing-xxxl);
+    text-align: right;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .work-plan {
+      padding: var(--spacing-xxl) 0;
+    }
+
+    .work-plan__title {
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .work-plan__item {
+      font-size: calc(var(--h4-size) * 0.7);
+      line-height: calc(var(--h4-line-height) * 0.8);
+      padding: var(--spacing-md) 0;
+    }
+  }
+</style>
+
+<script>
+  // Importar GSAP y ScrollTrigger
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  // Registrar el plugin ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Función para inicializar las animaciones
+  const initWorkPlanAnimations = () => {
+    // Verificar que el elemento existe
+    const workPlan = document.querySelector(".work-plan");
+    if (!workPlan) return;
+
+    // Establecer estado inicial de los elementos (ocultos)
+    gsap.set(".work-plan__title span", { opacity: 0, y: 30 });
+    gsap.set(".work-plan__item", { opacity: 0, x: -30 });
+    gsap.set(".work-plan__cta", { opacity: 0, scale: 0.8 });
+
+    // Animar el título con stagger entre los spans
+    gsap.to(".work-plan__title span", {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".work-plan__title",
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar los items de la lista con stagger
+    gsap.to(".work-plan__item", {
+      opacity: 1,
+      x: 0,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".work-plan__list",
+        start: "top 75%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Animar el CTA
+    gsap.to(".work-plan__cta", {
+      opacity: 1,
+      scale: 1,
+      duration: 0.7,
+      ease: "back.out(1.5)",
+      scrollTrigger: {
+        trigger: ".work-plan__cta",
+        start: "top 85%",
+        toggleActions: "play none none none",
+      },
+    });
+  };
+
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWorkPlanAnimations);
+  } else {
+    initWorkPlanAnimations();
+  }
+</script>

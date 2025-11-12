@@ -1,0 +1,160 @@
+---
+// SolutionsFolders Component
+const folders = [
+  { id: 1, title: "DISEÑO GRAFICO", color: "grey" },
+  { id: 2, title: "REDES SOCIALES", color: "lime" },
+  { id: 3, title: "DISEÑO WEB", color: "grey" },
+  { id: 4, title: "MULTIMEDIA", color: "black" },
+];
+---
+
+<section class="solutions-folders">
+  <div class="solutions-folders-background"></div>
+  <div class="folders-container">
+    {
+      folders.map((folder, index) => (
+        <div class="folder" data-index={index}>
+          <div class={`folder-tab bg-${folder.color}`}>
+            <span>{folder.title}</span>
+          </div>
+          <div
+            class={`folder-content bg-${folder.color === "lime" ? "lime" : "black"}`}
+          >
+            <p>Contenido de {folder.title}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .solutions-folders {
+    position: relative;
+    width: 100%;
+    height: 400vh;
+  }
+
+  .solutions-folders-background {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url("/assets/solutionsFolders/background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+
+  .folders-container {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .folder {
+    position: sticky;
+    top: 150px;
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: var(--spacing-xxl);
+  }
+
+  .folder[data-index="0"] {
+    z-index: 1;
+  }
+
+  .folder[data-index="1"] {
+    z-index: 2;
+  }
+
+  .folder[data-index="2"] {
+    z-index: 3;
+  }
+
+  .folder[data-index="3"] {
+    z-index: 4;
+  }
+
+  .folder-tab {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px 8px 0 0;
+    margin-left: var(--spacing-xl);
+  }
+
+  .folder-tab span {
+    font-family: var(--font-hanken);
+    font-size: var(--h6-size);
+    font-weight: 500;
+  }
+
+  .folder-tab.bg-grey span {
+    color: var(--color-black);
+  }
+
+  .folder-tab.bg-lime span {
+    color: var(--color-black);
+  }
+
+  .folder-tab.bg-black span {
+    color: var(--color-grey);
+  }
+
+  .folder-content {
+    width: 100%;
+    height: 500px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+  }
+
+  .folder-content.bg-black {
+    color: var(--color-grey);
+  }
+
+  .folder-content.bg-lime {
+    color: var(--color-black);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .folders-container {
+      top: 100px;
+    }
+
+    .folder {
+      top: 100px;
+      width: 90%;
+    }
+
+    .folder-tab {
+      width: 150px;
+      height: 35px;
+    }
+
+    .folder-content {
+      height: 400px;
+    }
+  }
+
+  @media (max-height: 700px) {
+    .folders-container {
+      top: 60px;
+    }
+
+    .folder {
+      top: 60px;
+    }
+  }
+</style>
