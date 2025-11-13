@@ -102,7 +102,8 @@ import { foldersData } from "../../data/foldersData";
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px 8px 0 0;
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+    padding-left: var(--spacing-lg);
   }
 
   .folder-tab span {
@@ -125,7 +126,6 @@ import { foldersData } from "../../data/foldersData";
   .folder-content {
     width: 100%;
     min-height: 500px;
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
     padding: var(--spacing-xl);
@@ -205,6 +205,9 @@ import { foldersData } from "../../data/foldersData";
 
   /* === RESPONSIVE === */
   @media (max-width: 768px) {
+    .solutions-folders {
+      height: 430vh;
+    }
     .folders-container {
       top: 100px;
     }
@@ -217,6 +220,11 @@ import { foldersData } from "../../data/foldersData";
     .folder-tab {
       width: 150px;
       height: 35px;
+    }
+
+    .folder-tab span {
+      font-size: var(--body-size);
+      font-weight: 500;
     }
 
     .folder[data-index="0"] .folder-tab {
