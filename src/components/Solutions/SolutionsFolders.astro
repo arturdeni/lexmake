@@ -1,26 +1,40 @@
 ---
 // SolutionsFolders Component
-const folders = [
-  { id: 1, title: "DISEÑO GRAFICO", color: "grey" },
-  { id: 2, title: "REDES SOCIALES", color: "lime" },
-  { id: 3, title: "DISEÑO WEB", color: "grey" },
-  { id: 4, title: "MULTIMEDIA", color: "black" },
-];
+import { foldersData } from "../../data/foldersData";
 ---
 
 <section class="solutions-folders">
   <div class="solutions-folders-background"></div>
   <div class="folders-container">
     {
-      folders.map((folder, index) => (
+      foldersData.map((folder, index) => (
         <div class="folder" data-index={index}>
-          <div class={`folder-tab bg-${folder.color}`}>
+          <div
+            class="folder-tab"
+            style={`background-color: ${folder.color}; left: ${folder.tabPosition};`}
+          >
             <span>{folder.title}</span>
           </div>
           <div
-            class={`folder-content bg-${folder.color === "lime" ? "lime" : "black"}`}
+            class="folder-content"
+            style={`background-color: ${folder.color};`}
           >
-            <p>Contenido de {folder.title}</p>
+            <div class="folder-header">
+              <span>{folder.content.header}</span>
+            </div>
+            <div class="folder-body">
+              <div class="folder-image">
+                <img src={folder.content.image} alt={folder.content.imageAlt} />
+              </div>
+              <div class="folder-text">
+                <h3>{folder.content.heading}</h3>
+                <p>{folder.content.description}</p>
+                <p class="body-cursiva">{folder.content.advice}</p>
+              </div>
+            </div>
+            <a href={folder.content.link.url} class="folder-link normal-link">
+              <span>{folder.content.link.text}</span>
+            </a>
           </div>
         </div>
       ))
@@ -82,49 +96,111 @@ const folders = [
   }
 
   .folder-tab {
+    position: relative;
     width: 200px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px 8px 0 0;
-    margin-left: var(--spacing-xl);
   }
 
   .folder-tab span {
     font-family: var(--font-hanken);
     font-size: var(--h6-size);
     font-weight: 500;
-  }
-
-  .folder-tab.bg-grey span {
     color: var(--color-black);
   }
 
-  .folder-tab.bg-lime span {
-    color: var(--color-black);
-  }
-
-  .folder-tab.bg-black span {
+  .folder[data-index="2"] .folder-tab span,
+  .folder[data-index="2"] .folder-link,
+  .folder[data-index="2"] .folder-content {
     color: var(--color-grey);
+  }
+
+  .folder[data-index="2"] .normal-link::after {
+    background: var(--color-grey);
   }
 
   .folder-content {
     width: 100%;
-    height: 500px;
+    min-height: 500px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-xl);
+    position: relative;
+  }
+
+  .folder[data-index="0"] .folder-content {
+    border-top-left-radius: 0;
+  }
+
+  .folder[data-index="3"] .folder-content {
+    border-top-right-radius: 0;
+  }
+
+  .folder-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .folder-header span {
+    font-family: var(--font-hanken);
+    font-size: var(--h3-size);
+    font-weight: 700;
+    opacity: 0.3;
+  }
+
+  .folder-body {
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+    flex: 1;
+  }
+
+  .folder-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .folder-text h3 {
+    font-family: var(--font-hanken);
+    font-size: var(--h3-size);
+    font-weight: 700;
+  }
+
+  .folder-text p {
+    font-family: var(--font-hanken);
+    font-size: var(--body-size);
+    line-height: 1.6;
+  }
+
+  .folder-link {
+    position: absolute;
+    bottom: var(--spacing-xl);
+    right: var(--spacing-xl);
+    font-size: var(--h6-size);
+  }
+
+  .folder-image {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-xl);
   }
 
-  .folder-content.bg-black {
-    color: var(--color-grey);
-  }
-
-  .folder-content.bg-lime {
-    color: var(--color-black);
+  .folder-image img {
+    width: 85%;
+    height: auto;
+    max-height: 350px;
+    object-fit: contain;
+    margin: 0 auto;
   }
 
   /* === RESPONSIVE === */
@@ -143,12 +219,53 @@ const folders = [
       height: 35px;
     }
 
+    .folder[data-index="0"] .folder-tab {
+      left: 0% !important;
+    }
+
+    .folder[data-index="1"] .folder-tab {
+      left: calc(33.33% - 50px) !important;
+    }
+
+    .folder[data-index="2"] .folder-tab {
+      left: calc(66.66% - 100px) !important;
+    }
+
+    .folder[data-index="3"] .folder-tab {
+      left: calc(100% - 150px) !important;
+    }
+
     .folder-content {
-      height: 400px;
+      min-height: 550px;
+    }
+
+    .folder-body {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+      align-items: start;
+    }
+
+    .folder-text h3 {
+      font-size: var(--h4-size);
+    }
+
+    .folder-text p {
+      font-size: var(--small-size);
+    }
+
+    .folder-image {
+      display: none;
+    }
+
+    .folder-image img {
+      max-height: 250px;
     }
   }
 
   @media (max-height: 700px) {
+    .solutions-folders {
+      height: 450vh;
+    }
     .folders-container {
       top: 60px;
     }
