@@ -1,0 +1,406 @@
+---
+// src/components/Contact/ContactForm.astro
+import Button from "../UI/Button.astro";
+
+// Variables de entorno para EmailJS
+const emailJsConfig = {
+  publicKey: import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY,
+  serviceId: import.meta.env.PUBLIC_EMAILJS_SERVICE_ID,
+  templateId: import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID,
+};
+---
+
+<section class="contact-form">
+  <div class="contact-form__container">
+    <!-- Pregunta inicial -->
+    <h3 class="contact-form__question">¿Qué puedo hacer por ti?</h3>
+
+    <!-- Botones de selección múltiple -->
+    <div class="contact-form__services">
+      <button type="button" class="service-button" data-service="web">
+        <span class="service-button__text">Web</span>
+      </button>
+      <button type="button" class="service-button" data-service="logotipo">
+        <span class="service-button__text">Branding</span>
+      </button>
+      <button
+        type="button"
+        class="service-button"
+        data-service="redes-sociales"
+      >
+        <span class="service-button__text">Redes Sociales</span>
+      </button>
+      <button type="button" class="service-button" data-service="video">
+        <span class="service-button__text">Video</span>
+      </button>
+      <button type="button" class="service-button" data-service="asesoramiento">
+        <span class="service-button__text">Asesoramiento</span>
+      </button>
+    </div>
+
+    <!-- Formulario -->
+    <form class="contact-form__form" id="contact-form">
+      <input type="hidden" name="services" id="selected-services" />
+
+      <div class="contact-form__grid">
+        <!-- Columna izquierda -->
+        <div class="contact-form__field">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="contact-form__field">
+          <label for="email">Mail</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <!-- Segunda fila -->
+        <div class="contact-form__field">
+          <label for="phone">Teléfono</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
+
+        <div class="contact-form__field">
+          <label for="project-name">Nombre de tu empresa/marca</label>
+          <input type="text" id="project-name" name="project_name" />
+        </div>
+
+        <!-- Tercera fila -->
+        <div class="contact-form__field">
+          <label for="has-website">¿Tienes web?</label>
+          <input type="text" id="has-website" name="has_website" />
+        </div>
+
+        <div class="contact-form__field">
+          <label for="budget">Presupuesto</label>
+          <input type="text" id="budget" name="budget" />
+        </div>
+      </div>
+
+      <!-- Área de texto completa -->
+      <div class="contact-form__field contact-form__field--full">
+        <label for="description">Describe tu proyecto</label>
+        <textarea id="description" name="description" rows="5"></textarea>
+      </div>
+
+      <!-- Botón de envío -->
+      <div class="contact-form__submit">
+        <Button type="submit" variant="primary" size="default"> Enviar </Button>
+      </div>
+
+      <!-- Mensaje de estado -->
+      <div class="contact-form__message" id="form-message"></div>
+    </form>
+  </div>
+</section>
+
+<!-- EmailJS SDK -->
+<script
+  is:inline
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+></script>
+
+<script is:inline define:vars={{ emailJsConfig }}>
+  // EmailJS configuration desde variables de entorno
+  const PUBLIC_KEY = emailJsConfig.publicKey;
+  const SERVICE_ID = emailJsConfig.serviceId;
+  const TEMPLATE_ID = emailJsConfig.templateId;
+
+  // Manejo de los botones de servicios (selección múltiple)
+  const serviceButtons = document.querySelectorAll(".service-button");
+  const selectedServices = [];
+
+  serviceButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const service = button.getAttribute("data-service");
+      if (!service) return;
+
+      button.classList.toggle("service-button--active");
+
+      const index = selectedServices.indexOf(service);
+      if (index > -1) {
+        selectedServices.splice(index, 1);
+      } else {
+        selectedServices.push(service);
+      }
+
+      // Actualizar el campo oculto
+      const hiddenInput = document.getElementById("selected-services");
+      if (hiddenInput) {
+        hiddenInput.value = selectedServices.join(", ");
+      }
+    });
+  });
+
+  // Manejo del envío del formulario
+  const form = document.getElementById("contact-form");
+  const formMessage = document.getElementById("form-message");
+
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!formMessage) return;
+
+      // Mostrar mensaje de carga
+      formMessage.textContent = "Enviando mensaje...";
+      formMessage.className =
+        "contact-form__message contact-form__message--loading";
+
+      try {
+        // Inicializar EmailJS
+        if (typeof window.emailjs !== "undefined") {
+          window.emailjs.init(PUBLIC_KEY);
+
+          // Enviar el formulario
+          const formData = new FormData(form);
+          const templateParams = {};
+
+          formData.forEach((value, key) => {
+            templateParams[key] = value;
+          });
+
+          await window.emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+
+          // Éxito
+          formMessage.textContent =
+            "¡Mensaje enviado con éxito! Te responderé pronto.";
+          formMessage.className =
+            "contact-form__message contact-form__message--success";
+          form.reset();
+
+          // Limpiar botones de servicios
+          serviceButtons.forEach((btn) => {
+            btn.classList.remove("service-button--active");
+          });
+          selectedServices.length = 0;
+        } else {
+          throw new Error("EmailJS no está cargado");
+        }
+      } catch (error) {
+        // Error
+        formMessage.textContent =
+          "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.";
+        formMessage.className =
+          "contact-form__message contact-form__message--error";
+        console.error("Error:", error);
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-form {
+    width: 100%;
+    background-color: var(--color-grey);
+    padding: var(--spacing-4xl) 0;
+  }
+
+  .contact-form__container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+  }
+
+  /* === PREGUNTA === */
+  .contact-form__question {
+    font-family: var(--font-hanken);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--color-black);
+    margin: 0 0 var(--spacing-xl) 0;
+  }
+
+  /* === BOTONES DE SERVICIOS === */
+  .contact-form__services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xxxl);
+  }
+
+  .service-button {
+    /* Estilos base inspirados en Button.astro pero invertidos */
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    font-size: 20px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-grey);
+    color: var(--color-black);
+    border: 1px solid var(--color-black);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  /* Pseudo-elemento para el efecto hover/active */
+  .service-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-black);
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .service-button:hover::before {
+    left: 0;
+  }
+
+  .service-button:hover {
+    color: var(--color-grey);
+  }
+
+  /* Estado activo (seleccionado) */
+  .service-button--active {
+    background-color: var(--color-black);
+    color: var(--color-grey);
+  }
+
+  .service-button--active::before {
+    left: 0;
+  }
+
+  .service-button__text {
+    position: relative;
+    z-index: 2;
+    display: block;
+  }
+
+  /* === FORMULARIO === */
+  .contact-form__form {
+    width: 100%;
+  }
+
+  .contact-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xxl) var(--spacing-xl);
+    margin-bottom: var(--spacing-xxl);
+  }
+
+  .contact-form__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-form__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .contact-form__field label {
+    font-family: var(--font-hanken);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .contact-form__field input,
+  .contact-form__field textarea {
+    font-family: var(--font-hanken);
+    font-size: 16px;
+    padding: var(--spacing-sm) 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-black);
+    color: var(--color-black);
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .contact-form__field input:focus,
+  .contact-form__field textarea:focus {
+    border-bottom-color: var(--color-black);
+    border-bottom-width: 2px;
+  }
+
+  .contact-form__field textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  /* === SUBMIT === */
+  .contact-form__submit {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--spacing-xl);
+  }
+
+  /* === MENSAJES === */
+  .contact-form__message {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    font-family: var(--font-hanken);
+    font-size: 16px;
+    text-align: center;
+    border-radius: 4px;
+    display: none;
+  }
+
+  .contact-form__message--loading,
+  .contact-form__message--success,
+  .contact-form__message--error {
+    display: block;
+  }
+
+  .contact-form__message--loading {
+    background-color: #f0f0f0;
+    color: var(--color-black);
+  }
+
+  .contact-form__message--success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .contact-form__message--error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .contact-form {
+      padding: var(--spacing-xxl) 0;
+    }
+
+    .contact-form__grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .contact-form__services {
+      gap: var(--spacing-sm);
+    }
+
+    .service-button {
+      font-size: 18px;
+      padding: var(--spacing-sm) var(--spacing-md);
+      flex: 1 1 calc(50% - var(--spacing-sm));
+      min-width: 0;
+    }
+
+    .contact-form__question {
+      font-size: 18px;
+    }
+  }
+
+  /* === FOCUS STATES === */
+  .service-button:focus-visible {
+    outline: 2px solid var(--color-black);
+    outline-offset: 2px;
+  }
+
+  /* === ACTIVE STATES === */
+  .service-button:active {
+    transform: translateY(1px);
+  }
+</style>

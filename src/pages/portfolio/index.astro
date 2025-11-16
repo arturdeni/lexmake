@@ -75,6 +75,7 @@ while (projectIndex < projects.length) {
                 style={`width: ${row.widths[index]}%`}
               >
                 <div class="project-image-wrapper">
+                  <div class="skeleton"></div>
                   <img
                     src={project.mainImage.url}
                     alt={project.title}
@@ -167,15 +168,53 @@ while (projectIndex < projects.length) {
     display: none;
   }
 
+  /* Skeleton Loader */
+  .skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      #e0e0e0 0%,
+      #f0f0f0 50%,
+      #e0e0e0 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    z-index: 1;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
   .project-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s ease;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.6s ease;
   }
 
-  .project-card:hover .project-image {
+  .project-image.loaded {
+    opacity: 1;
+  }
+
+  .project-image-wrapper.loaded .skeleton {
+    display: none;
+  }
+
+  .project-card:hover .project-image.loaded {
     transform: scale(1.05);
   }
 
@@ -197,6 +236,7 @@ while (projectIndex < projects.length) {
     display: flex;
     align-items: flex-end;
     padding: var(--spacing-xl);
+    z-index: 2;
   }
 
   .project-card:hover .project-overlay {
@@ -291,3 +331,25 @@ while (projectIndex < projects.length) {
     }
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const images = document.querySelectorAll(".project-image");
+
+    images.forEach((img) => {
+      const imageElement = img as HTMLImageElement;
+
+      // Si la imagen ya está cargada (desde caché)
+      if (imageElement.complete) {
+        imageElement.classList.add("loaded");
+        imageElement.parentElement?.classList.add("loaded");
+      } else {
+        // Cuando la imagen cargue
+        imageElement.addEventListener("load", () => {
+          imageElement.classList.add("loaded");
+          imageElement.parentElement?.classList.add("loaded");
+        });
+      }
+    });
+  });
+</script>

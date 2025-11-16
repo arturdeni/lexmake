@@ -21,7 +21,7 @@ export interface FolderData {
 export const foldersData: FolderData[] = [
   {
     id: 1,
-    title: "DISEÑO GRAFICO",
+    title: "DISEÑO GRÁFICO",
     color: "white",
     tabPosition: "0%",
     content: {

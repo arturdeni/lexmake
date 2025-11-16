@@ -1,0 +1,67 @@
+---
+// src/pages/contact/index.astro
+import Layout from "../../layouts/Layout.astro";
+import ContactForm from "../../components/Contact/ContactForm.astro";
+---
+
+<Layout
+  title="Contact - LexMake"
+  description="Ponte en contacto con nosotros y hagamos realidad tu proyecto."
+>
+  <main class="contact">
+    <!-- Hero Section -->
+    <section class="contact-hero">
+      <h2 class="contact-title">
+        <span class="contact-title-italic">Lex</span>make it<br />
+        HAPPEN
+      </h2>
+      <p class="contact-subtitle">
+        Big ideas start with a simple message. Write me!
+      </p>
+    </section>
+
+    <ContactForm />
+  </main>
+</Layout>
+
+<style>
+  .contact {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /* === HERO SECTION === */
+  .contact-hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-4xl) var(--container-padding);
+    text-align: center;
+  }
+
+  .contact-title {
+    font-family: var(--font-hanken);
+    margin: 0;
+    color: var(--color-black);
+  }
+
+  .contact-title-italic {
+    font-family: var(--font-gallery);
+    font-style: italic;
+    display: inline-block;
+  }
+
+  .contact-subtitle {
+    font-family: var(--font-hanken);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-black);
+    margin: var(--spacing-xl);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .contact-hero {
+      padding: var(--spacing-2xl) var(--container-padding);
+    }
+  }
+</style>
