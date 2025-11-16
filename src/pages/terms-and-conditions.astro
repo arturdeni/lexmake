@@ -1,0 +1,149 @@
+---
+// src/pages/terms-and-conditions.astro
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Terms and Conditions - LexMake"
+  description="Términos y condiciones de uso de LexMake. Información sobre el uso del sitio web y nuestros servicios."
+>
+  <section class="terms-policy">
+    <div class="terms-container">
+      <div class="terms-header">
+        <h2>
+          <span class="h1-cursiva">Conditions</span> of use
+        </h2>
+      </div>
+
+      <div class="terms-content">
+        <p class="terms-intro-text">
+          Bienvenido/a a Lexmake.com. Al utilizar este sitio web, aceptas las
+          siguientes condiciones de uso. Por favor, léelas atentamente antes de
+          navegar o contratar nuestros servicios.
+        </p>
+
+        <div class="terms-section">
+          <h5>Uso del sitio web:</h5>
+          <p>
+            Este sitio está destinado a ofrecer servicios de diseño gráfico,
+            creación de páginas web y gestión de redes sociales.
+          </p>
+          <p>
+            El contenido del sitio, incluyendo textos, imágenes y materiales
+            gráficos, es propiedad de LexMake.com. Está prohibido copiar,
+            distribuir o modificar el contenido sin nuestro consentimiento.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h5>Responsabilidades:</h5>
+          <p>
+            Nos esforzamos por mantener la información actualizada, pero no
+            garantizamos la disponibilidad o exactitud del contenido en todo
+            momento.
+          </p>
+          <p>
+            No nos hacemos responsables por daños directos o indirectos
+            derivados del uso del sitio web.
+          </p>
+        </div>
+
+        <div class="terms-section">
+          <h5>Modificaciones:</h5>
+          <p>
+            LexMake.com se reserva el derecho de actualizar o modificar estas
+            condiciones en cualquier momento. Los cambios se publicarán en esta
+            misma página.
+          </p>
+          <p>
+            Si tienes preguntas, puedes contactarnos en alexia@lexmake.com.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .terms-policy {
+    background-color: var(--color-grey);
+    padding: var(--spacing-4xl) 0;
+    min-height: 80vh;
+  }
+
+  .terms-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+  }
+
+  .terms-header {
+    margin-bottom: var(--spacing-xxxl);
+  }
+
+  .terms-header h2 {
+    font-size: var(--h1-size);
+    line-height: var(--h1-line-height);
+    font-weight: 500;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .terms-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxl);
+  }
+
+  .terms-intro-text {
+    font-size: var(--body-size);
+    line-height: 1.6;
+  }
+
+  .terms-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .terms-section h5 {
+    font-size: var(--h5-size);
+    line-height: var(--h5-line-height);
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .terms-section p {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .terms-policy {
+      padding: var(--spacing-xxl) 0;
+    }
+
+    .terms-header {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .terms-header h2 {
+      font-size: calc(var(--h1-size) * 0.6);
+      line-height: calc(var(--h1-line-height) * 0.6);
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .terms-section h5 {
+      font-size: calc(var(--h5-size) * 0.9);
+      line-height: calc(var(--h5-line-height) * 0.9);
+    }
+
+    .terms-content {
+      gap: var(--spacing-xl);
+    }
+  }
+</style>

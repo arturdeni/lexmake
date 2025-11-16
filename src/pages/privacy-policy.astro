@@ -1,0 +1,187 @@
+---
+// src/pages/privacy-policy.astro
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Privacy Policy - LexMake"
+  description="Política de privacidad de LexMake. Información sobre cómo recopilamos, utilizamos y protegemos tus datos personales."
+>
+  <section class="privacy-policy">
+    <div class="privacy-container">
+      <div class="privacy-header">
+        <h2>
+          <span class="h1-cursiva">Privacy</span> Policy
+        </h2>
+      </div>
+
+      <div class="privacy-content">
+        <p class="privacy-intro-text">
+          En LexMake.com respetamos tu privacidad y nos comprometemos a proteger
+          tus datos personales. Esta política explica cómo recopilamos,
+          utilizamos y protegemos tu información.
+        </p>
+
+        <div class="privacy-section">
+          <h5>Responsable del tratamiento:</h5>
+          <ul>
+            <li>Titular: Alexia Viladot</li>
+            <li>NIF: 53299617S</li>
+            <li>Email: alexia@lexmake.com</li>
+          </ul>
+        </div>
+
+        <div class="privacy-section">
+          <h5>Datos recopilados:</h5>
+          <ul>
+            <li>Nombre y apellidos</li>
+            <li>Email y teléfono de contacto</li>
+            <li>Información proporcionada mediante formularios o consultas</li>
+          </ul>
+        </div>
+
+        <div class="privacy-section">
+          <h5>Finalidad del tratamiento:</h5>
+          <ul>
+            <li>
+              Ofrecer servicios personalizados de diseño gráfico, desarrollo web
+              y gestión de redes sociales.
+            </li>
+            <li>Responder consultas y solicitudes de información.</li>
+            <li>Enviar comunicaciones relacionadas con nuestros servicios.</li>
+          </ul>
+        </div>
+
+        <div class="privacy-section">
+          <h5>Derechos de los usuarios:</h5>
+          <p>
+            Puedes ejercer tus derechos de acceso, rectificación, cancelación y
+            oposición enviando un correo a alexia@lexmake.com, indicando
+            claramente tu solicitud y adjuntando una copia de tu documento de
+            identidad.
+          </p>
+        </div>
+
+        <div class="privacy-section">
+          <h5>Seguridad:</h5>
+          <p>
+            Adoptamos medidas técnicas y organizativas para proteger tus datos
+            personales contra accesos no autorizados, pérdida o divulgación
+            indebida.
+          </p>
+          <p>
+            Si tienes dudas sobre esta política, puedes escribirnos a
+            alexia@lexmake.com.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .privacy-policy {
+    background-color: var(--color-grey);
+    padding: var(--spacing-4xl) 0;
+    min-height: 80vh;
+  }
+
+  .privacy-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+  }
+
+  .privacy-header {
+    margin-bottom: var(--spacing-xxxl);
+  }
+
+  .privacy-header h1 {
+    font-size: var(--h1-size);
+    line-height: var(--h1-line-height);
+    font-weight: 500;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .privacy-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxl);
+  }
+
+  .privacy-intro-text {
+    font-size: var(--body-size);
+    line-height: 1.6;
+  }
+
+  .privacy-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .privacy-section h3 {
+    font-size: var(--h3-size);
+    line-height: var(--h3-line-height);
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .privacy-section p {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .privacy-section ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .privacy-section ul li {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    font-weight: 300;
+    padding-left: var(--spacing-lg);
+    position: relative;
+  }
+
+  .privacy-section ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-black);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .privacy-policy {
+      padding: var(--spacing-xxl) 0;
+    }
+
+    .privacy-header {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .privacy-header h1 {
+      font-size: calc(var(--h1-size) * 0.6);
+      line-height: calc(var(--h1-line-height) * 0.6);
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .privacy-section h3 {
+      font-size: calc(var(--h3-size) * 0.7);
+      line-height: calc(var(--h3-line-height) * 0.7);
+    }
+
+    .privacy-content {
+      gap: var(--spacing-xl);
+    }
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+// src/pages/resources/index.astro
+import Layout from "../../layouts/Layout.astro";
+import ResourcesBlocks from "../../components/Resources/ResourcesBlocks.astro";
+import PortfolioCTA from "../../components/Common/PortfolioCTA.astro";
+---
+
+<Layout
+  title="Resources - LexMake"
+  description="Herramientas y recursos para tus proyectos."
+>
+  <main class="resources">
+    <!-- Hero Section -->
+    <section class="resources-hero">
+      <h2 class="resources-title">
+        LEXMAKE <br /><span class="resources-title-italic">resources</span>
+      </h2>
+      <p class="resources-subtitle">Herramientas</p>
+    </section>
+
+    <ResourcesBlocks />
+
+    <div class="resources__portfolio-cta-container">
+        <PortfolioCTA />
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .resources {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /* === HERO SECTION === */
+  .resources-hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-4xl) var(--container-padding);
+    text-align: center;
+  }
+
+  .resources-title {
+    font-family: var(--font-hanken);
+    margin: 0;
+    color: var(--color-black);
+  }
+
+  .resources-title-italic {
+    font-family: var(--font-gallery);
+    font-style: italic;
+    display: inline-block;
+  }
+
+  .resources-subtitle {
+    font-family: var(--font-hanken);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-black);
+    margin: var(--spacing-xl);
+  }
+
+  .resources__portfolio-cta-container {
+    position: relative;
+    background-color: var(--color-gray);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    z-index: 10;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .resources-hero {
+      padding: var(--spacing-2xl) var(--container-padding);
+    }
+  }
+</style>

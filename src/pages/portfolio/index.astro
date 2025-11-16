@@ -75,7 +75,7 @@ while (projectIndex < projects.length) {
                 style={`width: ${row.widths[index]}%`}
               >
                 <div class="project-image-wrapper">
-                  <div class="skeleton"></div>
+                  <div class="skeleton" />
                   <img
                     src={project.mainImage.url}
                     alt={project.title}
@@ -175,12 +175,7 @@ while (projectIndex < projects.length) {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      #e0e0e0 0%,
-      #f0f0f0 50%,
-      #e0e0e0 100%
-    );
+    background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     z-index: 1;
@@ -203,7 +198,9 @@ while (projectIndex < projects.length) {
     position: relative;
     z-index: 1;
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.6s ease;
+    transition:
+      opacity 0.3s ease,
+      transform 0.6s ease;
   }
 
   .project-image.loaded {
@@ -261,7 +258,7 @@ while (projectIndex < projects.length) {
 
   .project-title {
     font-family: var(--font-hanken);
-    font-size: clamp(18px, 2vw, 28px);
+    font-size: 20px;
     font-weight: 500;
     margin: 0;
     line-height: 1.2;
@@ -323,7 +320,7 @@ while (projectIndex < projects.length) {
 
     .project-info-mobile .project-title {
       font-family: var(--font-hanken);
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       margin: 0;
       line-height: 1.3;
