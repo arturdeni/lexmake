@@ -130,6 +130,10 @@ const emailJsConfig = {
       if (hiddenInput) {
         hiddenInput.value = selectedServices.join(", ");
       }
+
+      // Quitar el foco del botón en dispositivos táctiles
+      // para evitar que se quede el estado visual de active
+      button.blur();
     });
   });
 
@@ -250,12 +254,15 @@ const emailJsConfig = {
     z-index: -1;
   }
 
-  .service-button:hover::before {
-    left: 0;
-  }
+  /* Hover solo en dispositivos con cursor (desktop) */
+  @media (hover: hover) and (pointer: fine) {
+    .service-button:hover::before {
+      left: 0;
+    }
 
-  .service-button:hover {
-    color: var(--color-grey);
+    .service-button:hover {
+      color: var(--color-grey);
+    }
   }
 
   /* Estado activo (seleccionado) */

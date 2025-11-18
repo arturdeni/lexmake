@@ -7,13 +7,13 @@ import Button from "../UI/Button.astro";
 <nav class="navigation">
   <ul class="nav-list">
     <li class="nav-item">
-      <a href="/solutions" class="nav-link">SOLUTIONS</a>
+      <a href="/solutions" class="nav-link" data-text="SOLUTIONS">SOLUTIONS</a>
     </li>
     <li class="nav-item">
-      <a href="/portfolio" class="nav-link">PORTFOLIO</a>
+      <a href="/portfolio" class="nav-link" data-text="PORTFOLIO">PORTFOLIO</a>
     </li>
     <li class="nav-item">
-      <a href="/resources" class="nav-link">RESOURCES</a>
+      <a href="/resources" class="nav-link" data-text="RESOURCES">RESOURCES</a>
     </li>
   </ul>
 
@@ -53,6 +53,7 @@ import Button from "../UI/Button.astro";
   .nav-item {
     position: relative;
     min-width: 120px;
+    overflow: hidden;
   }
 
   .nav-link {
@@ -63,11 +64,32 @@ import Button from "../UI/Button.astro";
     text-decoration: none;
     padding: var(--spacing-sm) 0;
     display: block;
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Pseudo-elemento con el texto italic (inicialmente oculto debajo) */
+  .nav-link::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-gallery);
+    font-style: italic;
+    color: var(--color-black);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: var(--spacing-sm) 0;
   }
 
   .nav-link:hover {
-    font-family: var(--font-gallery);
-    font-style: italic;
+    transform: translateY(-100%);
+  }
+
+  .nav-link:hover::before {
+    transform: translateY(50);
   }
 
   /* Wrapper para el botón Contact alineado a la derecha */
