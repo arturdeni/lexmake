@@ -2,6 +2,7 @@
 // src/pages/portfolio.astro
 import Layout from "../../layouts/Layout.astro";
 import { hygraph, GET_ALL_PROJECTS } from "../../lib/hygraph.ts";
+import { optimizeHygraphImage, IMAGE_PRESETS } from "../../lib/imageUtils.ts";
 import type { ProjectsResponse } from "../../types/project.ts";
 
 // Fetch proyectos desde Hygraph
@@ -77,7 +78,10 @@ while (projectIndex < projects.length) {
                 <div class="project-image-wrapper">
                   <div class="skeleton" />
                   <img
-                    src={project.mainImage.url}
+                    src={optimizeHygraphImage(
+                      project.mainImage.url,
+                      IMAGE_PRESETS.thumbnail
+                    )}
                     alt={project.title}
                     class="project-image"
                     loading="lazy"

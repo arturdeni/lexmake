@@ -6,6 +6,7 @@ import {
   GET_PROJECT_BY_SLUG,
   GET_ALL_PROJECTS,
 } from "../../lib/hygraph.ts";
+import { optimizeHygraphImage, IMAGE_PRESETS } from "../../lib/imageUtils.ts";
 import type { ProjectResponse, ProjectsResponse } from "../../types/project.ts";
 
 // Esta función genera todas las rutas estáticas en build time
@@ -64,7 +65,7 @@ if (!project) {
             project.images.map((image) => (
               <div class="gallery-item">
                 <div class="skeleton"></div>
-                <img src={image.url} alt={project.title} class="gallery-image" loading="lazy" />
+                <img src={optimizeHygraphImage(image.url, IMAGE_PRESETS.gallery)} alt={project.title} class="gallery-image" loading="lazy" />
               </div>
             ))
         }
