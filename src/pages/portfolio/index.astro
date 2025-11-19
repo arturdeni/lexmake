@@ -89,7 +89,7 @@ while (projectIndex < projects.length) {
                 </div>
                 <div class="project-info">
                   <span class="project-category">{project.category}</span>
-                  <h2 class="project-title">{project.title}</h2>
+                  <h5 class="project-title">{project.title}</h5>
                 </div>
               </a>
             ))}
@@ -138,13 +138,14 @@ while (projectIndex < projects.length) {
   .portfolio-grid {
     max-width: var(--max-width);
     margin: 0 auto;
+    padding: 0 var(--spacing-xl);
   }
 
   .grid-row {
     display: flex;
     height: 355px;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-xxl);
+    margin-bottom: var(--spacing-xxl);
   }
 
   .project-card {
@@ -153,7 +154,9 @@ while (projectIndex < projects.length) {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    cursor: url('/assets/cursor/BLANCO.svg') 32 32, pointer;
+    cursor:
+      url("/assets/cursor/BLANCO.svg") 32 32,
+      pointer;
   }
 
   .project-image-wrapper {
@@ -214,27 +217,23 @@ while (projectIndex < projects.length) {
   .project-info {
     display: block;
     padding: 0;
+    margin-top: var(--spacing-sm);
   }
 
   .project-category {
     font-family: var(--font-hanken);
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 1px;
     display: block;
-    margin-bottom: 0;
     color: var(--color-black);
-    opacity: 0.6;
   }
 
   .project-title {
     font-family: var(--font-hanken);
-    font-size: 18px;
-    font-weight: 500;
     margin: 0;
-    line-height: 1.3;
     color: var(--color-black);
+    text-transform: uppercase;
   }
 
   /* === RESPONSIVE === */
@@ -243,8 +242,13 @@ while (projectIndex < projects.length) {
       padding: var(--spacing-2xl) var(--container-padding);
     }
 
+    .portfolio-subtitle {
+      margin: var(--spacing-md) 0 var(--spacing-xxxl);
+    }
+
     .portfolio-grid {
       margin: var(--spacing-md);
+      padding: 0;
     }
 
     .grid-row {
@@ -271,7 +275,7 @@ while (projectIndex < projects.length) {
 
     /* Ajustes de tamaño para mobile */
     .project-category {
-      font-size: 10px;
+      font-size: 11px;
     }
 
     .project-title {

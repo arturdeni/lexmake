@@ -152,8 +152,16 @@ const resources = [
     }
 
     .resources-blocks__grid {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-xxl);
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-lg);
+    }
+
+    .resource-card {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .resource-card__image-wrapper {
+      aspect-ratio: 1 / 1;
     }
 
     .resource-card__title {
