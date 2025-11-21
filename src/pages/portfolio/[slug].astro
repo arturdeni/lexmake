@@ -64,8 +64,13 @@ if (!project) {
           project.images &&
             project.images.map((image) => (
               <div class="gallery-item">
-                <div class="skeleton"></div>
-                <img src={optimizeHygraphImage(image.url, IMAGE_PRESETS.gallery)} alt={project.title} class="gallery-image" loading="lazy" />
+                <div class="skeleton" />
+                <img
+                  src={optimizeHygraphImage(image.url, IMAGE_PRESETS.gallery)}
+                  alt={project.title}
+                  class="gallery-image"
+                  loading="lazy"
+                />
               </div>
             ))
         }
@@ -132,7 +137,7 @@ if (!project) {
     font-family: var(--font-hanken);
     font-size: 16px;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.1;
     color: var(--color-black);
     margin: 0;
   }
@@ -164,12 +169,7 @@ if (!project) {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      #e0e0e0 0%,
-      #f0f0f0 50%,
-      #e0e0e0 100%
-    );
+    background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     z-index: 1;
@@ -235,7 +235,7 @@ if (!project) {
   /* === RESPONSIVE === */
   @media (max-width: 768px) {
     .project-hero {
-      padding: var(--spacing-md) var(--container-padding);
+      padding: var(--spacing-md) var(--container-padding) var(--spacing-xl);
     }
 
     .project-header {
@@ -285,7 +285,7 @@ if (!project) {
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initGalleryImages() {
     const images = document.querySelectorAll(".gallery-image");
 
     images.forEach((img) => {
@@ -303,5 +303,11 @@ if (!project) {
         });
       }
     });
-  });
+  }
+
+  // Ejecutar en carga inicial
+  document.addEventListener("DOMContentLoaded", initGalleryImages);
+
+  // Ejecutar después de transiciones de página
+  document.addEventListener("astro:page-load", initGalleryImages);
 </script>

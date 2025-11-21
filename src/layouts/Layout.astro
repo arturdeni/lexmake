@@ -16,6 +16,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
+import { ClientRouter } from 'astro:transitions';
 import "../styles/fonts.css";
 import "../styles/variables.css";
 import "../styles/global.css";
@@ -28,6 +29,9 @@ import Footer from "../components/Layout/Footer.astro";
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Client Router for page transitions -->
+    <ClientRouter fallback="none" />
+
     <!-- Basic Meta Tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -74,6 +78,7 @@ import Footer from "../components/Layout/Footer.astro";
       type="font/woff2"
       crossorigin
     />
+
   </head>
 
   <body>
@@ -88,9 +93,58 @@ import Footer from "../components/Layout/Footer.astro";
     <!-- Footer -->
     <Footer />
 
-    <!-- Scripts -->
+    <!-- Script para manejar carga de imágenes en transiciones -->
     <script>
-      // Script inicial para GSAP y otros
+      document.addEventListener('astro:before-swap', async (event) => {
+        // Obtener todas las imágenes de la nueva página
+        const images = event.newDocument.querySelectorAll('img');
+
+        // Crear promesas para esperar que todas las imágenes se carguen
+        const imagePromises = Array.from(images).map((img) => {
+          // Si la imagen ya está cargada, resolver inmediatamente
+          if (img.complete) return Promise.resolve();
+
+          // Si no, esperar a que se cargue
+          return new Promise((resolve) => {
+            img.addEventListener('load', resolve);
+            img.addEventListener('error', resolve); // Resolver incluso si falla
+          });
+        });
+
+        // Esperar a que todas las imágenes se carguen antes de continuar
+        await Promise.all(imagePromises);
+      });
+    </script>
+
+    <!-- Script global para reinicializar componentes después de transiciones -->
+    <script>
+      function initializeComponents() {
+        // Agregar clase gsap-loaded a todos los componentes que la necesiten
+        const componentsToInit = [
+          '.hero',
+          '.home-behind',
+          '.home-skills',
+          '.home-closing',
+          '.portfolio-cta',
+          '.solutions-folders',
+          '.work-plan',
+          '.footer',
+          '.header'
+        ];
+
+        componentsToInit.forEach(selector => {
+          const element = document.querySelector(selector);
+          if (element && !element.classList.contains('gsap-loaded')) {
+            element.classList.add('gsap-loaded');
+          }
+        });
+      }
+
+      // Ejecutar en carga inicial
+      document.addEventListener('DOMContentLoaded', initializeComponents);
+
+      // Ejecutar después de cada transición de página
+      document.addEventListener('astro:page-load', initializeComponents);
     </script>
   </body>
 </html>

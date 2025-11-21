@@ -26,10 +26,10 @@ import Navigation from "./Navigation.astro";
   <div class="mobile-overlay">
     <nav class="mobile-nav">
       <ul class="mobile-nav__list">
-        <li><a href="/solutions" class="mobile-nav__link">SOLUTIONS</a></li>
-        <li><a href="/portfolio" class="mobile-nav__link">PORTFOLIO</a></li>
-        <li><a href="/resources" class="mobile-nav__link">RESOURCES</a></li>
-        <li><a href="/contact" class="mobile-nav__button">CONTACT</a></li>
+        <li><a href="/solutions" class="mobile-nav__link" data-astro-reload>SOLUTIONS</a></li>
+        <li><a href="/portfolio" class="mobile-nav__link" data-astro-reload>PORTFOLIO</a></li>
+        <li><a href="/resources" class="mobile-nav__link" data-astro-reload>RESOURCES</a></li>
+        <li><a href="/contact" class="mobile-nav__button" data-astro-reload>CONTACT</a></li>
       </ul>
     </nav>
   </div>
@@ -210,48 +210,62 @@ import Navigation from "./Navigation.astro";
 
 <script>
   // Funcionalidad del menú móvil
-  document.addEventListener("DOMContentLoaded", () => {
-    const mobileToggle = document.querySelector(".mobile-toggle");
-    const mobileOverlay = document.querySelector(".mobile-overlay");
+  function initMobileMenu() {
+    const mobileToggle = document.querySelector<HTMLElement>(".mobile-toggle");
+    const mobileOverlay = document.querySelector<HTMLElement>(".mobile-overlay");
     const body = document.body;
 
     if (mobileToggle && mobileOverlay) {
-      mobileToggle.addEventListener("click", () => {
-        const isActive = mobileToggle.classList.contains("active");
+      // Remover listeners antiguos clonando los elementos
+      const newMobileToggle = mobileToggle.cloneNode(true) as HTMLElement;
+      mobileToggle.parentNode?.replaceChild(newMobileToggle, mobileToggle);
+
+      newMobileToggle.addEventListener("click", () => {
+        const isActive = newMobileToggle.classList?.contains("active") || false;
 
         if (isActive) {
           // Cerrar menú
-          mobileToggle.classList.remove("active");
-          mobileOverlay.classList.remove("active");
+          newMobileToggle.classList?.remove("active");
+          mobileOverlay.classList?.remove("active");
           body.style.overflow = "";
         } else {
           // Abrir menú
-          mobileToggle.classList.add("active");
-          mobileOverlay.classList.add("active");
+          newMobileToggle.classList?.add("active");
+          mobileOverlay.classList?.add("active");
           body.style.overflow = "hidden";
         }
       });
 
       // Cerrar menú al hacer click en los links
-      const mobileLinks = document.querySelectorAll(
+      const mobileLinks = document.querySelectorAll<HTMLElement>(
         ".mobile-nav__link, .mobile-nav__button"
       );
       mobileLinks.forEach((link) => {
         link.addEventListener("click", () => {
-          mobileToggle.classList.remove("active");
-          mobileOverlay.classList.remove("active");
+          newMobileToggle.classList?.remove("active");
+          mobileOverlay.classList?.remove("active");
           body.style.overflow = "";
         });
       });
+    }
+  }
 
-      // Cerrar menú con ESC
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && mobileToggle.classList.contains("active")) {
-          mobileToggle.classList.remove("active");
-          mobileOverlay.classList.remove("active");
-          body.style.overflow = "";
-        }
-      });
+  // Cerrar menú con ESC (listener global, solo se añade una vez)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const mobileToggle = document.querySelector<HTMLElement>(".mobile-toggle");
+      const mobileOverlay = document.querySelector<HTMLElement>(".mobile-overlay");
+      if (mobileToggle?.classList?.contains("active")) {
+        mobileToggle.classList?.remove("active");
+        mobileOverlay?.classList?.remove("active");
+        document.body.style.overflow = "";
+      }
     }
   });
+
+  // Ejecutar en carga inicial
+  document.addEventListener("DOMContentLoaded", initMobileMenu);
+
+  // Ejecutar después de transiciones de página
+  document.addEventListener("astro:page-load", initMobileMenu);
 </script>

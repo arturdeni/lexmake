@@ -285,7 +285,7 @@ while (projectIndex < projects.length) {
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initPortfolioImages() {
     const images = document.querySelectorAll(".project-image");
 
     images.forEach((img) => {
@@ -303,5 +303,11 @@ while (projectIndex < projects.length) {
         });
       }
     });
-  });
+  }
+
+  // Ejecutar en carga inicial
+  document.addEventListener("DOMContentLoaded", initPortfolioImages);
+
+  // Ejecutar después de transiciones de página
+  document.addEventListener("astro:page-load", initPortfolioImages);
 </script>

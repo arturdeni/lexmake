@@ -272,7 +272,7 @@
 
 <script>
   // Script básico para hero
-  document.addEventListener("DOMContentLoaded", () => {
+  function initHero() {
     const hero = document.querySelector(".hero");
 
     // Fallback si GSAP no está cargado aún
@@ -281,5 +281,11 @@
         hero.classList.add("gsap-loaded");
       }
     }, 100);
-  });
+  }
+
+  // Ejecutar en carga inicial
+  document.addEventListener("DOMContentLoaded", initHero);
+
+  // Ejecutar después de transiciones de página
+  document.addEventListener("astro:page-load", initHero);
 </script>
