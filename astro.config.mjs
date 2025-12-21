@@ -1,8 +1,14 @@
 import { defineConfig } from "astro/config";
+import vercel from "@astrojs/vercel/static";
 
 export default defineConfig({
   output: "static",
-  site: "https://lexmake.com", // Cambiar por tu dominio final
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true
+    }
+  }),
+  site: "https://lexmake.com",
   compressHTML: true,
   experimental: {
     clientPrerender: true,
