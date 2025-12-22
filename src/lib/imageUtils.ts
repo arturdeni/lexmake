@@ -95,4 +95,10 @@ export const IMAGE_PRESETS = {
     quality: 70,
     format: 'webp' as const,
   },
+  // Para placeholder blur (muy pequeña y baja calidad)
+  blur: {
+    width: 40,
+    quality: 30,
+    format: 'webp' as const,
+  },
 } as const;

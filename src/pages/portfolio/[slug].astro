@@ -64,12 +64,11 @@ if (!project) {
           project.images &&
             project.images.map((image) => (
               <div class="gallery-item">
-                <div class="skeleton" />
                 <img
-                  src={optimizeHygraphImage(image.url, IMAGE_PRESETS.gallery)}
+                  src={optimizeHygraphImage(image.url, IMAGE_PRESETS.blur)}
+                  data-src={optimizeHygraphImage(image.url, IMAGE_PRESETS.gallery)}
                   alt={project.title}
-                  class="gallery-image"
-                  loading="lazy"
+                  class="gallery-image blur-placeholder"
                 />
               </div>
             ))
@@ -136,7 +135,7 @@ if (!project) {
   .project-description {
     font-family: var(--font-hanken);
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 1.1;
     color: var(--color-black);
     margin: 0;
@@ -160,47 +159,26 @@ if (!project) {
     width: 100%;
     overflow: hidden;
     position: relative;
+    background-color: #f0f0f0;
   }
 
-  /* Skeleton Loader */
-  .skeleton {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    z-index: 1;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  .gallery-item img {
+  .gallery-image {
     width: 100%;
     height: 100%;
     display: block;
     object-fit: cover;
-    position: relative;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: filter 0.4s ease;
   }
 
-  .gallery-item img.loaded {
-    opacity: 1;
+  /* Blur placeholder effect */
+  .gallery-image.blur-placeholder {
+    filter: blur(20px);
+    transform: scale(1.1);
   }
 
-  .gallery-item.loaded .skeleton {
-    display: none;
+  .gallery-image.loaded {
+    filter: blur(0);
+    transform: scale(1);
   }
 
   /* Layout específico para las 7 imágenes */
@@ -288,19 +266,49 @@ if (!project) {
   function initGalleryImages() {
     const images = document.querySelectorAll(".gallery-image");
 
+    // Configuración del Intersection Observer para lazy loading
+    const imageObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            const highResSrc = img.getAttribute("data-src");
+
+            if (highResSrc) {
+              // Crear una nueva imagen para precargar
+              const highResImage = new Image();
+
+              highResImage.onload = () => {
+                // Cuando la imagen de alta resolución esté lista, cambiar src y quitar blur
+                img.src = highResSrc;
+                img.classList.remove("blur-placeholder");
+                img.classList.add("loaded");
+              };
+
+              // Iniciar la carga de la imagen de alta resolución
+              highResImage.src = highResSrc;
+              img.removeAttribute("data-src");
+            }
+
+            // Dejar de observar esta imagen
+            observer.unobserve(img);
+          }
+        });
+      },
+      {
+        // Cargar cuando la imagen esté a 300px de entrar en el viewport
+        rootMargin: "300px",
+        threshold: 0,
+      }
+    );
+
+    // Observar todas las imágenes
     images.forEach((img) => {
       const imageElement = img as HTMLImageElement;
 
-      // Si la imagen ya está cargada (desde caché)
-      if (imageElement.complete) {
-        imageElement.classList.add("loaded");
-        imageElement.parentElement?.classList.add("loaded");
-      } else {
-        // Cuando la imagen cargue
-        imageElement.addEventListener("load", () => {
-          imageElement.classList.add("loaded");
-          imageElement.parentElement?.classList.add("loaded");
-        });
+      // Si tiene data-src, observar para lazy loading
+      if (imageElement.getAttribute("data-src")) {
+        imageObserver.observe(imageElement);
       }
     });
   }

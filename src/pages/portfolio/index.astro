@@ -76,15 +76,17 @@ while (projectIndex < projects.length) {
                 style={`width: ${row.widths[index]}%`}
               >
                 <div class="project-image-wrapper">
-                  <div class="skeleton" />
                   <img
                     src={optimizeHygraphImage(
+                      project.mainImage.url,
+                      IMAGE_PRESETS.blur
+                    )}
+                    data-src={optimizeHygraphImage(
                       project.mainImage.url,
                       IMAGE_PRESETS.thumbnail
                     )}
                     alt={project.title}
-                    class="project-image"
-                    loading="lazy"
+                    class="project-image blur-placeholder"
                   />
                 </div>
                 <div class="project-info">
@@ -164,28 +166,7 @@ while (projectIndex < projects.length) {
     width: 100%;
     height: 355px;
     overflow: hidden;
-  }
-
-  /* Skeleton Loader */
-  .skeleton {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    z-index: 1;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
+    background-color: #f0f0f0;
   }
 
   .project-image {
@@ -193,20 +174,20 @@ while (projectIndex < projects.length) {
     height: 100%;
     object-fit: cover;
     display: block;
-    position: relative;
-    z-index: 1;
-    opacity: 0;
     transition:
-      opacity 0.3s ease,
+      filter 0.4s ease,
       transform 0.6s ease;
   }
 
-  .project-image.loaded {
-    opacity: 1;
+  /* Blur placeholder effect */
+  .project-image.blur-placeholder {
+    filter: blur(20px);
+    transform: scale(1.1);
   }
 
-  .project-image-wrapper.loaded .skeleton {
-    display: none;
+  .project-image.loaded {
+    filter: blur(0);
+    transform: scale(1);
   }
 
   .project-card:hover .project-image.loaded {
@@ -249,14 +230,13 @@ while (projectIndex < projects.length) {
     .portfolio-grid {
       margin: var(--spacing-md);
       padding: 0;
-    }
-
-    .grid-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--spacing-md);
-      height: auto;
-      margin-bottom: var(--spacing-lg);
+    }
+
+    .grid-row {
+      display: contents;
     }
 
     .project-card {
@@ -288,19 +268,49 @@ while (projectIndex < projects.length) {
   function initPortfolioImages() {
     const images = document.querySelectorAll(".project-image");
 
+    // Configuración del Intersection Observer para lazy loading
+    const imageObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            const highResSrc = img.getAttribute("data-src");
+
+            if (highResSrc) {
+              // Crear una nueva imagen para precargar
+              const highResImage = new Image();
+
+              highResImage.onload = () => {
+                // Cuando la imagen de alta resolución esté lista, cambiar src y quitar blur
+                img.src = highResSrc;
+                img.classList.remove("blur-placeholder");
+                img.classList.add("loaded");
+              };
+
+              // Iniciar la carga de la imagen de alta resolución
+              highResImage.src = highResSrc;
+              img.removeAttribute("data-src");
+            }
+
+            // Dejar de observar esta imagen
+            observer.unobserve(img);
+          }
+        });
+      },
+      {
+        // Cargar cuando la imagen esté a 200px de entrar en el viewport
+        rootMargin: "200px",
+        threshold: 0,
+      }
+    );
+
+    // Observar todas las imágenes
     images.forEach((img) => {
       const imageElement = img as HTMLImageElement;
 
-      // Si la imagen ya está cargada (desde caché)
-      if (imageElement.complete) {
-        imageElement.classList.add("loaded");
-        imageElement.parentElement?.classList.add("loaded");
-      } else {
-        // Cuando la imagen cargue
-        imageElement.addEventListener("load", () => {
-          imageElement.classList.add("loaded");
-          imageElement.parentElement?.classList.add("loaded");
-        });
+      // Si tiene data-src, observar para lazy loading
+      if (imageElement.getAttribute("data-src")) {
+        imageObserver.observe(imageElement);
       }
     });
   }

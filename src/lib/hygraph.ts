@@ -14,7 +14,7 @@ export const hygraph = new GraphQLClient(
 // Query para obtener todos los proyectos (para la página de portfolio)
 export const GET_ALL_PROJECTS = `
   query GetAllProjects {
-    projects(orderBy: date_DESC) {
+    projects(orderBy: date_DESC, first: 100) {
       id
       slug
       title
