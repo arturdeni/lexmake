@@ -61,18 +61,18 @@ export const foldersData: FolderData[] = [
   },
   {
     id: 3,
-    title: "DISEÑO WEB",
+    title: "MULTIMEDIA",
     color: "black",
     tabPosition: "calc(66.66% - 133.32px)",
     content: {
       header: "03",
-      heading: "Diseño Web",
+      heading: "Multimedia",
       description:
         "Si tu marca necesita moverse, hablar y destacar, este servicio es para ti. Desde motion graphics hasta edición de video y animaciones con identidad de marca, creo contenido dinámico que da vida a tus visuales en diversas plataformas. Incluye planificación, edición y una ronda de ajustes.",
       advice:
         "Este servicio es ideal si buscas contenido audaz y llamativo, y estás listo para colaborar con confianza y apertura creativa.",
       image: "/assets/solutionsFolders/folder3-illustration.png",
-      imageAlt: "Diseño web",
+      imageAlt: "Multimedia",
       link: {
         text: "QUIERO CONTACTAR",
         url: "/contact",
@@ -81,18 +81,18 @@ export const foldersData: FolderData[] = [
   },
   {
     id: 4,
-    title: "MULTIMEDIA",
+    title: "DISEÑO WEB",
     color: "#D9D9D9",
     tabPosition: "calc(100% - 200px)",
     content: {
       header: "04",
-      heading: "Multimedia",
+      heading: "Diseño Web",
       description:
         "Si tu marca necesita una presencia digital clara, atractiva y funcional, este servicio de diseño web es para ti. Desde el diseño de sitios web modernos hasta la estructura visual de landing pages y portfolios, creo experiencias digitales que reflejan tu identidad de marca y guían al usuario de forma intuitiva. Incluye planificación, diseño visual, adaptación a dispositivos móviles y una ronda de ajustes.",
       advice:
         "Este servicio es ideal si quieres construir o renovar tu presencia online con una estética coherente y estratégica, y estás listo para colaborar con confianza y apertura creativa.",
       image: "/assets/solutionsFolders/folder4-illustration.png",
-      imageAlt: "Multimedia",
+      imageAlt: "Diseño Web",
       link: {
         text: "QUIERO CONTACTAR",
         url: "/contact",

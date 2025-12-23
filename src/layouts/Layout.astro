@@ -93,29 +93,6 @@ import Footer from "../components/Layout/Footer.astro";
     <!-- Footer -->
     <Footer />
 
-    <!-- Script para manejar carga de imágenes en transiciones -->
-    <script>
-      document.addEventListener('astro:before-swap', async (event) => {
-        // Obtener todas las imágenes de la nueva página
-        const images = event.newDocument.querySelectorAll('img');
-
-        // Crear promesas para esperar que todas las imágenes se carguen
-        const imagePromises = Array.from(images).map((img) => {
-          // Si la imagen ya está cargada, resolver inmediatamente
-          if (img.complete) return Promise.resolve();
-
-          // Si no, esperar a que se cargue
-          return new Promise((resolve) => {
-            img.addEventListener('load', resolve);
-            img.addEventListener('error', resolve); // Resolver incluso si falla
-          });
-        });
-
-        // Esperar a que todas las imágenes se carguen antes de continuar
-        await Promise.all(imagePromises);
-      });
-    </script>
-
     <!-- Script global para reinicializar componentes después de transiciones -->
     <script>
       function initializeComponents() {
