@@ -42,6 +42,9 @@ const emailJsConfig = {
     <form class="contact-form__form" id="contact-form">
       <input type="hidden" name="services" id="selected-services" />
 
+      <!-- Honeypot field - campo trampa para bots (invisible) -->
+      <input type="text" name="website" id="website" class="honeypot" tabindex="-1" autocomplete="off" />
+
       <div class="contact-form__grid">
         <!-- Columna izquierda -->
         <div class="contact-form__field">
@@ -137,6 +140,9 @@ const emailJsConfig = {
     });
   });
 
+  // Timestamp de cuando se cargó la página
+  const pageLoadTime = Date.now();
+
   // Manejo del envío del formulario
   const form = document.getElementById("contact-form");
   const formMessage = document.getElementById("form-message");
@@ -146,6 +152,66 @@ const emailJsConfig = {
       e.preventDefault();
 
       if (!formMessage) return;
+
+      // === VALIDACIONES ANTI-SPAM ===
+
+      // 1. Honeypot: Si el campo "website" está rellenado, es un bot
+      const honeypot = document.getElementById("website");
+      if (honeypot && honeypot.value !== "") {
+        console.log("Spam detectado: honeypot rellenado");
+        return; // Salir silenciosamente sin mostrar error
+      }
+
+      // 2. Rate limiting: No permitir más de 1 envío cada 60 segundos
+      const lastSubmit = localStorage.getItem("lastFormSubmit");
+      const now = Date.now();
+      if (lastSubmit && now - parseInt(lastSubmit) < 60000) {
+        formMessage.textContent =
+          "Por favor, espera un momento antes de enviar otro mensaje.";
+        formMessage.className =
+          "contact-form__message contact-form__message--error";
+        return;
+      }
+
+      // 3. Tiempo mínimo: El usuario debe haber estado al menos 3 segundos en la página
+      if (now - pageLoadTime < 3000) {
+        console.log("Spam detectado: envío demasiado rápido");
+        return; // Salir silenciosamente
+      }
+
+      // 4. Validación de contenido sospechoso
+      const formData = new FormData(form);
+      const templateParams = {};
+
+      formData.forEach((value, key) => {
+        templateParams[key] = value;
+      });
+
+      // Detectar cadenas de texto aleatorio (más de 15 caracteres con alta entropía)
+      const suspiciousPattern = /[A-Za-z]{15,}/;
+      const textFields = [
+        templateParams.name,
+        templateParams.description,
+        templateParams.project_name,
+      ];
+
+      for (const field of textFields) {
+        if (field && suspiciousPattern.test(field)) {
+          // Verificar si tiene muchas mayúsculas y minúsculas mezcladas (señal de spam)
+          const upperCount = (field.match(/[A-Z]/g) || []).length;
+          const lowerCount = (field.match(/[a-z]/g) || []).length;
+          const totalLetters = upperCount + lowerCount;
+
+          if (
+            totalLetters > 15 &&
+            upperCount > totalLetters * 0.3 &&
+            lowerCount > totalLetters * 0.3
+          ) {
+            console.log("Spam detectado: contenido sospechoso");
+            return; // Salir silenciosamente
+          }
+        }
+      }
 
       // Mostrar mensaje de carga
       formMessage.textContent = "Enviando mensaje...";
@@ -157,13 +223,8 @@ const emailJsConfig = {
         if (typeof window.emailjs !== "undefined") {
           window.emailjs.init(PUBLIC_KEY);
 
-          // Enviar el formulario
-          const formData = new FormData(form);
-          const templateParams = {};
-
-          formData.forEach((value, key) => {
-            templateParams[key] = value;
-          });
+          // Enviar el formulario (sin el campo honeypot)
+          delete templateParams.website;
 
           await window.emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
 
@@ -173,6 +234,9 @@ const emailJsConfig = {
           formMessage.className =
             "contact-form__message contact-form__message--success";
           form.reset();
+
+          // Guardar timestamp del envío exitoso
+          localStorage.setItem("lastFormSubmit", now.toString());
 
           // Limpiar botones de servicios
           serviceButtons.forEach((btn) => {
@@ -409,5 +473,15 @@ const emailJsConfig = {
   /* === ACTIVE STATES === */
   .service-button:active {
     transform: translateY(1px);
+  }
+
+  /* === HONEYPOT === */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
   }
 </style>
