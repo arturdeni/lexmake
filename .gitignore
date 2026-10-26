@@ -23,3 +23,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+.vercel
+.env*.local
+
+# prototipo de referencia: las imágenes ya están en Hygraph / public
+docs/prototipo/img/
+docs/prototipo/fonts/

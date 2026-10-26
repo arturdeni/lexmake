@@ -1,0 +1,765 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LexMake</title>
+<style>.astro-route-announcer{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}@font-face{font-family:Hanken Grotesk;src:url(fonts/HankenGrotesk-Light.woff2) format("woff2");font-weight:300;font-style:normal;font-display:swap}@font-face{font-family:Hanken Grotesk;src:url(fonts/HankenGrotesk-Medium.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}:root{--color-grey: #ededed;--color-black: #000000;--color-lime: #d5ff00;--font-gallery: "Gallery", serif;--font-hanken: "Hanken Grotesk", sans-serif;--h1-size: 90px;--h1-cursiva-size: 90px;--h2-size: 72px;--h2-cursiva-size: 72px;--h3-size: 45px;--h3-cursiva-size: 45px;--h4-size: 32px;--h5-size: 20px;--h6-size: 18px;--body-size: 15px;--body-cursiva-size: 15px;--h1-line-height: 70px;--h1-cursiva-line-height: 70px;--h2-line-height: 58px;--h2-cursiva-line-height: 58px;--h3-line-height: 36px;--h3-cursiva-line-height: 36px;--h4-line-height: 28px;--h5-line-height: 20px;--h6-line-height: 18px;--body-line-height: 15px;--body-cursiva-line-height: 15px;--spacing-xs: .25rem;--spacing-sm: .5rem;--spacing-md: 1rem;--spacing-lg: 1.5rem;--spacing-xl: 2rem;--spacing-xxl: 3rem;--spacing-xxxl: 4rem;--spacing-4xl: 6rem;--max-width: 1200px;--container-padding: var(--spacing-lg);--mobile: 768px;--tablet: 1024px;--desktop: 1400px}@media (min-width: 769px){::view-transition-old(root),::view-transition-new(root){animation-duration:.7s;animation-timing-function:cubic-bezier(.4,0,.2,1)}::view-transition-old(root){animation-name:fade-out}::view-transition-new(root){animation-name:fade-in}@keyframes fade-out{0%{opacity:1}to{opacity:0}}@keyframes fade-in{0%{opacity:0}to{opacity:1}}}@media (max-width: 768px){::view-transition-old(root),::view-transition-new(root){animation:none}}*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;scroll-behavior:smooth}body{font-family:var(--font-hanken);font-size:var(--body-size);line-height:var(--body-line-height);color:var(--color-black);background-color:var(--color-grey);font-weight:400}h1{font-family:var(--font-hanken);font-size:var(--h1-size);line-height:var(--h1-line-height);font-weight:500;font-style:normal}h2{font-family:var(--font-hanken);font-size:var(--h2-size);line-height:var(--h2-line-height);font-weight:500;font-style:normal}h3{font-family:var(--font-hanken);font-size:var(--h3-size);line-height:var(--h3-line-height);font-weight:500;font-style:normal}h4{font-family:var(--font-hanken);font-size:var(--h4-size);line-height:var(--h4-line-height);font-weight:500;font-style:normal}h5{font-family:var(--font-hanken);font-size:var(--h5-size);line-height:var(--h5-line-height);font-weight:500;font-style:normal}h6{font-family:var(--font-hanken);font-size:var(--h6-size);line-height:var(--h6-line-height);font-weight:500;font-style:normal}p,body{font-family:var(--font-hanken);font-size:var(--body-size);line-height:var(--body-line-height);font-weight:300;font-style:normal}.h1-cursiva{font-family:var(--font-gallery);font-size:var(--h1-cursiva-size);line-height:var(--h1-cursiva-line-height);font-weight:400;font-style:italic}.h2-cursiva{font-family:var(--font-gallery);font-size:var(--h2-cursiva-size);line-height:var(--h2-cursiva-line-height);font-weight:400;font-style:italic}.h3-cursiva{font-family:var(--font-gallery);font-size:var(--h3-cursiva-size);line-height:var(--h3-cursiva-line-height);font-weight:400;font-style:italic}.body-cursiva{font-family:var(--font-gallery);font-size:var(--body-cursiva-size);line-height:var(--body-cursiva-line-height);font-weight:400;font-style:italic}.view-more-link,.normal-link{text-decoration:none;font-family:var(--font-gallery);font-size:25px;font-style:italic;color:var(--color-black);transition:color .3s ease,opacity .3s ease;position:relative}.view-more-link:after,.normal-link:after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--color-black);transition:width .3s cubic-bezier(.4,0,.2,1)}.view-more-link:hover:after,.normal-link:hover:after{width:100%}.container{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding)}.text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}.text-black{color:var(--color-black)}.text-grey{color:var(--color-grey)}.text-lime{color:var(--color-lime)}.bg-black{background-color:var(--color-black)}.bg-grey{background-color:var(--color-grey)}.bg-lime{background-color:var(--color-lime)}@media (max-width: 768px){html{font-size:14px}h1{font-size:calc(var(--h1-size) * .6);line-height:calc(var(--h1-line-height) * .6)}h2{font-size:calc(var(--h2-size) * .6);line-height:calc(var(--h2-line-height) * .6)}h3{font-size:calc(var(--h3-size) * .7);line-height:calc(var(--h3-line-height) * .7)}.h1-cursiva{font-size:calc(var(--h1-cursiva-size) * .6);line-height:calc(var(--h1-cursiva-line-height) * .6)}.h2-cursiva{font-size:calc(var(--h2-cursiva-size) * .6);line-height:calc(var(--h2-cursiva-line-height) * .6)}.h3-cursiva{font-size:calc(var(--h3-cursiva-size) * .7);line-height:calc(var(--h3-cursiva-line-height) * .7)}}.lexmake-button[data-astro-cid-ljkzbozy]{font-family:var(--font-hanken);font-weight:500;text-decoration:none;border:1px solid var(--color-black);cursor:pointer;transition:all .3s ease;white-space:nowrap;display:inline-block;position:relative;overflow:hidden;background:none;outline:none;z-index:1}.lexmake-button[data-astro-cid-ljkzbozy]:before{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background-color:var(--color-grey);transition:left .3s ease;z-index:-1}.lexmake-button[data-astro-cid-ljkzbozy]:hover:before{left:0}.lexmake-button__text[data-astro-cid-ljkzbozy]{position:relative;z-index:2;display:block;transition:color .3s ease}.lexmake-button--primary[data-astro-cid-ljkzbozy]{background-color:var(--color-black);color:var(--color-grey)}.lexmake-button--primary[data-astro-cid-ljkzbozy]:hover{color:var(--color-black)}.lexmake-button--secondary[data-astro-cid-ljkzbozy]{background-color:var(--color-grey);color:var(--color-black)}.lexmake-button--secondary[data-astro-cid-ljkzbozy]:before{background-color:var(--color-black)}.lexmake-button--secondary[data-astro-cid-ljkzbozy]:hover{color:var(--color-grey)}.lexmake-button--default[data-astro-cid-ljkzbozy]{font-size:20px;padding:var(--spacing-md) var(--spacing-lg)}.lexmake-button--small[data-astro-cid-ljkzbozy]{font-size:16px;padding:var(--spacing-sm) var(--spacing-md)}.lexmake-button--large[data-astro-cid-ljkzbozy]{font-size:24px;padding:var(--spacing-lg) var(--spacing-xl)}.lexmake-button[data-astro-cid-ljkzbozy]:disabled,.lexmake-button[data-astro-cid-ljkzbozy][disabled]{opacity:.5;cursor:not-allowed;pointer-events:none}@media (max-width: 768px){.lexmake-button--default[data-astro-cid-ljkzbozy]{font-size:18px;padding:var(--spacing-sm) var(--spacing-md)}.lexmake-button--large[data-astro-cid-ljkzbozy]{font-size:20px;padding:var(--spacing-md) var(--spacing-lg)}}.lexmake-button[data-astro-cid-ljkzbozy]:focus-visible{outline:2px solid var(--color-black);outline-offset:2px}.lexmake-button[data-astro-cid-ljkzbozy]:active{transform:translateY(1px)}.navigation[data-astro-cid-dll7423c]{display:flex;align-items:center;justify-content:space-between;width:100%;position:absolute;left:0;right:0;padding:0 var(--container-padding);pointer-events:none}.navigation[data-astro-cid-dll7423c]>[data-astro-cid-dll7423c]{pointer-events:auto}.nav-list[data-astro-cid-dll7423c]{display:flex;align-items:center;gap:var(--spacing-xl);list-style:none;margin:0;padding:0;position:absolute;left:50%;transform:translate(-50%)}.nav-item[data-astro-cid-dll7423c]{position:relative;min-width:120px;overflow:hidden}.nav-link[data-astro-cid-dll7423c]{font-family:var(--font-hanken);font-size:20px;font-weight:500;color:var(--color-black);text-decoration:none;padding:var(--spacing-sm) 0;display:block;position:relative;transition:transform .35s cubic-bezier(.4,0,.2,1)}.nav-link[data-astro-cid-dll7423c]:before{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;font-family:var(--font-gallery);font-style:italic;color:var(--color-black);transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);padding:var(--spacing-sm) 0}.nav-link[data-astro-cid-dll7423c]:hover{transform:translateY(-100%)}.nav-link[data-astro-cid-dll7423c]:hover:before{transform:translateY(50)}.contact-button-wrapper[data-astro-cid-dll7423c]{margin-left:auto}@media (max-width: 768px){.navigation[data-astro-cid-dll7423c]{display:none}}.header[data-astro-cid-5dwd546o]{position:fixed;top:0;left:0;right:0;z-index:10;background-color:var(--color-grey)}.header__container[data-astro-cid-5dwd546o]{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding);height:80px;display:flex;align-items:center;justify-content:space-between;position:relative}.header__logo[data-astro-cid-5dwd546o]{flex-shrink:0}.logo-link[data-astro-cid-5dwd546o]{display:block;text-decoration:none}.logo[data-astro-cid-5dwd546o]{height:40px;width:auto;display:block}.mobile-toggle[data-astro-cid-5dwd546o]{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:0;gap:6px;position:relative;z-index:11}.hamburger-line[data-astro-cid-5dwd546o]{width:24px;height:2px;background-color:var(--color-black);transition:all .3s ease;transform-origin:center}.mobile-toggle[data-astro-cid-5dwd546o].active{gap:9px}.mobile-toggle[data-astro-cid-5dwd546o].active .hamburger-line[data-astro-cid-5dwd546o]:first-child{transform:rotate(45deg) translate(4px,4px)}.mobile-toggle[data-astro-cid-5dwd546o].active .hamburger-line[data-astro-cid-5dwd546o]:last-child{transform:rotate(-45deg) translate(4px,-4px)}.mobile-overlay[data-astro-cid-5dwd546o]{position:fixed;inset:0;background-color:var(--color-grey);z-index:9;opacity:0;visibility:hidden;transform:translateY(-100%);transition:all .4s ease}.mobile-overlay[data-astro-cid-5dwd546o].active{opacity:1;visibility:visible;transform:translateY(0)}.mobile-nav[data-astro-cid-5dwd546o]{height:100vh;display:flex;align-items:center;justify-content:center;padding-top:80px}.mobile-nav__list[data-astro-cid-5dwd546o]{list-style:none;text-align:center;display:flex;flex-direction:column;gap:var(--spacing-xl)}.mobile-nav__link[data-astro-cid-5dwd546o]{font-family:var(--font-hanken);font-size:24px;font-weight:500;color:var(--color-black);text-decoration:none;transition:all .3s ease;display:block;padding:var(--spacing-md)}.mobile-nav__link[data-astro-cid-5dwd546o]:hover{font-family:var(--font-gallery);font-style:italic}.mobile-nav__button[data-astro-cid-5dwd546o]{font-family:var(--font-hanken);font-size:24px;font-weight:500;color:var(--color-grey);background-color:var(--color-black);text-decoration:none;padding:var(--spacing-md) var(--spacing-xl);border:1px solid var(--color-black);display:inline-block;margin-top:var(--spacing-lg);transition:all .3s ease}.mobile-nav__button[data-astro-cid-5dwd546o]:hover{background-color:var(--color-grey);color:var(--color-black)}@media (max-width: 768px){.header__container[data-astro-cid-5dwd546o]{height:60px}.logo[data-astro-cid-5dwd546o]{height:25px}.mobile-toggle[data-astro-cid-5dwd546o]{display:flex}body{padding-top:80px}}@media (min-width: 769px){body{padding-top:80px}}.footer[data-astro-cid-r6dvspah]{background-color:var(--color-grey);padding:var(--spacing-xxxl) 0 0;margin-top:var(--spacing-xl)}.footer__container[data-astro-cid-r6dvspah]{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding);display:grid;grid-template-columns:auto 1fr auto auto;align-items:start;gap:var(--spacing-xxl);padding-bottom:var(--spacing-xxl)}.footer__logo[data-astro-cid-r6dvspah]{flex-shrink:0}.logo-link[data-astro-cid-r6dvspah]{display:block;text-decoration:none}.logo-circle[data-astro-cid-r6dvspah]{width:90px;height:90px;border-radius:50%;background-color:var(--color-black);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .3s ease}.logo-img[data-astro-cid-r6dvspah]{width:100%;height:100%;object-fit:cover}.logo-link[data-astro-cid-r6dvspah]:hover .logo-circle[data-astro-cid-r6dvspah]{transform:scale(1.05)}.footer__nav-list[data-astro-cid-r6dvspah]{list-style:none;display:flex;flex-direction:column;gap:var(--spacing-sm)}.footer__nav-link[data-astro-cid-r6dvspah]{font-family:var(--font-hanken);font-size:var(--body-size);font-weight:300;color:var(--color-black);text-decoration:none;transition:font-family .3s ease}.footer__nav-link[data-astro-cid-r6dvspah]:hover{font-family:var(--font-gallery);font-style:italic}.footer__contact[data-astro-cid-r6dvspah]{display:flex;flex-direction:column;gap:var(--spacing-sm);text-align:right}.footer__contact-link[data-astro-cid-r6dvspah]{font-family:var(--font-hanken);font-size:var(--body-size);font-weight:300;color:var(--color-black);text-decoration:none;transition:opacity .3s ease}.footer__contact-link[data-astro-cid-r6dvspah]:hover{opacity:.7}.footer__social[data-astro-cid-r6dvspah]{display:flex;gap:var(--spacing-md);align-items:center}.footer__social-link[data-astro-cid-r6dvspah]{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--color-black);color:var(--color-black);text-decoration:none;transition:all .3s ease}.footer__social-link[data-astro-cid-r6dvspah]:hover{background-color:var(--color-black);color:var(--color-grey)}.footer__social-link[data-astro-cid-r6dvspah] svg[data-astro-cid-r6dvspah]{width:18px;height:18px}.footer__bottom[data-astro-cid-r6dvspah]{border-top:1px solid var(--color-black);padding:var(--spacing-lg) 0}.footer__bottom-container[data-astro-cid-r6dvspah]{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding);display:flex;justify-content:space-between;align-items:center;gap:var(--spacing-lg)}.footer__copyright[data-astro-cid-r6dvspah]{font-family:var(--font-hanken);font-size:var(--body-size);font-weight:300;color:var(--color-black);margin:0}.footer__legal[data-astro-cid-r6dvspah]{display:flex;gap:var(--spacing-xxl)}.footer__legal-link[data-astro-cid-r6dvspah]{font-family:var(--font-hanken);font-size:var(--body-size);font-weight:300;color:var(--color-black);text-decoration:none;transition:opacity .3s ease;text-transform:uppercase;letter-spacing:.5px}.footer__legal-link[data-astro-cid-r6dvspah]:hover{opacity:.7}@media (max-width: 768px){.footer[data-astro-cid-r6dvspah]{padding:var(--spacing-xl) 0 0;margin-top:var(--spacing-xl)}.footer__container[data-astro-cid-r6dvspah]{grid-template-columns:1fr;gap:var(--spacing-xl);padding-bottom:var(--spacing-xl);text-align:center}.footer__logo[data-astro-cid-r6dvspah]{justify-self:center}.footer__nav-list[data-astro-cid-r6dvspah]{align-items:center}.footer__contact[data-astro-cid-r6dvspah]{text-align:center}.footer__social[data-astro-cid-r6dvspah]{justify-content:center}.footer__bottom-container[data-astro-cid-r6dvspah]{flex-direction:column;text-align:center;gap:var(--spacing-md)}.footer__legal[data-astro-cid-r6dvspah]{flex-direction:column;gap:var(--spacing-sm)}.logo-circle[data-astro-cid-r6dvspah]{width:60px;height:60px}}@media (max-width: 1024px) and (min-width: 769px){.footer__container[data-astro-cid-r6dvspah]{grid-template-columns:auto 1fr;gap:var(--spacing-xl)}.footer__contact[data-astro-cid-r6dvspah]{grid-column:1 / -1;text-align:left}.footer__social[data-astro-cid-r6dvspah]{grid-column:1 / -1;justify-content:flex-start}}body{min-height:100vh;display:flex;flex-direction:column}#main{flex:1}#main,#footer{will-change:transform}
+.hero[data-astro-cid-ocrortkz]{position:relative;height:250vh}.hero__sticky-container[data-astro-cid-ocrortkz]{position:sticky;top:0;display:flex;align-items:center;justify-content:center;z-index:2;padding-top:180px}.hero__content[data-astro-cid-ocrortkz]{max-width:var(--max-width);width:100%;padding:0 var(--container-padding);position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--spacing-xl)}.hero__side-text[data-astro-cid-ocrortkz]{position:absolute;top:35%;transform:translateY(-50%);text-align:right}.hero__side-text--left[data-astro-cid-ocrortkz]{left:75px}.hero__side-text--right[data-astro-cid-ocrortkz]{right:75px;text-align:left}.hero__side-text[data-astro-cid-ocrortkz] h5[data-astro-cid-ocrortkz]{margin:0}.hero__title[data-astro-cid-ocrortkz]{margin:0;text-align:center;display:flex;flex-direction:column;gap:var(--spacing-sm);max-width:800px}.hero__title-line[data-astro-cid-ocrortkz]{display:block}.hero__title-line--cursive[data-astro-cid-ocrortkz]{font-family:var(--font-gallery);font-style:italic;font-weight:400}.hero__subtitle[data-astro-cid-ocrortkz]{margin:0;text-align:center;max-width:600px}.hero__images[data-astro-cid-ocrortkz]{position:absolute;top:70vh;left:0;right:0;z-index:1}.hero__image[data-astro-cid-ocrortkz]{position:absolute;width:300px;height:400px}.hero__image[data-astro-cid-ocrortkz] img[data-astro-cid-ocrortkz]{width:100%;height:100%;object-fit:cover;display:block}.hero__image--1[data-astro-cid-ocrortkz]{top:0;left:10%}.hero__image--2[data-astro-cid-ocrortkz]{top:200px;right:15%}.hero__image--3[data-astro-cid-ocrortkz]{top:670px;left:32%;transform:translate(-50%);width:330px;height:540px}@media (max-width: 1024px){.hero__side-text[data-astro-cid-ocrortkz]{display:none}}@media (max-width: 768px){.hero__sticky-container[data-astro-cid-ocrortkz]{top:35px;padding-top:40px}.hero__title[data-astro-cid-ocrortkz],.hero__subtitle[data-astro-cid-ocrortkz]{max-width:100%}.hero__image[data-astro-cid-ocrortkz]{width:200px;height:280px}.hero__image--1[data-astro-cid-ocrortkz]{left:5%}.hero__image--2[data-astro-cid-ocrortkz]{right:5%}.hero__image--3[data-astro-cid-ocrortkz]{left:25%;top:480px;transform:translate(-50%)}}@media (max-width: 480px){.hero[data-astro-cid-ocrortkz]{margin-top:110px}.hero__subtitle[data-astro-cid-ocrortkz]{br{display:none}}.hero__image[data-astro-cid-ocrortkz]{width:150px;height:220px}.hero__image--3[data-astro-cid-ocrortkz]{width:190px;height:320px}}.hero__title-line[data-astro-cid-ocrortkz]{opacity:0;transform:translateY(30px)}.hero__subtitle[data-astro-cid-ocrortkz]{opacity:0;transform:translateY(20px)}.hero__side-text[data-astro-cid-ocrortkz]{opacity:0;transform:translate(-20px)}.hero__side-text--right[data-astro-cid-ocrortkz]{transform:translate(20px)}.hero__image[data-astro-cid-ocrortkz]{opacity:0;transform:translateY(50px)}.hero[data-astro-cid-ocrortkz].gsap-loaded .hero__title-line[data-astro-cid-ocrortkz],.hero[data-astro-cid-ocrortkz].gsap-loaded .hero__subtitle[data-astro-cid-ocrortkz],.hero[data-astro-cid-ocrortkz].gsap-loaded .hero__side-text[data-astro-cid-ocrortkz],.hero[data-astro-cid-ocrortkz].gsap-loaded .hero__image[data-astro-cid-ocrortkz]{opacity:1;transform:none;transition:opacity .3s ease,transform .3s ease}.home-skills[data-astro-cid-cv2ltbwd]{background-color:var(--color-grey);position:relative;z-index:10;margin-top:-300px;padding:var(--spacing-xl) 0}.home-skills__container[data-astro-cid-cv2ltbwd]{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding);display:flex;flex-direction:column}.home-skills__skills-section[data-astro-cid-cv2ltbwd]{display:flex;flex-direction:column;gap:var(--spacing-md);margin-top:var(--spacing-xxxl)}.skills-header[data-astro-cid-cv2ltbwd]{text-align:center;margin:0;font-size:var(--h5-size);font-weight:500;letter-spacing:.1em}.skills-grid[data-astro-cid-cv2ltbwd]{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--spacing-sm) var(--spacing-xl);max-width:800px;margin:0 auto}.skill-item[data-astro-cid-cv2ltbwd]{font-size:var(--h4-size);line-height:1.2;margin:0;white-space:nowrap}.skill-item--large[data-astro-cid-cv2ltbwd]{font-family:var(--font-hanken);font-weight:500;font-style:normal;text-transform:uppercase}.skill-item--cursive[data-astro-cid-cv2ltbwd]{font-family:var(--font-gallery);font-weight:400;font-style:italic}@media (max-width: 1024px){.skills-grid[data-astro-cid-cv2ltbwd]{gap:var(--spacing-md) var(--spacing-lg)}.skill-item[data-astro-cid-cv2ltbwd]{font-size:calc(var(--h4-size) * .8)}}@media (max-width: 768px){.home-skills[data-astro-cid-cv2ltbwd]{padding:var(--spacing-xl) 0}.home-skills__container[data-astro-cid-cv2ltbwd]{gap:0:}.skills-grid[data-astro-cid-cv2ltbwd]{gap:var(--spacing-md);text-align:center}.skill-item[data-astro-cid-cv2ltbwd]{font-size:calc(var(--h4-size) * .7)}}@media (max-width: 480px){.skill-item[data-astro-cid-cv2ltbwd]{font-size:calc(var(--h4-size) * .6)}}.home-behind[data-astro-cid-4pkthcoi]{background-color:var(--color-white);position:relative;z-index:15;padding:var(--spacing-xxxl) 0;margin-top:var(--spacing-xxxl)}.home-behind__container[data-astro-cid-4pkthcoi]{max-width:1000px;margin:0 auto;padding:0 var(--container-padding)}.home-behind__content[data-astro-cid-4pkthcoi]{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-xxl);align-items:end}.home-behind__image[data-astro-cid-4pkthcoi]{width:100%;aspect-ratio:3/4;background-color:var(--color-grey);overflow:hidden}.home-behind__image[data-astro-cid-4pkthcoi] img[data-astro-cid-4pkthcoi]{width:100%;height:100%;object-fit:cover;display:block}.home-behind__text[data-astro-cid-4pkthcoi]{display:flex;flex-direction:column;gap:var(--spacing-md)}.home-behind__title[data-astro-cid-4pkthcoi]{margin:0 0 var(--spacing-lg) 0;display:flex;align-items:baseline;gap:.5rem}.home-behind__title[data-astro-cid-4pkthcoi] span[data-astro-cid-4pkthcoi]:first-child{font-family:var(--font-hanken);font-weight:500;font-style:normal}.home-behind__description[data-astro-cid-4pkthcoi]{font-size:var(--body-size);margin:0;color:var(--color-black)}@media (max-width: 1024px){.home-behind__content[data-astro-cid-4pkthcoi]{gap:var(--spacing-xxl)}.home-behind__description[data-astro-cid-4pkthcoi]{font-size:calc(var(--body-size) * .95)}}@media (max-width: 768px){.home-behind[data-astro-cid-4pkthcoi]{padding:var(--spacing-xl) 0}.home-behind__content[data-astro-cid-4pkthcoi]{grid-template-columns:1fr}.home-behind__image[data-astro-cid-4pkthcoi]{max-width:400px;margin:0 auto}.home-behind__text[data-astro-cid-4pkthcoi]{padding-top:0}.home-behind__title[data-astro-cid-4pkthcoi]{justify-content:center}.home-behind__description[data-astro-cid-4pkthcoi]{text-align:center}}.home-closing[data-astro-cid-aogfqscw]{background-color:var(--color-grey);position:relative;z-index:15;padding:var(--spacing-xxxl) 0;margin:var(--spacing-xxxl) 0}.home-closing__container[data-astro-cid-aogfqscw]{max-width:1000px;margin:0 auto;padding:0 var(--container-padding)}.home-closing__content[data-astro-cid-aogfqscw]{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--spacing-xxl)}.home-closing__text[data-astro-cid-aogfqscw]{font-family:var(--font-hanken);font-size:var(--h4-size);font-weight:500;line-height:var(--h4-line-height);margin:0;max-width:700px;color:var(--color-black)}.home-closing__text--italic[data-astro-cid-aogfqscw]{font-family:var(--font-gallery);font-style:italic;font-weight:400}.home-closing__cta[data-astro-cid-aogfqscw]{text-transform:uppercase;margin-top:var(--spacing-xxl)}@media (max-width: 1024px){.home-closing__text[data-astro-cid-aogfqscw]{font-size:calc(var(--h3-size) * .9)}}@media (max-width: 768px){.home-closing[data-astro-cid-aogfqscw]{padding:var(--spacing-xl) 0}.home-closing__content[data-astro-cid-aogfqscw]{gap:var(--spacing-xl)}.home-closing__text[data-astro-cid-aogfqscw]{font-size:calc(var(--h3-size) * .75)}.home-closing__cta[data-astro-cid-aogfqscw]{margin-top:var(--spacing-xxxl)}}
+.portfolio-cta__header[data-astro-cid-yyawck5k]{text-align:left}.portfolio-cta__title[data-astro-cid-yyawck5k]{margin:var(--spacing-lg);display:flex;align-items:baseline}.portfolio-cta__title[data-astro-cid-yyawck5k] span[data-astro-cid-yyawck5k]:first-child{font-family:var(--font-hanken);font-weight:500;font-style:normal}.portfolio-cta__grid[data-astro-cid-yyawck5k]{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:var(--spacing-xl)}.portfolio-cta__item[data-astro-cid-yyawck5k]{aspect-ratio:4/3;background-color:var(--color-black);overflow:hidden}.portfolio-cta__item[data-astro-cid-yyawck5k] img[data-astro-cid-yyawck5k]{width:100%;height:100%;object-fit:cover;display:block}.portfolio-cta__view-more[data-astro-cid-yyawck5k]{text-align:right;margin-bottom:var(--spacing-xxl)}@media (max-width: 1024px){.portfolio-cta__grid[data-astro-cid-yyawck5k]{grid-template-columns:repeat(2,1fr)}}@media (max-width: 768px){.portfolio-cta__title[data-astro-cid-yyawck5k]{flex-direction:column;gap:0;text-align:center;margin:var(--spacing-lg)}.portfolio-cta__grid[data-astro-cid-yyawck5k]{grid-template-columns:1fr;gap:var(--spacing-md)}.portfolio-cta__view-more[data-astro-cid-yyawck5k]{text-align:center;margin-bottom:var(--spacing-xl)}}
+.portfolio[data-astro-cid-ajmli3vt]{width:100%;min-height:100vh}.portfolio-hero[data-astro-cid-ajmli3vt]{max-width:var(--max-width);margin:0 auto;padding:var(--spacing-4xl) var(--container-padding);text-align:center}.portfolio-title[data-astro-cid-ajmli3vt]{font-family:var(--font-hanken);margin:0;color:var(--color-black)}.portfolio-title-italic[data-astro-cid-ajmli3vt]{font-family:var(--font-gallery);font-style:italic;display:block}.portfolio-subtitle[data-astro-cid-ajmli3vt]{font-family:var(--font-hanken);font-size:18px;font-weight:400;color:var(--color-black);margin-top:var(--spacing-xl)}.portfolio-grid[data-astro-cid-ajmli3vt]{max-width:var(--max-width);margin:0 auto;padding:0 var(--spacing-xl)}.grid-row[data-astro-cid-ajmli3vt]{display:flex;height:355px;gap:var(--spacing-xxl);margin-bottom:var(--spacing-xxl)}.project-card[data-astro-cid-ajmli3vt]{position:relative;text-decoration:none;display:flex;flex-direction:column;gap:var(--spacing-sm);cursor:url(img/ui/BLANCO.svg) 32 32,pointer}.project-image-wrapper[data-astro-cid-ajmli3vt]{position:relative;width:100%;height:355px;overflow:hidden;background-color:#f0f0f0}.project-image[data-astro-cid-ajmli3vt]{width:100%;height:100%;object-fit:cover;display:block;transition:filter .4s ease,transform .6s ease}.project-image[data-astro-cid-ajmli3vt].blur-placeholder{filter:blur(20px);transform:scale(1.1)}.project-image[data-astro-cid-ajmli3vt].loaded{filter:blur(0);transform:scale(1)}.project-card[data-astro-cid-ajmli3vt]:hover .project-image[data-astro-cid-ajmli3vt].loaded{transform:scale(1.05)}.project-info[data-astro-cid-ajmli3vt]{display:block;padding:0;margin-top:var(--spacing-sm)}.project-category[data-astro-cid-ajmli3vt]{font-family:var(--font-hanken);font-size:15px;font-weight:300;text-transform:uppercase;display:block;color:var(--color-black)}.project-title[data-astro-cid-ajmli3vt]{font-family:var(--font-hanken);margin:0;color:var(--color-black);text-transform:uppercase}@media (max-width: 768px){.portfolio-hero[data-astro-cid-ajmli3vt]{padding:var(--spacing-2xl) var(--container-padding)}.portfolio-subtitle[data-astro-cid-ajmli3vt]{margin:var(--spacing-md) 0 var(--spacing-xxxl)}.portfolio-grid[data-astro-cid-ajmli3vt]{margin:var(--spacing-md);padding:0;display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-md)}.grid-row[data-astro-cid-ajmli3vt]{display:contents}.project-card[data-astro-cid-ajmli3vt]{width:100%!important;aspect-ratio:auto;overflow:visible;display:flex;flex-direction:column;gap:var(--spacing-sm)}.project-image-wrapper[data-astro-cid-ajmli3vt]{height:auto;overflow:hidden}.project-category[data-astro-cid-ajmli3vt]{font-size:11px}.project-title[data-astro-cid-ajmli3vt]{font-size:16px}}
+.solutions-folders[data-astro-cid-h4oxh3fn]{position:relative;width:100%;height:400vh}.solutions-folders-background[data-astro-cid-h4oxh3fn]{position:sticky;top:0;left:0;width:100%;height:100vh;background-image:url(img/sol/background.webp);background-size:cover;background-position:center;background-repeat:no-repeat;z-index:-1}.folders-container[data-astro-cid-h4oxh3fn]{position:absolute;top:150px;left:0;width:100%;height:100%}.folder[data-astro-cid-h4oxh3fn]{position:sticky;top:150px;width:80%;max-width:900px;margin:0 auto;padding-top:var(--spacing-xxl)}.folder[data-astro-cid-h4oxh3fn][data-index="0"]{z-index:1}.folder[data-astro-cid-h4oxh3fn][data-index="1"]{z-index:2}.folder[data-astro-cid-h4oxh3fn][data-index="2"]{z-index:3}.folder[data-astro-cid-h4oxh3fn][data-index="3"]{z-index:4}.folder-tab[data-astro-cid-h4oxh3fn]{position:relative;width:200px;height:40px;display:flex;align-items:center;justify-content:center;clip-path:polygon(15% 0%,100% 0%,100% 100%,0% 100%);padding-left:var(--spacing-lg)}.folder-tab[data-astro-cid-h4oxh3fn] span[data-astro-cid-h4oxh3fn]{font-family:var(--font-hanken);font-size:var(--h6-size);font-weight:500;color:var(--color-black)}.folder[data-astro-cid-h4oxh3fn][data-index="2"] .folder-tab[data-astro-cid-h4oxh3fn] span[data-astro-cid-h4oxh3fn],.folder[data-astro-cid-h4oxh3fn][data-index="2"] .folder-link[data-astro-cid-h4oxh3fn],.folder[data-astro-cid-h4oxh3fn][data-index="2"] .folder-content[data-astro-cid-h4oxh3fn]{color:var(--color-grey)}.folder[data-astro-cid-h4oxh3fn][data-index="2"] .normal-link[data-astro-cid-h4oxh3fn]:after{background:var(--color-grey)}.folder-content[data-astro-cid-h4oxh3fn]{width:100%;min-height:500px;display:flex;flex-direction:column;padding:var(--spacing-xl);position:relative}.folder[data-astro-cid-h4oxh3fn][data-index="0"] .folder-content[data-astro-cid-h4oxh3fn]{border-top-left-radius:0}.folder[data-astro-cid-h4oxh3fn][data-index="3"] .folder-content[data-astro-cid-h4oxh3fn]{border-top-right-radius:0}.folder-header[data-astro-cid-h4oxh3fn]{width:100%;display:flex;justify-content:flex-end;margin-bottom:var(--spacing-md)}.folder-header[data-astro-cid-h4oxh3fn] span[data-astro-cid-h4oxh3fn]{font-family:var(--font-hanken);font-size:var(--h3-size);font-weight:700;opacity:.3}.folder-body[data-astro-cid-h4oxh3fn]{display:grid;grid-template-columns:3fr 4fr;gap:var(--spacing-xl);align-items:center;flex:1}.folder-text[data-astro-cid-h4oxh3fn]{display:flex;flex-direction:column;gap:var(--spacing-md)}.folder-text[data-astro-cid-h4oxh3fn] h3[data-astro-cid-h4oxh3fn]{font-family:var(--font-hanken);font-size:var(--h3-size);font-weight:700}.folder-text[data-astro-cid-h4oxh3fn] p[data-astro-cid-h4oxh3fn]{font-family:var(--font-hanken);font-size:var(--body-size);line-height:1.6}.folder-link[data-astro-cid-h4oxh3fn]{position:absolute;bottom:var(--spacing-xl);right:var(--spacing-xl);font-size:var(--h6-size)}.folder-image[data-astro-cid-h4oxh3fn]{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.folder-image[data-astro-cid-h4oxh3fn] img[data-astro-cid-h4oxh3fn]{width:85%;height:auto;max-height:350px;object-fit:contain;margin:0 auto}@media (max-width: 768px){.solutions-folders[data-astro-cid-h4oxh3fn]{height:430vh}.folders-container[data-astro-cid-h4oxh3fn]{top:100px}.folder[data-astro-cid-h4oxh3fn]{top:100px;width:90%}.folder-tab[data-astro-cid-h4oxh3fn]{width:150px;height:35px}.folder-tab[data-astro-cid-h4oxh3fn] span[data-astro-cid-h4oxh3fn]{font-size:var(--body-size);font-weight:500}.folder[data-astro-cid-h4oxh3fn][data-index="0"] .folder-tab[data-astro-cid-h4oxh3fn]{left:0%!important}.folder[data-astro-cid-h4oxh3fn][data-index="1"] .folder-tab[data-astro-cid-h4oxh3fn]{left:calc(33.33% - 50px)!important}.folder[data-astro-cid-h4oxh3fn][data-index="2"] .folder-tab[data-astro-cid-h4oxh3fn]{left:calc(66.66% - 100px)!important}.folder[data-astro-cid-h4oxh3fn][data-index="3"] .folder-tab[data-astro-cid-h4oxh3fn]{left:calc(100% - 150px)!important}.folder-content[data-astro-cid-h4oxh3fn]{min-height:550px}.folder-body[data-astro-cid-h4oxh3fn]{grid-template-columns:1fr;gap:var(--spacing-lg);align-items:start}.folder-text[data-astro-cid-h4oxh3fn] h3[data-astro-cid-h4oxh3fn]{font-size:var(--h4-size)}.folder-text[data-astro-cid-h4oxh3fn] p[data-astro-cid-h4oxh3fn]{font-size:var(--small-size)}.folder-image[data-astro-cid-h4oxh3fn]{display:none}.folder-image[data-astro-cid-h4oxh3fn] img[data-astro-cid-h4oxh3fn]{max-height:250px}}@media (max-height: 700px){.solutions-folders[data-astro-cid-h4oxh3fn]{height:450vh}.folders-container[data-astro-cid-h4oxh3fn],.folder[data-astro-cid-h4oxh3fn]{top:60px}}.work-plan[data-astro-cid-ootxauno]{background-color:var(--color-grey);padding:var(--spacing-4xl) 0;position:relative;z-index:10;margin-top:-90vh}.work-plan__container[data-astro-cid-ootxauno]{max-width:900px;margin:0 auto;padding:0 var(--container-padding)}.work-plan__title[data-astro-cid-ootxauno]{margin-bottom:var(--spacing-xxl);display:flex;gap:.5rem;align-items:baseline}.work-plan__list[data-astro-cid-ootxauno]{list-style:none;padding:0;margin:0}.work-plan__item[data-astro-cid-ootxauno]{font-family:var(--font-hanken);font-size:var(--h5-size);line-height:var(--h5-line-height);font-weight:300;padding:var(--spacing-lg) 0;border-bottom:1px solid var(--color-black)}.work-plan__cta[data-astro-cid-ootxauno]{margin-top:var(--spacing-xxxl);text-align:right}@media (max-width: 768px){.work-plan[data-astro-cid-ootxauno]{padding:var(--spacing-xxl) 0}.work-plan__title[data-astro-cid-ootxauno]{flex-direction:column;gap:0;margin-bottom:var(--spacing-xl)}.work-plan__item[data-astro-cid-ootxauno]{font-size:calc(var(--h4-size) * .7);line-height:calc(var(--h4-line-height) * .8);padding:var(--spacing-md) 0}}.solutions[data-astro-cid-44eo3ts4]{width:100%;min-height:100vh}.solutions-hero[data-astro-cid-44eo3ts4]{max-width:var(--max-width);margin:0 auto;padding:var(--spacing-4xl) var(--container-padding);text-align:center}.solutions-title[data-astro-cid-44eo3ts4]{font-family:var(--font-hanken);margin:0;color:var(--color-black)}.solutions-title-italic[data-astro-cid-44eo3ts4]{font-family:var(--font-gallery);font-style:italic;display:inline-block}.solutions-subtitle[data-astro-cid-44eo3ts4]{font-family:var(--font-hanken);font-size:18px;font-weight:400;color:var(--color-black);margin:var(--spacing-xl)}.solutions__portfolio-cta-container[data-astro-cid-44eo3ts4]{position:relative;background-color:var(--color-gray);max-width:var(--max-width);margin:0 auto;padding:var(--spacing-xl);z-index:10}@media (max-width: 768px){.solutions-hero[data-astro-cid-44eo3ts4]{padding:var(--spacing-2xl) var(--container-padding)}.solutions-subtitle[data-astro-cid-44eo3ts4]{margin:var(--spacing-md) 0 var(--spacing-xxxl)}}
+.contact-form[data-astro-cid-fknn56lw]{width:100%;background-color:var(--color-grey);padding:var(--spacing-4xl) 0}.contact-form__container[data-astro-cid-fknn56lw]{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding)}.contact-form__question[data-astro-cid-fknn56lw]{font-family:var(--font-hanken);font-size:20px;font-weight:400;color:var(--color-black);margin:0 0 var(--spacing-xl) 0}.contact-form__services[data-astro-cid-fknn56lw]{display:flex;flex-wrap:wrap;gap:var(--spacing-md);margin-bottom:var(--spacing-xxxl)}.service-button[data-astro-cid-fknn56lw]{font-family:var(--font-hanken);font-weight:500;font-size:20px;padding:var(--spacing-md) var(--spacing-lg);background-color:var(--color-grey);color:var(--color-black);border:1px solid var(--color-black);cursor:pointer;transition:all .3s ease;white-space:nowrap;position:relative;overflow:hidden;z-index:1}.service-button[data-astro-cid-fknn56lw]:before{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background-color:var(--color-black);transition:left .3s ease;z-index:-1}@media (hover: hover) and (pointer: fine){.service-button[data-astro-cid-fknn56lw]:hover:before{left:0}.service-button[data-astro-cid-fknn56lw]:hover{color:var(--color-grey)}}.service-button--active[data-astro-cid-fknn56lw]{background-color:var(--color-black);color:var(--color-grey)}.service-button--active[data-astro-cid-fknn56lw]:before{left:0}.service-button__text[data-astro-cid-fknn56lw]{position:relative;z-index:2;display:block}.contact-form__form[data-astro-cid-fknn56lw]{width:100%}.contact-form__grid[data-astro-cid-fknn56lw]{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--spacing-xxl) var(--spacing-xl);margin-bottom:var(--spacing-xxl)}.contact-form__field[data-astro-cid-fknn56lw]{display:flex;flex-direction:column}.contact-form__field--full[data-astro-cid-fknn56lw]{grid-column:1 / -1}.contact-form__field[data-astro-cid-fknn56lw] label[data-astro-cid-fknn56lw]{font-family:var(--font-hanken);font-size:16px;font-weight:400;color:var(--color-black);margin-bottom:var(--spacing-sm)}.contact-form__field[data-astro-cid-fknn56lw] input[data-astro-cid-fknn56lw],.contact-form__field[data-astro-cid-fknn56lw] textarea[data-astro-cid-fknn56lw]{font-family:var(--font-hanken);font-size:16px;padding:var(--spacing-sm) 0;background:transparent;border:none;border-bottom:1px solid var(--color-black);color:var(--color-black);outline:none;transition:border-color .3s ease}.contact-form__field[data-astro-cid-fknn56lw] input[data-astro-cid-fknn56lw]:focus,.contact-form__field[data-astro-cid-fknn56lw] textarea[data-astro-cid-fknn56lw]:focus{border-bottom-color:var(--color-black);border-bottom-width:2px}.contact-form__field[data-astro-cid-fknn56lw] textarea[data-astro-cid-fknn56lw]{resize:vertical;min-height:100px}.contact-form__submit[data-astro-cid-fknn56lw]{display:flex;justify-content:flex-end;margin-top:var(--spacing-xl)}.contact-form__message[data-astro-cid-fknn56lw]{margin-top:var(--spacing-lg);padding:var(--spacing-md);font-family:var(--font-hanken);font-size:16px;text-align:center;border-radius:4px;display:none}.contact-form__message--loading[data-astro-cid-fknn56lw],.contact-form__message--success[data-astro-cid-fknn56lw],.contact-form__message--error[data-astro-cid-fknn56lw]{display:block}.contact-form__message--loading[data-astro-cid-fknn56lw]{background-color:#f0f0f0;color:var(--color-black)}.contact-form__message--success[data-astro-cid-fknn56lw]{background-color:#d4edda;color:#155724}.contact-form__message--error[data-astro-cid-fknn56lw]{background-color:#f8d7da;color:#721c24}@media (max-width: 768px){.contact-form[data-astro-cid-fknn56lw]{padding:var(--spacing-xxl) 0}.contact-form__grid[data-astro-cid-fknn56lw]{grid-template-columns:1fr;gap:var(--spacing-xl)}.contact-form__services[data-astro-cid-fknn56lw]{gap:var(--spacing-sm)}.service-button[data-astro-cid-fknn56lw]{font-size:18px;padding:var(--spacing-sm) var(--spacing-md);flex:1 1 calc(50% - var(--spacing-sm));min-width:0}.contact-form__question[data-astro-cid-fknn56lw]{font-size:18px}}.service-button[data-astro-cid-fknn56lw]:focus-visible{outline:2px solid var(--color-black);outline-offset:2px}.service-button[data-astro-cid-fknn56lw]:active{transform:translateY(1px)}.honeypot[data-astro-cid-fknn56lw]{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}.contact[data-astro-cid-ahc3q4vw]{width:100%;min-height:100vh}.contact-hero[data-astro-cid-ahc3q4vw]{max-width:var(--max-width);margin:0 auto;padding:var(--spacing-4xl) var(--container-padding);text-align:center}.contact-title[data-astro-cid-ahc3q4vw]{font-family:var(--font-hanken);margin:0;color:var(--color-black)}.contact-title-italic[data-astro-cid-ahc3q4vw]{font-family:var(--font-gallery);font-style:italic;display:inline-block}.contact-subtitle[data-astro-cid-ahc3q4vw]{font-family:var(--font-hanken);font-size:18px;font-weight:400;color:var(--color-black);margin:var(--spacing-xl)}@media (max-width: 768px){.contact-hero[data-astro-cid-ahc3q4vw]{padding:var(--spacing-2xl) var(--container-padding)}}
+.resources-blocks[data-astro-cid-imxkcpv6]{width:100%;background-color:var(--color-grey);padding-bottom:var(--spacing-4xl)}.resources-blocks__container[data-astro-cid-imxkcpv6]{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding)}.resources-blocks__grid[data-astro-cid-imxkcpv6]{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--spacing-xl)}.resource-card[data-astro-cid-imxkcpv6]{display:flex;flex-direction:column;background-color:var(--color-grey)}.resource-card__image-wrapper[data-astro-cid-imxkcpv6]{width:100%;aspect-ratio:3 / 4;overflow:hidden;background-color:#d9d9d9;margin-bottom:var(--spacing-lg)}.resource-card__image[data-astro-cid-imxkcpv6]{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}.resource-card[data-astro-cid-imxkcpv6]:hover .resource-card__image[data-astro-cid-imxkcpv6]{transform:scale(1.05)}.resource-card__content[data-astro-cid-imxkcpv6]{display:flex;flex-direction:column;gap:var(--spacing-md)}.resource-card__title[data-astro-cid-imxkcpv6]{font-family:var(--font-hanken);font-size:18px;font-weight:500;line-height:1.2;color:var(--color-black);margin:0}.resource-card__description[data-astro-cid-imxkcpv6]{font-family:var(--font-hanken);font-size:13px;font-weight:300;line-height:1.4;color:var(--color-black);margin:0}.resource-card__link[data-astro-cid-imxkcpv6]{font-size:20px;width:fit-content}.resource-card__link[data-astro-cid-imxkcpv6]:after{bottom:-4px}@media (max-width: 768px){.resources-blocks[data-astro-cid-imxkcpv6]{padding-bottom:var(--spacing-xxl)}.resources-blocks__grid[data-astro-cid-imxkcpv6]{grid-template-columns:repeat(2,1fr);gap:var(--spacing-lg)}.resource-card[data-astro-cid-imxkcpv6]{margin-bottom:var(--spacing-lg)}.resource-card__image-wrapper[data-astro-cid-imxkcpv6]{aspect-ratio:1 / 1}.resource-card__title[data-astro-cid-imxkcpv6]{font-size:16px}.resource-card__description[data-astro-cid-imxkcpv6]{font-size:12px}}@media (min-width: 769px) and (max-width: 1024px){.resources-blocks__grid[data-astro-cid-imxkcpv6]{grid-template-columns:repeat(2,1fr)}}@media (min-width: 1025px){.resources-blocks__grid[data-astro-cid-imxkcpv6]{grid-template-columns:repeat(4,1fr)}}.resources[data-astro-cid-fmgelhwa]{width:100%;min-height:100vh}.resources-hero[data-astro-cid-fmgelhwa]{max-width:var(--max-width);margin:0 auto;padding:var(--spacing-4xl) var(--container-padding);text-align:center}.resources-title[data-astro-cid-fmgelhwa]{font-family:var(--font-hanken);margin:0;color:var(--color-black)}.resources-title-italic[data-astro-cid-fmgelhwa]{font-family:var(--font-gallery);font-style:italic;display:inline-block}.resources-subtitle[data-astro-cid-fmgelhwa]{font-family:var(--font-hanken);font-size:18px;font-weight:400;color:var(--color-black);margin:var(--spacing-xl)}.resources__portfolio-cta-container[data-astro-cid-fmgelhwa]{position:relative;background-color:var(--color-gray);max-width:var(--max-width);margin:0 auto;padding:var(--spacing-xl);z-index:10}@media (max-width: 768px){.resources-hero[data-astro-cid-fmgelhwa]{padding:var(--spacing-2xl) var(--container-padding)}.resources-subtitle[data-astro-cid-fmgelhwa]{margin:var(--spacing-md) 0 var(--spacing-xxxl)}}
+.portfolio-cta__header[data-astro-cid-yyawck5k]{text-align:left}.portfolio-cta__title[data-astro-cid-yyawck5k]{margin:var(--spacing-lg);display:flex;align-items:baseline}.portfolio-cta__title[data-astro-cid-yyawck5k] span[data-astro-cid-yyawck5k]:first-child{font-family:var(--font-hanken);font-weight:500;font-style:normal}.portfolio-cta__grid[data-astro-cid-yyawck5k]{display:grid;grid-template-columns:repeat(4,1fr);margin-bottom:var(--spacing-xl)}.portfolio-cta__item[data-astro-cid-yyawck5k]{aspect-ratio:4/3;background-color:var(--color-black);overflow:hidden}.portfolio-cta__item[data-astro-cid-yyawck5k] img[data-astro-cid-yyawck5k]{width:100%;height:100%;object-fit:cover;display:block}.portfolio-cta__view-more[data-astro-cid-yyawck5k]{text-align:right;margin-bottom:var(--spacing-xxl)}@media (max-width: 1024px){.portfolio-cta__grid[data-astro-cid-yyawck5k]{grid-template-columns:repeat(2,1fr)}}@media (max-width: 768px){.portfolio-cta__title[data-astro-cid-yyawck5k]{flex-direction:column;gap:0;text-align:center;margin:var(--spacing-lg)}.portfolio-cta__grid[data-astro-cid-yyawck5k]{grid-template-columns:1fr;gap:var(--spacing-md)}.portfolio-cta__view-more[data-astro-cid-yyawck5k]{text-align:center;margin-bottom:var(--spacing-xl)}}
+
+/* ===== Lexmake × estructura huyml — solo lo nuevo; el resto es el CSS original ===== */
+@font-face{font-family:"Gallery";src:url(fonts/Gallery-Italic.otf) format("opentype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Gallery";src:url(fonts/Gallery.otf) format("opentype");font-weight:400;font-style:normal;font-display:swap}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{background:var(--color-grey);color:var(--color-black)}
+#app{transition:opacity .45s ease}
+#app.fading{opacity:0}
+
+/* micro-tipografía de la referencia: 10px / 13px, medium */
+.lx-s{font-family:var(--font-hanken);font-size:10px;line-height:13px;font-weight:500;letter-spacing:.1px}
+.lx-mute{color:rgba(0,0,0,.5)}
+
+/* animación de entrada original (fade + y) */
+[data-fx]{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.33,1,.68,1),transform .8s cubic-bezier(.33,1,.68,1)}
+[data-fx].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-fx]{opacity:1;transform:none;transition:none}}
+
+/* ---------- HOME · trabajos (estructura huyml) ---------- */
+.lx-work{background:var(--color-grey);position:relative;z-index:10;margin-top:-300px}
+.lx-work .portfolio-cta__header{max-width:var(--max-width);margin:0 auto;padding:var(--spacing-xl) var(--container-padding) 0}
+.home-skills.lx-after{margin-top:0}
+.lx-show{position:relative}
+.lx-stick{position:sticky;top:0;height:100vh;overflow:hidden;perspective:1400px}
+.lx-stage{position:absolute;inset:0}
+.lx-card{position:absolute;left:49.2%;top:50.5%;width:23.7vw;max-width:420px;aspect-ratio:1.235;display:block;will-change:transform,opacity;cursor:url(img/ui/BLANCO.svg) 32 32,pointer;backface-visibility:hidden}
+.lx-card img{width:100%;height:100%;object-fit:cover;display:block;background:#d9d9d9;box-shadow:-6px 0 0 rgba(0,0,0,.04)}
+.lx-info{position:absolute;left:0;top:41.6%;display:grid;grid-template-columns:repeat(2,auto);gap:68px 0;z-index:3}
+.lx-pair{display:grid;grid-template-columns:54px 1fr;padding-left:20px;min-width:178px}
+.lx-pair.c2{grid-template-columns:90px 1fr;padding-left:0;min-width:240px}
+.lx-pair a{color:var(--color-black);text-decoration:underline;text-underline-offset:2px}
+.lx-sel{position:absolute;left:13.75vw;bottom:24px;z-index:4;display:flex;align-items:flex-start;gap:12px;pointer-events:none;color:var(--color-black)}
+.lx-num{font-family:var(--font-hanken);font-weight:300;font-size:180px;line-height:153px;letter-spacing:-7.2px;height:153px;overflow:hidden;display:block;font-variant-numeric:tabular-nums}
+.lx-num span{display:block;transition:transform .6s cubic-bezier(.65,0,.35,1)}
+.lx-sel .lx-s{margin-top:8px}
+.lx-list{position:absolute;left:80vw;top:0;width:246px;margin-left:-123px;z-index:3;will-change:transform}
+.lx-item{height:173px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;opacity:.28;transition:opacity .45s ease;cursor:pointer;background:none;border:0;padding:0;width:100%;color:inherit;font-family:var(--font-hanken);font-size:10px;line-height:13px;font-weight:500;letter-spacing:.1px}
+.lx-item.on{opacity:1}
+.lx-item:hover{opacity:.7}.lx-item.on:hover{opacity:1}
+.lx-list .lx-item span.cat{font-size:10px!important;color:rgba(31,31,31,.52)}
+.lx-item .t{font-family:var(--font-hanken);font-weight:500;font-size:16px;line-height:16px;letter-spacing:.16px;text-transform:uppercase;margin-top:6px}
+.lx-item .d{width:12px;height:1px;background:currentColor;margin:16px 0 20px}
+.lx-sw{position:absolute;right:20px;top:50%;display:flex;gap:6px;z-index:3;transform:translateY(-50%)}
+.lx-sw i{width:12px;height:12px;display:block;transition:background .5s}
+.lx-foot{position:absolute;left:20px;right:20px;bottom:20px;display:flex;justify-content:space-between;align-items:flex-end;z-index:3}
+.lx-foot .view-more-link{font-size:20px}
+.lx-mobinfo{display:none}
+@media (max-width:768px){
+  .lx-work{margin-top:-200px}
+  .lx-card{left:50%;top:42%;width:72vw;max-width:none}
+  .lx-info,.lx-list,.lx-sw{display:none}
+  .lx-sel{left:var(--container-padding);top:84px;bottom:auto}
+  .lx-num{font-size:84px;line-height:72px;height:72px;letter-spacing:-3px}
+  .lx-mobinfo{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;position:absolute;left:24px;right:24px;bottom:76px;z-index:120}
+  .lx-mobinfo .t{font-family:var(--font-hanken);font-weight:500;font-size:16px;text-transform:uppercase}
+  .lx-mobinfo .sw{display:flex;gap:6px}.lx-mobinfo .sw i{width:12px;height:12px;display:block}
+  .lx-foot .lx-s:first-child{display:none}
+}
+
+/* ---------- PROYECTO (estructura huyml) ---------- */
+.lx-intro{height:100vh;background:#0c0c0c;color:#fff;display:grid;place-items:center;position:relative;z-index:20;padding:0 var(--container-padding)}
+.lx-intro h1{margin:0;font-family:var(--font-hanken);font-weight:500;font-size:var(--h2-size);line-height:var(--h2-line-height);text-transform:uppercase;text-align:center;overflow:hidden}
+.lx-intro h1 span{display:block;transition:transform 1s cubic-bezier(.33,1,.68,1)}
+.lx-intro.pre h1 span{transform:translateY(105%)}
+.lx-pj{display:grid;grid-template-columns:27.5vw 45vw 27.5vw;position:relative}
+.lx-aside{position:sticky;top:0;height:100vh;align-self:start}
+.lx-aside .blk{position:absolute;left:20px;top:39.4vh;width:calc(27.5vw - 40px);display:grid;gap:22px}
+.lx-aside .row{display:grid;grid-template-columns:104px 1fr;align-items:start}
+.lx-aside .row2{display:grid;grid-template-columns:104px auto 1fr;column-gap:16px}
+.lx-aside .about{max-width:210px}
+.lx-visit{color:var(--color-black);text-decoration:none;font-family:var(--font-hanken);font-weight:500;font-size:16px;line-height:16px;margin-left:104px;display:inline-flex;gap:6px;width:max-content;transition:opacity .3s}
+.lx-visit:hover{opacity:.55}
+.lx-aside .bot{position:absolute;left:20px;bottom:20px;display:flex;gap:10px}
+.lx-imgs{display:flex;flex-direction:column;gap:85px;padding:46.6vh 0 22vh}
+.lx-imgs figure{margin:0;width:100%;background:#dcdcdc;overflow:hidden}
+.lx-imgs img{width:100%;height:auto;display:block}
+.lx-map{position:sticky;top:0;height:100vh;align-self:start;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:7px;padding-right:47px}
+.lx-map button{width:43px;height:31px;padding:0;border:0;background:#ddd;opacity:.35;transition:opacity .3s;cursor:pointer;overflow:hidden}
+.lx-map button.on,.lx-map button:hover{opacity:1}
+.lx-map img{width:100%;height:100%;object-fit:cover;display:block}
+.lx-next{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:0 var(--container-padding);text-decoration:none;color:var(--color-black)}
+.lx-next b{font-family:var(--font-hanken);font-weight:500;font-size:clamp(56px,8.4vw,120px);line-height:1;text-transform:uppercase;letter-spacing:-.01em;transition:opacity .3s}
+.lx-next:hover b{opacity:.6}
+.lx-next .it{font-family:var(--font-hanken);font-style:normal;font-weight:500;font-size:10px;line-height:13px;letter-spacing:.1px;color:rgba(0,0,0,.5)}
+@media (max-width:900px){
+  .lx-pj{grid-template-columns:1fr;padding:0 var(--container-padding)}
+  .lx-aside{position:relative;height:auto}
+  .lx-aside .blk{position:static;width:auto;padding:110px 0 40px}
+  .lx-aside .bot,.lx-map{display:none}
+  .lx-imgs{padding:0 0 60px;gap:24px}
+  .lx-aside .row,.lx-aside .row2{grid-template-columns:90px 1fr}
+  .lx-visit{margin-left:90px}
+}
+
+/* descripciones más pequeñas */
+.lx-list .lx-item span.ds{display:block;font-size:10px!important;line-height:13px!important;font-weight:500;letter-spacing:.1px;max-width:246px;color:#000}
+.lx-aside .about{font-size:10px;line-height:13px;font-weight:500;letter-spacing:.1px;max-width:210px}
+
+/* todo en Hanken Light */
+.lx-s,.lx-item,.lx-list .lx-item span.ds,.lx-list .lx-item span.cat,.lx-item .t,.lx-aside .about,.lx-visit,.lx-mobinfo .t,.lx-next b,.lx-intro h1,.lx-pair,.lx-info{font-weight:300!important}
+
+/* ficha: ritmo de la referencia */
+.lx-aside .blk{gap:46px!important;top:37vh!important}
+.lx-aside .row4{display:grid;grid-template-columns:104px 108px 56px 1fr;align-items:start}
+.lx-aside .about{max-width:225px!important}
+.lx-item.on{cursor:url(img/ui/BLANCO.svg) 32 32,pointer}
+@media (max-width:900px){.lx-aside .row4{grid-template-columns:90px 1fr 56px 1fr}.lx-aside .blk{gap:28px!important}}
+
+.lx-next{min-height:0!important;padding:40px var(--container-padding) 140px!important}
+
+/* ---------- HERO: animación del título ---------- */
+.hero.lx-ha .hero__title-line{opacity:1!important;transform:none!important;transition:none!important}
+.lx-ha .hw{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .03em .24em;margin:0 -.03em -.24em}
+.lx-ha .hc{display:inline-block;transform:translateY(115%) rotate(9deg);transform-origin:0% 100%;transition:transform 1.15s cubic-bezier(.16,1,.3,1) var(--d)}
+.lx-ha .hs{display:inline-block;clip-path:inset(-30% 102% -30% -6%);transform:translateX(-.08em);transition:clip-path 1.25s cubic-bezier(.65,0,.35,1) var(--d),transform 1.25s cubic-bezier(.65,0,.35,1) var(--d)}
+.lx-ha.go .hc{transform:none}
+.lx-ha.go .hs{clip-path:inset(-30% -6% -30% -6%);transform:none}
+.lx-ha .hero__title:hover .hc{transition-delay:0s}
+.lx-ha .hw:hover .hc{transform:translateY(-6%)!important;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+/* subtítulo más pequeño y light, entra cuando termina el título */
+.hero .hero__subtitle{font-size:15px!important;line-height:1.12!important;font-weight:300!important}
+.hero.lx-ha .hero__subtitle,.hero.lx-ha .hero__side-text{transition:opacity .9s ease var(--end),transform .9s cubic-bezier(.16,1,.3,1) var(--end)!important}
+@media (prefers-reduced-motion:reduce){.lx-ha .hc,.lx-ha .hs{transform:none!important;clip-path:none!important;transition:none!important}}
+
+/* hero: menos interlineado */
+.hero .hero__title{gap:0!important}
+.hero .hero__title-line{margin-top:-.03em}
+.hero .hero__title-line:first-child{margin-top:0}
+/* paso al portfolio: sin borde de caja, transición con desenfoque */
+.lx-work::before{content:"";position:absolute;left:0;right:0;top:-280px;height:280px;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(237,237,237,0),rgba(237,237,237,.85) 75%,var(--color-grey));
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 60%);mask-image:linear-gradient(to bottom,transparent,#000 60%)}
+.hero .hero__sticky-container,.hero .hero__images{will-change:filter,opacity}
+
+/* ---------- ENTRADA ---------- */
+.lx-pre{position:fixed;inset:0;z-index:1000;background:var(--color-grey);display:grid;place-items:center;transition:transform 1.1s cubic-bezier(.76,0,.24,1),filter 1.1s ease,opacity 1.1s ease}
+.lx-pre .lg{width:min(300px,62vw);clip-path:inset(-10% 100% -10% 0);transition:clip-path 1.2s cubic-bezier(.65,0,.35,1),transform 1.1s cubic-bezier(.76,0,.24,1),filter .9s ease}
+.lx-pre .lg img{width:100%;height:auto;display:block}
+.lx-pre.draw .lg{clip-path:inset(-10% -2% -10% 0)}
+.lx-pre .pc,.lx-pre .pl{position:absolute;bottom:20px;font-variant-numeric:tabular-nums}
+.lx-pre .pc{right:20px}.lx-pre .pl{left:20px}
+.lx-pre.out{transform:translateY(-100%);pointer-events:none}
+.lx-pre.out .lg{transform:translateY(40vh) scale(.9);filter:blur(12px)}
+@media (prefers-reduced-motion:reduce){.lx-pre{display:none}}
+
+/* ---------- MENÚ ---------- */
+.header[data-astro-cid-5dwd546o]{transition:transform .7s cubic-bezier(.76,0,.24,1),background-color .5s ease,backdrop-filter .5s ease}
+.header.lx-scrolled{background-color:rgba(237,237,237,.72)!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.header.lx-hide{transform:translateY(-100%)}
+.nav-link[data-astro-cid-dll7423c]:before{display:none!important}
+.nav-link[data-astro-cid-dll7423c]:hover{transform:none!important}
+.nav-item[data-astro-cid-dll7423c]{overflow:visible!important;min-width:0!important}
+.nav-list[data-astro-cid-dll7423c]{gap:44px!important}
+.lx-wv{display:inline-flex;white-space:pre}
+.lx-wv .l{display:inline-block;overflow:hidden;height:1.2em;line-height:1.2em;vertical-align:top}
+.lx-wv .l i{display:block;font-style:normal;transition:transform .55s cubic-bezier(.76,0,.24,1) calc(var(--i)*28ms)}
+.lx-wv .l i+i{font-family:var(--font-gallery);font-style:italic;font-weight:400}
+a:hover>.lx-wv .l i,.lexmake-button:hover .lx-wv .l i{transform:translateY(-100%)}
+.nav-link{position:relative}
+.nav-link .ar{position:absolute;right:100%;top:50%;margin-right:8px;transform:translate(-6px,-50%);opacity:0;transition:opacity .4s,transform .6s cubic-bezier(.16,1,.3,1);font-weight:300}
+.nav-link.on .ar{opacity:1;transform:translate(0,-50%)}
+/* menú móvil: entrada escalonada con desenfoque */
+.mobile-nav__list li{opacity:0;filter:blur(10px);transform:translateY(24px);transition:opacity .6s ease,filter .6s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+.mobile-overlay.active .mobile-nav__list li{opacity:1;filter:none;transform:none}
+.mobile-overlay.active .mobile-nav__list li:nth-child(1){transition-delay:.15s}
+.mobile-overlay.active .mobile-nav__list li:nth-child(2){transition-delay:.23s}
+.mobile-overlay.active .mobile-nav__list li:nth-child(3){transition-delay:.31s}
+.mobile-overlay.active .mobile-nav__list li:nth-child(4){transition-delay:.39s}
+.mobile-overlay[data-astro-cid-5dwd546o]{transform:none!important;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);background-color:var(--color-grey)!important}
+.mobile-nav__link[data-astro-cid-5dwd546o]{font-size:40px!important}
+.mobile-nav__list li:nth-child(2) .mobile-nav__link{font-family:var(--font-gallery);font-style:italic;font-weight:400}
+
+/* menú sobrio: letra pequeña, cabecera y botón compactos, sin efecto de letras */
+.nav-link[data-astro-cid-dll7423c]{font-size:13px!important;font-weight:400!important;letter-spacing:.04em;padding:0!important;transition:opacity .3s ease!important}
+.nav-link[data-astro-cid-dll7423c]:hover{opacity:.45}
+.nav-list[data-astro-cid-dll7423c]{gap:36px!important}
+.header__container[data-astro-cid-5dwd546o]{height:56px!important}
+.logo[data-astro-cid-5dwd546o]{height:28px!important}
+.lexmake-button--default[data-astro-cid-ljkzbozy]{font-size:13px!important;padding:9px 16px!important;letter-spacing:.04em}
+@media (min-width:769px){body{padding-top:56px!important}}
+
+.lx-sk{will-change:transform,filter,opacity}
+
+/* menú desplegado equilibrado: opciones al centro, contacto y redes abajo */
+.mobile-nav[data-astro-cid-5dwd546o]{flex-direction:column;justify-content:space-between!important;padding:110px 24px max(36px,env(safe-area-inset-bottom,0px))!important;height:100vh;height:100dvh}
+.mobile-nav__list[data-astro-cid-5dwd546o]{margin:auto 0;gap:14px!important}
+.mobile-nav__button[data-astro-cid-5dwd546o]{font-size:15px!important;padding:12px 22px!important;margin-top:18px!important}
+.lx-mcontact{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;opacity:0;filter:blur(10px);transform:translateY(20px);transition:opacity .6s ease .45s,filter .6s ease .45s,transform .8s cubic-bezier(.16,1,.3,1) .45s}
+.mobile-overlay.active .lx-mcontact{opacity:1;filter:none;transform:none}
+.lx-mc-data{display:flex;flex-direction:column;gap:4px;font-size:15px;font-weight:300;line-height:1.3}
+.lx-mc-data .lx-s{margin-bottom:6px}
+.lx-mcontact .footer__social{justify-content:center}
+
+/* hero: máquina de escribir (sustituye la animación anterior) */
+.hero.lx-ty .hero__title-line{opacity:1!important;transform:none!important;transition:none!important}
+.lx-ty .tc{opacity:0}
+.lx-ty .tc.on{opacity:1}
+.lx-caret{display:inline-block;width:2px;height:.82em;background:var(--color-black);margin:0 .03em 0 .04em;vertical-align:-.04em;animation:lxblink 1s steps(1) infinite}
+.lx-caret.bye{opacity:0;transition:opacity .6s ease;animation:none}
+@keyframes lxblink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.hero.lx-ty .hero__subtitle,.hero.lx-ty .hero__side-text{opacity:1!important;transform:none!important;transition:none!important}
+
+/* menú móvil siempre por encima del contenido */
+.mobile-overlay[data-astro-cid-5dwd546o]{z-index:900!important}
+.header[data-astro-cid-5dwd546o]{z-index:901!important}
+
+/* entradas con desenfoque en todas las páginas */
+[data-fx]{filter:blur(8px);transition:opacity .9s cubic-bezier(.33,1,.68,1),transform .9s cubic-bezier(.33,1,.68,1),filter .9s ease!important}
+[data-fx].in{filter:none}
+/* títulos de página escritos */
+.lx-ty .tc{opacity:0}.lx-ty .tc.on{opacity:1}
+/* sección que entra sobre otra sin borde de caja */
+.lx-soft::before{content:"";position:absolute;left:0;right:0;top:-280px;height:280px;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(237,237,237,0),rgba(237,237,237,.85) 75%,var(--color-grey));
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 60%);mask-image:linear-gradient(to bottom,transparent,#000 60%)}
+.solutions-folders-background,.folders-container{will-change:filter,opacity}
+.contact-form__message{font-family:var(--font-hanken);font-size:13px;font-weight:300;margin-top:16px}
+
+/* ================= PÁGINAS · estilo nuevo ================= */
+.lx-ph{padding:110px var(--container-padding) 90px;text-align:center;display:grid;gap:18px;justify-items:center}
+.lx-pt{margin:0;font-family:var(--font-hanken);font-weight:500;font-size:var(--h2-size);line-height:.98;text-transform:none}
+.lx-pt .it,.it{font-family:var(--font-gallery);font-style:italic;font-weight:400}
+.lx-s.it{font-size:11px;line-height:14px}
+
+/* Solutions */
+.lx-sv{border-top:1px solid rgba(0,0,0,.14);margin:0 20px}
+.lx-svr{display:grid;grid-template-columns:27.5vw minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;padding:56px 0;border-bottom:1px solid rgba(0,0,0,.14)}
+.lx-svn{font-family:var(--font-hanken);font-weight:300;font-size:120px;line-height:.8;letter-spacing:-5px}
+.lx-svi{display:flex;justify-content:center}
+.lx-svi img{width:min(260px,100%);height:auto;filter:grayscale(1) contrast(1.05);mix-blend-mode:multiply;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.lx-svr:hover .lx-svi img{transform:rotate(-3deg) scale(1.04)}
+.lx-svt{display:grid;gap:12px;max-width:320px}
+.lx-svt h3{margin:0;font-family:var(--font-hanken);font-weight:300;font-size:16px;line-height:16px;text-transform:uppercase;letter-spacing:.16px}
+.lx-svt p{margin:0;font-weight:300}
+.lx-svt .lx-visit{margin:8px 0 0}
+.lx-plan{display:grid;grid-template-columns:27.5vw minmax(0,560px);gap:0 40px;padding:120px 20px 140px;align-items:start}
+.lx-plan-list{list-style:none;margin:0;padding:0;border-top:1px solid rgba(0,0,0,.14)}
+.lx-plan-list li{display:grid;grid-template-columns:44px 1fr;padding:12px 0;border-bottom:1px solid rgba(0,0,0,.14);font-family:var(--font-hanken);font-size:13px;font-weight:300}
+.lx-plan-go{grid-column:2;margin:28px 0 0;justify-self:end}
+
+/* Resources */
+.lx-rs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:0 20px 140px}
+.lx-rc{display:grid;gap:10px;align-content:start}
+.lx-rci{aspect-ratio:.8;overflow:hidden;background:#e2e2e2;margin-bottom:8px}
+.lx-rci img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.lx-rc:hover .lx-rci img{transform:scale(1.04)}
+.lx-rc h3{margin:0;font-family:var(--font-hanken);font-weight:300;font-size:16px;line-height:18px;text-transform:uppercase}
+.lx-rc p{margin:0;font-weight:300;max-width:280px}
+.lx-dl{color:var(--color-black);text-decoration:underline;text-underline-offset:2px;width:max-content}
+.lx-dl:hover{opacity:.5}
+
+/* Contact */
+.lx-ct{display:grid;grid-template-columns:27.5vw minmax(0,720px);gap:40px;padding:0 20px 140px;align-items:start}
+.lx-cta{display:grid;gap:22px;position:sticky;top:90px}
+.lx-cta .row{display:grid;grid-template-columns:70px 1fr}
+.lx-cta-soc .footer__social{gap:10px}
+.lx-cta-soc .footer__social-link{width:34px!important;height:34px!important}
+.lx-cta-soc svg{width:15px!important;height:15px!important}
+.lx-cf{display:grid;gap:22px}
+.lx-chips{display:flex;flex-wrap:wrap;gap:8px}
+.lx-chip{font-family:var(--font-hanken);font-size:12px;font-weight:300;padding:8px 14px;border:1px solid rgba(0,0,0,.35);background:none;color:var(--color-black);cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.lx-chip:hover{border-color:var(--color-black)}
+.lx-chip[aria-pressed="true"]{background:var(--color-black);color:var(--color-grey);border-color:var(--color-black)}
+.lx-fg{display:grid;grid-template-columns:1fr 1fr;gap:26px 32px;margin-top:10px}
+.lx-f{display:grid;gap:6px}
+.lx-f.full{grid-column:1/-1}
+.lx-f input,.lx-f textarea{font-family:var(--font-hanken);font-size:14px;font-weight:300;color:var(--color-black);background:none;border:0;border-bottom:1px solid rgba(0,0,0,.3);padding:6px 0;border-radius:0;outline:none;resize:vertical;transition:border-color .3s}
+.lx-f input:focus,.lx-f textarea:focus{border-color:var(--color-black)}
+.lx-cf-end{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:8px}
+.lx-send{font-family:var(--font-hanken);font-size:13px;letter-spacing:.04em;padding:9px 22px;background:var(--color-black);color:var(--color-grey);border:1px solid var(--color-black);cursor:pointer;transition:background .3s,color .3s}
+.lx-send:hover{background:none;color:var(--color-black)}
+
+@media (max-width:900px){
+  .lx-ph{padding:60px var(--container-padding) 50px}
+  .lx-svr{grid-template-columns:1fr;gap:18px;padding:40px 0}
+  .lx-svn{font-size:72px;letter-spacing:-3px}
+  .lx-svi{justify-content:flex-start}.lx-svi img{width:180px}
+  .lx-plan,.lx-ct{grid-template-columns:1fr;gap:24px;padding-left:var(--container-padding);padding-right:var(--container-padding)}
+  .lx-plan-go{grid-column:1}
+  .lx-rs{grid-template-columns:1fr 1fr;gap:28px 16px;padding:0 var(--container-padding) 100px}
+  .lx-cta{position:static}
+  .lx-fg{grid-template-columns:1fr}
+}
+
+/* detalles tipo awwwards */
+.lx-svi.inv img{filter:invert(1) grayscale(1)}
+.lx-sv{border-top:0}
+.lx-svr{border-bottom:0;position:relative}
+.lx-svr::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:rgba(0,0,0,.14);transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.65,0,.35,1) .1s}
+.lx-svr.in::before{transform:scaleX(1)}
+.lx-svn{transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .5s}
+.lx-svr:hover .lx-svn{transform:translateX(14px)}
+.lx-sv:hover .lx-svr:not(:hover) .lx-svn{opacity:.25}
+.lx-plan-list li{transition:padding .5s cubic-bezier(.16,1,.3,1)}
+.lx-plan-list li:hover{padding-left:10px}
+.lx-rc h3{transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.lx-rc:hover h3{transform:translateX(6px)}
+
+/* títulos de subpáginas más pequeños */
+.lx-pt{font-size:var(--h3-size)!important;line-height:1!important}
+.portfolio-title[data-astro-cid-ajmli3vt]{font-size:var(--h3-size)!important;line-height:1!important}
+.lx-ph{padding-bottom:70px}
+
+/* ilustraciones con motion graphics: se dibujan al entrar, flotan y su trazo "tiembla" como animación a mano */
+.lx-svi img{filter:url(#lx-boil) grayscale(1) contrast(1.05)!important;clip-path:inset(0 0 100% 0);transform:translateY(18px) rotate(-2deg);
+  transition:clip-path 1.6s cubic-bezier(.65,0,.35,1) .15s,transform 1.6s cubic-bezier(.16,1,.3,1) .15s}
+.lx-svi.inv img{filter:url(#lx-boil) invert(1) grayscale(1)!important}
+.lx-svr.in .lx-svi img{clip-path:inset(-4% -4% -4% -4%);transform:none}
+.lx-svi{animation:lxfloat 6.5s ease-in-out infinite}
+.lx-svr:nth-child(2) .lx-svi{animation-delay:-1.6s}.lx-svr:nth-child(3) .lx-svi{animation-delay:-3.2s}.lx-svr:nth-child(4) .lx-svi{animation-delay:-4.8s}
+@keyframes lxfloat{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-7px) rotate(1.2deg)}75%{transform:translateY(5px) rotate(-1deg)}}
+.lx-svr:hover .lx-svi img{transform:scale(1.05) rotate(-2deg)}
+@media (prefers-reduced-motion:reduce){.lx-svi{animation:none}.lx-svi img{clip-path:none;transform:none;filter:grayscale(1)!important}}
+
+/* todas las ilustraciones en la misma caja: mismo tamaño visual */
+.lx-svi{height:300px;align-items:center}
+.lx-svi img{width:auto!important;height:auto;max-width:300px;max-height:290px;mix-blend-mode:multiply}
+@media (max-width:900px){.lx-svi{height:220px}.lx-svi img{max-width:220px;max-height:210px}}
+
+/* títulos responsive: más pequeños en móvil */
+@media (max-width:768px){
+  .hero .hero__title{font-size:clamp(34px,10.5vw,54px)!important;line-height:1!important}
+  .lx-pt,.portfolio-title[data-astro-cid-ajmli3vt]{font-size:clamp(26px,8vw,40px)!important}
+  h3,.h3-cursiva,.portfolio-cta__title span,.home-behind__title span{font-size:clamp(24px,7.5vw,34px)!important;line-height:1.05!important}
+  .home-closing__text[data-astro-cid-aogfqscw]{font-size:clamp(20px,6vw,26px)!important;line-height:1.15!important}
+  .lx-svn{font-size:56px!important;letter-spacing:-2px!important}
+  .lx-svt h3,.lx-rc h3{font-size:14px!important;line-height:16px!important}
+  .lx-ph{padding:40px var(--container-padding) 40px!important}
+}
+
+/* menú hamburguesa: letra más pequeña */
+.mobile-nav__link[data-astro-cid-5dwd546o]{font-size:24px!important;padding:6px!important;font-weight:400!important}
+.mobile-nav__list[data-astro-cid-5dwd546o]{gap:6px!important}
+.mobile-nav__button[data-astro-cid-5dwd546o]{font-size:13px!important;padding:9px 18px!important}
+.lx-mc-data{font-size:13px!important}
+</style>
+<header class="header" data-astro-cid-5dwd546o> <div class="header__container" data-astro-cid-5dwd546o> <!-- Logo --> <div class="header__logo" data-astro-cid-5dwd546o> <a href="#home" class="logo-link" data-astro-cid-5dwd546o> <img src="logo.svg" alt="LexMake" class="logo" data-astro-cid-5dwd546o> </a> </div> <!-- Desktop Navigation --> <nav class="navigation" data-astro-cid-dll7423c> <ul class="nav-list" data-astro-cid-dll7423c> <li class="nav-item" data-astro-cid-dll7423c> <a href="#solutions" class="nav-link" data-text="SOLUTIONS" data-astro-cid-dll7423c>SOLUTIONS</a> </li> <li class="nav-item" data-astro-cid-dll7423c> <a href="#portfolio" class="nav-link" data-text="PORTFOLIO" data-astro-cid-dll7423c>PORTFOLIO</a> </li> <li class="nav-item" data-astro-cid-dll7423c> <a href="#resources" class="nav-link" data-text="RESOURCES" data-astro-cid-dll7423c>RESOURCES</a> </li> </ul> <!-- Botón Contact usando el componente Button --> <a class="lexmake-button lexmake-button--primary lexmake-button--default contact-button-wrapper" href="#contact" data-astro-cid-dll7423c="true" data-astro-cid-ljkzbozy="true"> <span class="lexmake-button__text" data-astro-cid-ljkzbozy> CONTACT </span> </a>  </nav>  <!-- Mobile Menu Toggle --> <button class="mobile-toggle" aria-label="Toggle mobile menu" data-astro-cid-5dwd546o> <span class="hamburger-line" data-astro-cid-5dwd546o></span> <span class="hamburger-line" data-astro-cid-5dwd546o></span> </button> </div> <!-- Mobile Menu Overlay --> <div class="mobile-overlay" data-astro-cid-5dwd546o> <nav class="mobile-nav" data-astro-cid-5dwd546o> <ul class="mobile-nav__list" data-astro-cid-5dwd546o> <li data-astro-cid-5dwd546o><a href="#solutions" class="mobile-nav__link" data-astro-cid-5dwd546o>SOLUTIONS</a></li> <li data-astro-cid-5dwd546o><a href="#portfolio" class="mobile-nav__link" data-astro-cid-5dwd546o>PORTFOLIO</a></li> <li data-astro-cid-5dwd546o><a href="#resources" class="mobile-nav__link" data-astro-cid-5dwd546o>RESOURCES</a></li> <li data-astro-cid-5dwd546o><a href="#contact" class="mobile-nav__button" data-astro-cid-5dwd546o>CONTACT</a></li> </ul> </nav> </div> </header>
+<main id="main"><div id="app"></div></main>
+<footer class="footer" data-astro-cid-r6dvspah> <div class="footer__container" data-astro-cid-r6dvspah> <!-- Logo --> <div class="footer__logo" data-astro-cid-r6dvspah> <a href="#home" class="logo-link" aria-label="Lexmake Home" data-astro-cid-r6dvspah> <div class="logo-circle" data-astro-cid-r6dvspah> <img src="img/ui/favicon-grande.png" alt="Lexmake Logo" class="logo-img" data-astro-cid-r6dvspah> </div> </a> </div> <!-- Navigation Links --> <nav class="footer__nav" data-astro-cid-r6dvspah> <ul class="footer__nav-list" data-astro-cid-r6dvspah> <li data-astro-cid-r6dvspah><a href="#solutions" class="footer__nav-link" data-astro-cid-r6dvspah>Soluciones</a></li> <li data-astro-cid-r6dvspah><a href="#portfolio" class="footer__nav-link" data-astro-cid-r6dvspah>Portfolio</a></li> <li data-astro-cid-r6dvspah><a href="#resources" class="footer__nav-link" data-astro-cid-r6dvspah>Recursos</a></li> </ul> </nav> <!-- Contact Info --> <div class="footer__contact" data-astro-cid-r6dvspah> <a href="mailto:alexia@lexmake.com" class="footer__contact-link" data-astro-cid-r6dvspah>alexia@lexmake.com</a> <a href="tel:+34609408905" class="footer__contact-link" data-astro-cid-r6dvspah>+34 609 408 905</a> </div> <!-- Social Links --> <div class="footer__social" data-astro-cid-r6dvspah> <a href="https://www.instagram.com/lexmake_/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Instagram" data-astro-cid-r6dvspah> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-astro-cid-r6dvspah> <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor" data-astro-cid-r6dvspah></path> </svg> </a> <a href="https://www.tiktok.com/@lexmake" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="TikTok" data-astro-cid-r6dvspah> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-astro-cid-r6dvspah> <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" fill="currentColor" data-astro-cid-r6dvspah></path> </svg> </a> <a href="https://www.linkedin.com/company/lexmake/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn" data-astro-cid-r6dvspah> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-astro-cid-r6dvspah> <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor" data-astro-cid-r6dvspah></path> </svg> </a> <a href="https://wa.me/34609408905" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="WhatsApp" data-astro-cid-r6dvspah> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-astro-cid-r6dvspah> <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor" data-astro-cid-r6dvspah></path> </svg> </a> </div> </div> <!-- Bottom Section --> <div class="footer__bottom" data-astro-cid-r6dvspah> <div class="footer__bottom-container" data-astro-cid-r6dvspah> <p class="footer__copyright" data-astro-cid-r6dvspah>
+© 2025 Lexmake. Todos los derechos reservados.
+</p> <div class="footer__legal" data-astro-cid-r6dvspah> <a href="https://www.lexmake.com/privacy-policy" target="_blank" rel="noopener" class="footer__legal-link" data-astro-cid-r6dvspah>POLÍTICA PRIVACIDAD</a> <a href="https://www.lexmake.com/terms-and-conditions" target="_blank" rel="noopener" class="footer__legal-link" data-astro-cid-r6dvspah>TÉRMINOS Y CONDICIONES</a> </div> </div> </div> </footer>
+<template id="tpl-home">   <section class="hero" data-astro-cid-ocrortkz> <!-- Contenedor de títulos que se quedará sticky --> <div class="hero__sticky-container" data-astro-cid-ocrortkz> <div class="hero__content" data-astro-cid-ocrortkz> <!-- Textos laterales (solo desktop) --> <div class="hero__side-text hero__side-text--left" data-astro-cid-ocrortkz> <h5 data-astro-cid-ocrortkz>From<br data-astro-cid-ocrortkz>Barcelona</h5> </div> <div class="hero__side-text hero__side-text--right" data-astro-cid-ocrortkz> <h5 data-astro-cid-ocrortkz>visual solutions<br data-astro-cid-ocrortkz>with soul</h5> </div> <!-- Título principal centrado --> <h1 class="hero__title" data-astro-cid-ocrortkz> <span class="hero__title-line" data-astro-cid-ocrortkz>Elevating</span> <span class="hero__title-line" data-astro-cid-ocrortkz> <span class="hero__title-line--cursive" data-astro-cid-ocrortkz>ideas</span> through
+</span> <span class="hero__title-line" data-astro-cid-ocrortkz>
+timeless <span class="hero__title-line--cursive" data-astro-cid-ocrortkz>design</span> </span> </h1> <!-- Subtítulo en español --> <h5 class="hero__subtitle" data-astro-cid-ocrortkz>
+Diseño atemporal para pensadores modernos,<br data-astro-cid-ocrortkz>
+líderes creativos y mentes visionarias.
+</h5> </div> </div> <!-- Imágenes que se mueven con scroll --> <div class="hero__images" data-astro-cid-ocrortkz> <div class="hero__image hero__image--1" data-astro-cid-ocrortkz> <img src="img/hero/lexmake-hero-1.webp" alt="Lexmake Hero 1" data-astro-cid-ocrortkz> </div> <div class="hero__image hero__image--2" data-astro-cid-ocrortkz> <img src="img/hero/lexmake-hero-2.gif" alt="Lexmake Hero 2" data-astro-cid-ocrortkz> </div> <div class="hero__image hero__image--3" data-astro-cid-ocrortkz> <img src="img/hero/lexmake-hero-3.gif" alt="Lexmake Hero 3" data-astro-cid-ocrortkz> </div> </div> </section>    <section class="lx-work"><div class="portfolio-cta__header" data-astro-cid-yyawck5k> <h3 class="portfolio-cta__title" data-astro-cid-yyawck5k> <span data-fx="0">DESIGN</span> <span class="h3-cursiva" data-fx=".2">Portfolio</span> </h3> </div><div id="work-slot"></div></section><section class="home-skills lx-after"><div class="home-skills__container"><div class="home-skills__skills-section" data-astro-cid-cv2ltbwd> <h4 data-fx="0" class="skills-header" data-astro-cid-cv2ltbwd>MY SKILLS</h4> <div class="skills-grid" data-astro-cid-cv2ltbwd> <!-- Fila 1 --> <div data-fx="0.00" class="skill-item skill-item--large" data-astro-cid-cv2ltbwd>Photoshop</div> <div data-fx="0.08" class="skill-item skill-item--cursive" data-astro-cid-cv2ltbwd>Adobe illustrator</div> <!-- Fila 2 --> <div data-fx="0.16" class="skill-item skill-item--large" data-astro-cid-cv2ltbwd>AFTER EFFECTS</div> <div data-fx="0.24" class="skill-item skill-item--cursive" data-astro-cid-cv2ltbwd>Premier Pro</div> <div data-fx="0.32" class="skill-item skill-item--large" data-astro-cid-cv2ltbwd>Dimensions</div> <!-- Fila 3 --> <div data-fx="0.40" class="skill-item skill-item--cursive" data-astro-cid-cv2ltbwd>indesign</div> <div data-fx="0.48" class="skill-item skill-item--large" data-astro-cid-cv2ltbwd>FIGMA</div> <div data-fx="0.56" class="skill-item skill-item--cursive" data-astro-cid-cv2ltbwd>Strikingly</div> <div data-fx="0.64" class="skill-item skill-item--large" data-astro-cid-cv2ltbwd>WORDPRESS</div> </div></div></section><section class="home-behind" data-astro-cid-4pkthcoi> <div class="home-behind__container" data-astro-cid-4pkthcoi> <div class="home-behind__content" data-astro-cid-4pkthcoi> <!-- Imagen izquierda --> <div data-fx="0" class="home-behind__image" data-astro-cid-4pkthcoi> <img src="img/hero/behind.gif" alt="Behind lexmake" data-astro-cid-4pkthcoi> </div> <!-- Texto derecha --> <div class="home-behind__text" data-astro-cid-4pkthcoi> <h3 class="home-behind__title" data-astro-cid-4pkthcoi> <span data-fx="0">Behind</span> <span class="h3-cursiva" data-fx=".15">lexmake</span> </h3> <p data-fx="0.00" class="home-behind__description" data-astro-cid-4pkthcoi>
+Hola, soy Alexia — la mente, el pulso y el caos creativo detrás de
+          Lexmake.
+</p> <p data-fx="0.12" class="home-behind__description" data-astro-cid-4pkthcoi>
+Fundé este estudio con una idea muy sencilla (y un poco ambiciosa):
+          que el diseño de calidad no debería ser un lujo reservado para unos
+          pocos con presupuestos infinitos y reuniones eternas. Todos, desde
+          marcas personales que apenas arrancan hasta empresas consolidadas,
+          merecen verse tan increíbles como lo que ofrecen.
+</p> <p data-fx="0.24" class="home-behind__description" data-astro-cid-4pkthcoi>
+Mi superpoder es traducir lo que tienes en la cabeza (aunque venga con
+          notas de voz, dibujos en servilletas o frases como "algo minimalista
+          pero que impacte") en una identidad visual clara, coherente y
+          memorable. En Lexmake no solo diseñamos. Creamos experiencias que
+          cuentan historias, sin clichés ni plantillas genéricas.
+</p> <p data-fx="0.36" class="home-behind__description body-cursiva" data-astro-cid-4pkthcoi>
+Porque sí: un buen diseño puede (y debe) emocionar, conectar y, por
+          qué no, dejar a tu competencia un poquito nerviosa
+</p> </div> </div> </div> </section>    <section class="home-closing" data-astro-cid-aogfqscw> <div class="home-closing__container" data-astro-cid-aogfqscw> <div class="home-closing__content" data-astro-cid-aogfqscw> <p data-fx="0" class="home-closing__text" data-astro-cid-aogfqscw>
+Quiero ayudar a personas y empresas a tener la imagen que se merecen, a
+        mostrar al mundo qué saben hacer.
+<span class="home-closing__text--italic" data-astro-cid-aogfqscw>Si has llegado hasta aquí es que tienes algo que contarme.</span> </p> <div class="home-closing__cta" data-astro-cid-aogfqscw> <a href="#contact" data-fx=".3" class="normal-link" data-astro-cid-aogfqscw>Contactar</a> </div> </div> </div> </section>    </template>
+<template id="tpl-portfolio"><div class="portfolio" data-astro-cid-ajmli3vt> <!-- Hero Section --> <section class="portfolio-hero" data-astro-cid-ajmli3vt> <h2 class="portfolio-title" data-astro-cid-ajmli3vt>
+DESIGN<br data-astro-cid-ajmli3vt> <span class="portfolio-title-italic" data-astro-cid-ajmli3vt>Portfolio</span> </h2> <p class="portfolio-subtitle" data-astro-cid-ajmli3vt>Mis proyectos</p> </section> <!-- Projects Grid --> <section class="portfolio-grid" data-astro-cid-ajmli3vt> <div class="grid-row" data-astro-cid-ajmli3vt> <a href="#brusi" class="project-card" style="width: 66.66%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/brusi-c.webp" alt="BRUSI" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING</span> <h5 class="project-title" data-astro-cid-ajmli3vt>BRUSI</h5> </div> </a><a href="#mbow" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/mbow-c.webp" alt="MBOW" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING, REDES SOCIALES</span> <h5 class="project-title" data-astro-cid-ajmli3vt>MBOW</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#reclivo" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/reclivo-c.webp" alt="RECLIVO" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING</span> <h5 class="project-title" data-astro-cid-ajmli3vt>RECLIVO</h5> </div> </a><a href="#ax-partners" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/ax-partners-c.webp" alt="AX PARTNERS" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>WB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>AX PARTNERS</h5> </div> </a><a href="#gdesk" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/gdesk-c.webp" alt="GDESK" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING, SAAS</span> <h5 class="project-title" data-astro-cid-ajmli3vt>GDESK</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#alfonso-morales" class="project-card" style="width: 40%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/alfonso-morales-c.webp" alt="ALFONSO MORALES" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>ALFONSO MORALES</h5> </div> </a><a href="#carnisseries-olivella" class="project-card" style="width: 60%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/carnisseries-olivella-c.webp" alt="CARNISSERIES OLIVELLA" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING / REDES SOCIALES</span> <h5 class="project-title" data-astro-cid-ajmli3vt>CARNISSERIES OLIVELLA</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#addicraft" class="project-card" style="width: 25%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/addicraft-c.webp" alt="ADDICRAFT" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING / WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>ADDICRAFT</h5> </div> </a><a href="#flowstark" class="project-card" style="width: 45%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/flowstark-c.webp" alt="FLOWSTARK" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING/ WEB/ SOFTWARE</span> <h5 class="project-title" data-astro-cid-ajmli3vt>FLOWSTARK</h5> </div> </a><a href="#arsol" class="project-card" style="width: 30%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/arsol-c.webp" alt="ARSOL" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>ARSOL</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#zumgo" class="project-card" style="width: 50%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/zumgo-c.webp" alt="ZUMGO" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING/ WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>ZUMGO</h5> </div> </a><a href="#subasting" class="project-card" style="width: 50%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/subasting-c.webp" alt="SUBASTING" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING/ WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>SUBASTING</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#estiber-viatges" class="project-card" style="width: 60%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/estiber-viatges-c.webp" alt="ESTIBER VIATGES" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING/ REDES SOCIALES </span> <h5 class="project-title" data-astro-cid-ajmli3vt>ESTIBER VIATGES</h5> </div> </a><a href="#garrotxa-tech" class="project-card" style="width: 40%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/garrotxa-tech-c.webp" alt="GARROTXA TECH" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING/ WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>GARROTXA TECH</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#gesiuris-real-estate" class="project-card" style="width: 66.66%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/gesiuris-real-estate-c.webp" alt="GESIURIS  REAL ESTATE" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING/ WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>GESIURIS  REAL ESTATE</h5> </div> </a><a href="#weye" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/weye-c.webp" alt="WEYE" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>PACKAGING/ REDES SOCIALES/ WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>WEYE</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#the-original-misoil" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/the-original-misoil-c.webp" alt="THE ORIGINAL MISOIL" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>WEB/ ILUSTRACIONES</span> <h5 class="project-title" data-astro-cid-ajmli3vt>THE ORIGINAL MISOIL</h5> </div> </a><a href="#club-tennis-barcino" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/club-tennis-barcino-c.webp" alt="CLUB TENNIS BARCINO" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>REDES SOCIALES</span> <h5 class="project-title" data-astro-cid-ajmli3vt>CLUB TENNIS BARCINO</h5> </div> </a><a href="#golden-visa" class="project-card" style="width: 33.33%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/golden-visa-c.webp" alt="GOLDEN VISA" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING/ WEB</span> <h5 class="project-title" data-astro-cid-ajmli3vt>GOLDEN VISA</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#andorra-superhome" class="project-card" style="width: 40%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/andorra-superhome-c.webp" alt="ANDORRA SUPERHOME" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>BRANDING</span> <h5 class="project-title" data-astro-cid-ajmli3vt>ANDORRA SUPERHOME</h5> </div> </a><a href="#filly" class="project-card" style="width: 60%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/filly-c.webp" alt="FILLY" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>NAMING, BRANDING, REDES SOCIALES, WEB, APP</span> <h5 class="project-title" data-astro-cid-ajmli3vt>FILLY</h5> </div> </a> </div><div class="grid-row" data-astro-cid-ajmli3vt> <a href="#veronica-lopera" class="project-card" style="width: 25%" data-astro-cid-ajmli3vt> <div class="project-image-wrapper" data-astro-cid-ajmli3vt> <img src="img/p/veronica-lopera-c.webp" alt="VERONICA  LOPERA" class="project-image loaded" loading="lazy" data-astro-cid-ajmli3vt> </div> <div class="project-info" data-astro-cid-ajmli3vt> <span class="project-category" data-astro-cid-ajmli3vt>WEB/BRANDING/NAMING</span> <h5 class="project-title" data-astro-cid-ajmli3vt>VERONICA  LOPERA</h5> </div> </a> </div> </section> </div></template>
+<template id="tpl-solutions"><div class="solutions" data-astro-cid-44eo3ts4> <!-- Hero Section --> <section class="solutions-hero" data-astro-cid-44eo3ts4> <h2 class="solutions-title" data-astro-cid-44eo3ts4> <span class="solutions-title-italic" data-astro-cid-44eo3ts4>visual</span>
+solutions<br data-astro-cid-44eo3ts4>
+THAT WORK
+</h2> <p class="solutions-subtitle" data-astro-cid-44eo3ts4>Soluciones a medida</p> </section> <section class="solutions-folders" data-astro-cid-h4oxh3fn> <div class="solutions-folders-background" data-astro-cid-h4oxh3fn></div> <div class="folders-container" data-astro-cid-h4oxh3fn> <div class="folder" data-index="0" data-astro-cid-h4oxh3fn> <div class="folder-tab" style="background-color: white; left: 0%;" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>DISEÑO GRÁFICO</span> </div> <div class="folder-content" style="background-color: white;" data-astro-cid-h4oxh3fn> <div class="folder-header" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>01</span> </div> <div class="folder-body" data-astro-cid-h4oxh3fn> <div class="folder-image" data-astro-cid-h4oxh3fn> <img src="img/sol/folder1-illustration.png" alt="Diseño gráfico" data-astro-cid-h4oxh3fn> </div> <div class="folder-text" data-astro-cid-h4oxh3fn> <h3 data-astro-cid-h4oxh3fn>Diseño Gráfico</h3> <p data-astro-cid-h4oxh3fn>Si tu marca necesita una identidad visual sólida, coherente y memorable, este servicio de diseño gráfico es para ti. Desde la creación o actualización de tu branding hasta el diseño de piezas visuales para redes, web o impresión, te ayudo a construir una presencia visual que refleje quién eres y conecte con tu audiencia. Incluye desarrollo de identidad (logotipo, paleta de colores, tipografía), piezas gráficas clave y una ronda de ajustes.</p> <p class="body-cursiva" data-astro-cid-h4oxh3fn>Este servicio es ideal si quieres aclarar y fortalecer tu marca, y estás listo para colaborar con confianza y apertura creativa.</p> </div> </div> <a href="#contact" class="folder-link normal-link" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>QUIERO CONTACTAR</span> </a> </div> </div><div class="folder" data-index="1" data-astro-cid-h4oxh3fn> <div class="folder-tab" style="background-color: #D5FF00; left: calc(33.33% - 66.66px);" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>REDES SOCIALES</span> </div> <div class="folder-content" style="background-color: #D5FF00;" data-astro-cid-h4oxh3fn> <div class="folder-header" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>02</span> </div> <div class="folder-body" data-astro-cid-h4oxh3fn> <div class="folder-image" data-astro-cid-h4oxh3fn> <img src="img/sol/folder2-illustration.png" alt="Redes sociales" data-astro-cid-h4oxh3fn> </div> <div class="folder-text" data-astro-cid-h4oxh3fn> <h3 data-astro-cid-h4oxh3fn>Redes Sociales</h3> <p data-astro-cid-h4oxh3fn>Si tu marca necesita comunicar con claridad, estilo y coherencia en redes sociales, este servicio de diseño y planificación es para ti. Desde la creación de templates personalizados hasta la organización estratégica del contenido, te ayudo a construir un feed atractivo, alineado con tu identidad visual y pensado para conectar con tu audiencia. Incluye planificación de publicaciones, diseño gráfico para redes y una ronda de ajustes.</p> <p class="body-cursiva" data-astro-cid-h4oxh3fn>Este servicio es ideal si quieres profesionalizar tu presencia en redes, atraer con contenido visualmente impactante y estás listo para colaborar con confianza y apertura creativa.</p> </div> </div> <a href="#contact" class="folder-link normal-link" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>QUIERO CONTACTAR</span> </a> </div> </div><div class="folder" data-index="2" data-astro-cid-h4oxh3fn> <div class="folder-tab" style="background-color: black; left: calc(66.66% - 133.32px);" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>MULTIMEDIA</span> </div> <div class="folder-content" style="background-color: black;" data-astro-cid-h4oxh3fn> <div class="folder-header" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>03</span> </div> <div class="folder-body" data-astro-cid-h4oxh3fn> <div class="folder-image" data-astro-cid-h4oxh3fn> <img src="img/sol/folder3-illustration.png" alt="Multimedia" data-astro-cid-h4oxh3fn> </div> <div class="folder-text" data-astro-cid-h4oxh3fn> <h3 data-astro-cid-h4oxh3fn>Multimedia</h3> <p data-astro-cid-h4oxh3fn>Si tu marca necesita moverse, hablar y destacar, este servicio es para ti. Desde motion graphics hasta edición de video y animaciones con identidad de marca, creo contenido dinámico que da vida a tus visuales en diversas plataformas. Incluye planificación, edición y una ronda de ajustes.</p> <p class="body-cursiva" data-astro-cid-h4oxh3fn>Este servicio es ideal si buscas contenido audaz y llamativo, y estás listo para colaborar con confianza y apertura creativa.</p> </div> </div> <a href="#contact" class="folder-link normal-link" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>QUIERO CONTACTAR</span> </a> </div> </div><div class="folder" data-index="3" data-astro-cid-h4oxh3fn> <div class="folder-tab" style="background-color: #D9D9D9; left: calc(100% - 200px);" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>DISEÑO WEB</span> </div> <div class="folder-content" style="background-color: #D9D9D9;" data-astro-cid-h4oxh3fn> <div class="folder-header" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>04</span> </div> <div class="folder-body" data-astro-cid-h4oxh3fn> <div class="folder-image" data-astro-cid-h4oxh3fn> <img src="img/sol/folder4-illustration.png" alt="Diseño Web" data-astro-cid-h4oxh3fn> </div> <div class="folder-text" data-astro-cid-h4oxh3fn> <h3 data-astro-cid-h4oxh3fn>Diseño Web</h3> <p data-astro-cid-h4oxh3fn>Si tu marca necesita una presencia digital clara, atractiva y funcional, este servicio de diseño web es para ti. Desde el diseño de sitios web modernos hasta la estructura visual de landing pages y portfolios, creo experiencias digitales que reflejan tu identidad de marca y guían al usuario de forma intuitiva. Incluye planificación, diseño visual, adaptación a dispositivos móviles y una ronda de ajustes.</p> <p class="body-cursiva" data-astro-cid-h4oxh3fn>Este servicio es ideal si quieres construir o renovar tu presencia online con una estética coherente y estratégica, y estás listo para colaborar con confianza y apertura creativa.</p> </div> </div> <a href="#contact" class="folder-link normal-link" data-astro-cid-h4oxh3fn> <span data-astro-cid-h4oxh3fn>QUIERO CONTACTAR</span> </a> </div> </div> </div> </section>  <section class="work-plan" data-astro-cid-ootxauno> <div class="work-plan__container" data-astro-cid-ootxauno> <h3 class="work-plan__title" data-astro-cid-ootxauno> <span class="h3-cursiva" data-astro-cid-ootxauno>Plan de</span> <span data-astro-cid-ootxauno>trabajo</span> </h3> <ul class="work-plan__list" data-astro-cid-ootxauno> <li class="work-plan__item" data-astro-cid-ootxauno>01/ Videollamada inicial</li><li class="work-plan__item" data-astro-cid-ootxauno>02/ Recepción de información</li><li class="work-plan__item" data-astro-cid-ootxauno>03/ Concepto de marca</li><li class="work-plan__item" data-astro-cid-ootxauno>04/ Feedback o correcciones</li><li class="work-plan__item" data-astro-cid-ootxauno>05/ Identidad visual</li><li class="work-plan__item" data-astro-cid-ootxauno>06/ Feedback o correcciones</li><li class="work-plan__item" data-astro-cid-ootxauno>07/ Recursos gráficos</li><li class="work-plan__item" data-astro-cid-ootxauno>08/ Feedback o correcciones</li><li class="work-plan__item" data-astro-cid-ootxauno>09/ Entrega de archivos finales</li><li class="work-plan__item" data-astro-cid-ootxauno>10/ Pago del 60% restante</li><li class="work-plan__item" data-astro-cid-ootxauno>11/ Videollamada de cierre (opcional)</li> </ul> <div class="work-plan__cta" data-astro-cid-ootxauno> <a href="#" class="normal-link" data-astro-cid-ootxauno>¡EMPEZAR!</a> </div> </div> </section>   <div class="solutions__portfolio-cta-container" data-astro-cid-44eo3ts4> <!-- Título de la sección --><div class="portfolio-cta__header" data-astro-cid-yyawck5k> <h3 class="portfolio-cta__title" data-astro-cid-yyawck5k> <span data-astro-cid-yyawck5k>DESIGN</span> <span class="h3-cursiva" data-astro-cid-yyawck5k>Portfolio</span> </h3> </div> <!-- Grid de imágenes del portfolio --> <div class="portfolio-cta__grid" data-astro-cid-yyawck5k> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-1.webp" alt="Portfolio Project 1" data-astro-cid-yyawck5k> </div> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-2.webp" alt="Portfolio Project 2" data-astro-cid-yyawck5k> </div> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-3.webp" alt="Portfolio Project 3" data-astro-cid-yyawck5k> </div> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-4.webp" alt="Portfolio Project 4" data-astro-cid-yyawck5k> </div> </div> <!-- Botón Ver Más --> <div class="portfolio-cta__view-more" data-astro-cid-yyawck5k> <a href="#portfolio" class="view-more-link" data-astro-cid-yyawck5k>VER MÁS</a> </div>   </div> </div></template>
+<template id="tpl-resources"><div class="resources" data-astro-cid-fmgelhwa> <!-- Hero Section --> <section class="resources-hero" data-astro-cid-fmgelhwa> <h2 class="resources-title" data-astro-cid-fmgelhwa>
+LEXMAKE <br data-astro-cid-fmgelhwa><span class="resources-title-italic" data-astro-cid-fmgelhwa>resources</span> </h2> <p class="resources-subtitle" data-astro-cid-fmgelhwa>Herramientas</p> </section> <section class="resources-blocks" data-astro-cid-imxkcpv6> <div class="resources-blocks__container" data-astro-cid-imxkcpv6> <div class="resources-blocks__grid" data-astro-cid-imxkcpv6> <article class="resource-card" data-astro-cid-imxkcpv6> <div class="resource-card__image-wrapper" data-astro-cid-imxkcpv6> <img src="img/res/reticulas.webp" alt="RETÍCULA ILLUSTRATOR LOGO MAKER" class="resource-card__image" loading="lazy" data-astro-cid-imxkcpv6> </div> <div class="resource-card__content" data-astro-cid-imxkcpv6> <h3 class="resource-card__title" data-astro-cid-imxkcpv6>RETÍCULA ILLUSTRATOR LOGO MAKER</h3> <p class="resource-card__description" data-astro-cid-imxkcpv6>Plantilla base para construir logotipos con precisión, coherencia visual y control total de proporciones en Illustrator.</p> <a href="https://www.lexmake.com/assets/resources/RETICULAS_LEXMAKE.ai" target="_blank" rel="noopener" class="normal-link resource-card__link" data-astro-cid-imxkcpv6>
+Descargar
+</a> </div> </article><article class="resource-card" data-astro-cid-imxkcpv6> <div class="resource-card__image-wrapper" data-astro-cid-imxkcpv6> <img src="img/res/branding.webp" alt="BRANDING PRESENTATION MOCKUPS" class="resource-card__image" loading="lazy" data-astro-cid-imxkcpv6> </div> <div class="resource-card__content" data-astro-cid-imxkcpv6> <h3 class="resource-card__title" data-astro-cid-imxkcpv6>BRANDING PRESENTATION MOCKUPS</h3> <p class="resource-card__description" data-astro-cid-imxkcpv6>Mockups listos para presentar tu identidad de marca de forma clara, atractiva y profesional en distintos soportes.</p> <a href="https://drive.google.com/AQUI_TU_ENLACE_DE_DESCARGA" class="normal-link resource-card__link" data-astro-cid-imxkcpv6>
+Descargar
+</a> </div> </article><article class="resource-card" data-astro-cid-imxkcpv6> <div class="resource-card__image-wrapper" data-astro-cid-imxkcpv6> <img src="img/res/briefing-img.webp" alt="INITIAL BRIEF TO MAKE A WEBSITE" class="resource-card__image" loading="lazy" data-astro-cid-imxkcpv6> </div> <div class="resource-card__content" data-astro-cid-imxkcpv6> <h3 class="resource-card__title" data-astro-cid-imxkcpv6>INITIAL BRIEF TO MAKE A WEBSITE</h3> <p class="resource-card__description" data-astro-cid-imxkcpv6>Documento guía para definir objetivos, estructura y necesidades clave antes de iniciar el diseño de un sitio web.</p> <a href="https://www.lexmake.com/assets/resources/BREIFINGS.zip" target="_blank" rel="noopener" class="normal-link resource-card__link" data-astro-cid-imxkcpv6>
+Descargar
+</a> </div> </article><article class="resource-card" data-astro-cid-imxkcpv6> <div class="resource-card__image-wrapper" data-astro-cid-imxkcpv6> <img src="img/res/logoProposal.webp" alt="LOGO PROPOSAL PRESENTATION" class="resource-card__image" loading="lazy" data-astro-cid-imxkcpv6> </div> <div class="resource-card__content" data-astro-cid-imxkcpv6> <h3 class="resource-card__title" data-astro-cid-imxkcpv6>LOGO PROPOSAL PRESENTATION</h3> <p class="resource-card__description" data-astro-cid-imxkcpv6>Documento diseñado para presentar propuestas de logotipo de forma clara, estratégica y profesional, explicando el concepto, las decisiones visuales y su correcta aplicación.</p> <a href="https://www.lexmake.com/assets/resources/Presentación propuesta Logo.ai.zip" target="_blank" rel="noopener" class="normal-link resource-card__link" data-astro-cid-imxkcpv6>
+Descargar
+</a> </div> </article> </div> </div> </section>  <div class="resources__portfolio-cta-container" data-astro-cid-fmgelhwa> <!-- Título de la sección --><div class="portfolio-cta__header" data-astro-cid-yyawck5k> <h3 class="portfolio-cta__title" data-astro-cid-yyawck5k> <span data-astro-cid-yyawck5k>DESIGN</span> <span class="h3-cursiva" data-astro-cid-yyawck5k>Portfolio</span> </h3> </div> <!-- Grid de imágenes del portfolio --> <div class="portfolio-cta__grid" data-astro-cid-yyawck5k> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-1.webp" alt="Portfolio Project 1" data-astro-cid-yyawck5k> </div> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-2.webp" alt="Portfolio Project 2" data-astro-cid-yyawck5k> </div> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-3.webp" alt="Portfolio Project 3" data-astro-cid-yyawck5k> </div> <div class="portfolio-cta__item" data-astro-cid-yyawck5k> <img src="img/pcta/lexmake-portfolio-4.webp" alt="Portfolio Project 4" data-astro-cid-yyawck5k> </div> </div> <!-- Botón Ver Más --> <div class="portfolio-cta__view-more" data-astro-cid-yyawck5k> <a href="#portfolio" class="view-more-link" data-astro-cid-yyawck5k>VER MÁS</a> </div>   </div> </div></template>
+<template id="tpl-contact"><div class="contact" data-astro-cid-ahc3q4vw> <!-- Hero Section --> <section class="contact-hero" data-astro-cid-ahc3q4vw> <h2 class="contact-title" data-astro-cid-ahc3q4vw> <span class="contact-title-italic" data-astro-cid-ahc3q4vw>Lex</span>make it<br data-astro-cid-ahc3q4vw>
+HAPPEN
+</h2> <p class="contact-subtitle" data-astro-cid-ahc3q4vw>
+Big ideas start with a simple message. Write me!
+</p> </section> <section class="contact-form" data-astro-cid-fknn56lw> <div class="contact-form__container" data-astro-cid-fknn56lw> <!-- Pregunta inicial --> <h3 class="contact-form__question" data-astro-cid-fknn56lw>¿Qué puedo hacer por ti?</h3> <!-- Botones de selección múltiple --> <div class="contact-form__services" data-astro-cid-fknn56lw> <button type="button" class="service-button" data-service="web" data-astro-cid-fknn56lw> <span class="service-button__text" data-astro-cid-fknn56lw>Web</span> </button> <button type="button" class="service-button" data-service="logotipo" data-astro-cid-fknn56lw> <span class="service-button__text" data-astro-cid-fknn56lw>Branding</span> </button> <button type="button" class="service-button" data-service="redes-sociales" data-astro-cid-fknn56lw> <span class="service-button__text" data-astro-cid-fknn56lw>Redes Sociales</span> </button> <button type="button" class="service-button" data-service="video" data-astro-cid-fknn56lw> <span class="service-button__text" data-astro-cid-fknn56lw>Video</span> </button> <button type="button" class="service-button" data-service="asesoramiento" data-astro-cid-fknn56lw> <span class="service-button__text" data-astro-cid-fknn56lw>Asesoramiento</span> </button> </div> <!-- Formulario --> <form class="contact-form__form" id="contact-form" data-astro-cid-fknn56lw> <input type="hidden" name="services" id="selected-services" data-astro-cid-fknn56lw> <!-- Honeypot field - campo trampa para bots (invisible) --> <input type="text" name="website" id="website" class="honeypot" tabindex="-1" autocomplete="off" data-astro-cid-fknn56lw> <div class="contact-form__grid" data-astro-cid-fknn56lw> <!-- Columna izquierda --> <div class="contact-form__field" data-astro-cid-fknn56lw> <label for="name" data-astro-cid-fknn56lw>Nombre</label> <input type="text" id="name" name="name" required data-astro-cid-fknn56lw> </div> <!-- Columna derecha --> <div class="contact-form__field" data-astro-cid-fknn56lw> <label for="email" data-astro-cid-fknn56lw>Mail</label> <input type="email" id="email" name="email" required data-astro-cid-fknn56lw> </div> <!-- Segunda fila --> <div class="contact-form__field" data-astro-cid-fknn56lw> <label for="phone" data-astro-cid-fknn56lw>Teléfono</label> <input type="tel" id="phone" name="phone" data-astro-cid-fknn56lw> </div> <div class="contact-form__field" data-astro-cid-fknn56lw> <label for="project-name" data-astro-cid-fknn56lw>Nombre de tu empresa/marca</label> <input type="text" id="project-name" name="project_name" data-astro-cid-fknn56lw> </div> <!-- Tercera fila --> <div class="contact-form__field" data-astro-cid-fknn56lw> <label for="has-website" data-astro-cid-fknn56lw>¿Tienes web?</label> <input type="text" id="has-website" name="has_website" data-astro-cid-fknn56lw> </div> <div class="contact-form__field" data-astro-cid-fknn56lw> <label for="budget" data-astro-cid-fknn56lw>Presupuesto</label> <input type="text" id="budget" name="budget" data-astro-cid-fknn56lw> </div> </div> <!-- Área de texto completa --> <div class="contact-form__field contact-form__field--full" data-astro-cid-fknn56lw> <label for="description" data-astro-cid-fknn56lw>Describe tu proyecto</label> <textarea id="description" name="description" rows="5" data-astro-cid-fknn56lw></textarea> </div> <!-- Botón de envío --> <div class="contact-form__submit" data-astro-cid-fknn56lw> <button class="lexmake-button lexmake-button--primary lexmake-button--default " type="submit" data-astro-cid-fknn56lw="true" data-astro-cid-ljkzbozy="true"> <span class="lexmake-button__text" data-astro-cid-ljkzbozy>  Enviar  </span> </button>  </div> <!-- Mensaje de estado --> <div class="contact-form__message" id="form-message" data-astro-cid-fknn56lw></div> </form> </div> </section> <!-- EmailJS SDK -->    </div></template>
+<script>window.LX_FULL={"brusi": "Brusi es una empresa de catering con una larga trayectoria en el distrito de Sant Gervasi, Barcelona. Se desarrolló un rebranding completo de la marca, actualizando su identidad visual para mantener su esencia y proximidad, pero con una imagen más actual, cuidada y coherente con su evolución.", "mbow": "MBOW es una agencia especializada en gestión de redes sociales, travel, stable management y creación de contenido. Se desarrolló todo el branding de la marca desde cero, creando una identidad elegante, cuidada y con personalidad, junto con el diseño de sus redes sociales y diferentes aplicaciones visuales.", "reclivo": "Reclivo es un proyecto de branding desarrollado para una empresa especializada en mobiliario, equipamiento y soluciones para oficinas y hogar. Se creó la identidad de marca desde cero, definiendo el universo visual, el sistema gráfico y sus distintas aplicaciones.", "ax-partners": "Cala Blanca es un proyecto web desarrollado para AX Partners para la comercialización de una promoción de obra nueva en Sitges. Se diseñó una página visual y elegante, orientada a presentar las viviendas, transmitir el valor de la promoción y facilitar el acceso a la información comercial.", "gdesk": "GDESK es un SaaS desarrollado para Gesiuris que permite gestionar y realizar operaciones financieras desde un entorno digital ágil e intuitivo. El proyecto incluyó el diseño completo de la plataforma, la creación del logotipo y el desarrollo de piezas publicitarias.", "alfonso-morales": "Alfonso Morales es un proyecto web desarrollado para un estudio de arquitectura. Se diseñó una página elegante, minimalista y visual, enfocada en poner en valor los proyectos y la identidad del arquitecto.", "carnisseries-olivella": "Carnisseries Olivella es un comercio de proximidad especializado en productos cárnicos. Se desarrolló una nueva imagen de marca y se gestiona la comunicación en redes sociales, modernizando su identidad y reforzando su conexión con el público local.", "addicraft": "Addifract es una ingeniería especializada en optimización topológica y fabricación aditiva. Se desarrolló su branding y su página web, creando una identidad tecnológica y contemporánea que comunica innovación y precisión.", "flowstark": "Flowstark es un software para la gestión de pagos. Se desarrolló todo su branding, incluyendo nuevo logotipo y paleta de colores, así como el diseño de la plataforma y su página web, creando una identidad digital sólida, clara y orientada a la usabilidad.", "arsol": "Arsol es una empresa especializada en la distribución de material odontológico, como fresadoras y equipamiento técnico. Se desarrolló su página web, creando una plataforma clara y funcional que facilita la presentación de sus productos y servicios.", "zumgo": "Zumgo es una empresa especializada en máquinas expendedoras que preparan zumo de naranja natural al momento. Se desarrolló su branding, su página web programada a medida, y el diseño de merchandising y de las máquinas expendedoras.", "subasting": "Subasting es un proyecto desarrollado junto a la agencia Ayonow. Se creó todo su branding y el diseño de su página web, construyendo una identidad sólida y contemporánea que refuerza el posicionamiento y la presencia digital de la marca.", "estiber-viatges": "Estiber Viajes es una agencia especializada en viajes y escapadas. Se realizó un rebranding y se gestiona actualmente la comunicación en redes sociales, renovando su identidad y reforzando su presencia digital.", "garrotxa-tech": "Garrotxa Tech es una asociación sin ánimo de lucro que promueve el ecosistema digital y tecnológico de la Garrotxa de forma abierta y colaborativa. Se desarrolló su branding y su página web, creando una identidad clara y cercana.", "gesiuris-real-estate": "Gesiuris Real Estate es una inmobiliaria especializada en oficinas prime en Barcelona. Se desarrolló su branding y su página web, creando una identidad sólida y elegante acorde a su posicionamiento, y actualmente se gestiona su diseño gráfico.", "weye": "Weye es una empresa de productos oftalmológicos para la salud ocular. Se desarrolló el packaging, la gestión de redes sociales, la creación de mockups y su página web, construyendo una identidad visual cuidada que refuerza la confianza y el bienestar.", "the-original-misoil": "The Original Misoil es una marca gastronómica. Se desarrolló su página web con Strikingly y se creó un pack de ilustraciones para contar de forma visual la historia del origen de Misoil, reforzando el storytelling y la identidad de la marca.", "club-tennis-barcino": "Club Tennis Barcino es un club deportivo de referencia en Barcelona. Se desarrolla la gestión de redes sociales y la creación de piezas gráficas, incluyendo pósters, vídeos y fotografía.", "golden-visa": "Golden Visa es una empresa especializada en la obtención de visas para España mediante inversión. Se desarrolló su branding y su página web, creando una identidad clara y profesional que transmite confianza.", "andorra-superhome": "Andorra Superhome es una inmobiliaria ubicada en Andorra. Se desarrolló su branding, creando una identidad visual sólida y coherente que transmite profesionalidad y confianza.", "filly": "Filly es una plataforma digital creada para conectar a personas y profesionales del mundo ecuestre. El proyecto abarcó el desarrollo integral de la marca, desde el naming y la identidad visual hasta el diseño de la aplicación y la página web.", "veronica-lopera": "Veronicalopera es una nueva inmobiliaria ubicada en Cunit. Se desarrolló su nueva página web, se creó una imagen renovada con un nuevo naming y se implementó un iframe funcional para mejorar la experiencia del usuario."};</script>
+<script>(() => {
+// w = capturas de la web real (img/w/<w>-i.webp), url = web en producción
+const P = [
+ {s:"the-original-misoil",n:"The Original Misoil",c:["Web","Ilustración"],sec:"Gastronomía",url:"https://theoriginalmisoil.com",w:"misoil",wn:8,d:"Marca gastronómica. Se desarrolló su página web con Strikingly y se creó un pack de ilustraciones para contar de forma visual la historia del origen de Misoil."},
+ {s:"flowstark",n:"Flowstark",c:["Branding","Web","Software"],sec:"Software de pagos",url:"https://www.flowstark.com",w:"flowstark",wn:7,d:"Software para la gestión de pagos. Branding completo con nuevo logotipo y paleta de colores, diseño de la plataforma y de su página web."},
+ {s:"gesiuris-real-estate",n:"Gesiuris Real Estate",c:["Branding","Web"],sec:"Inmobiliaria prime",url:"https://www.gesiurisrealestate.com",w:"gesiuris",wn:5,d:"Inmobiliaria especializada en oficinas prime en Barcelona. Branding y página web con una identidad sólida y elegante acorde a su posicionamiento."},
+ {s:"zumgo",n:"Zumgo",c:["Branding","Web"],sec:"Vending",d:"Máquinas expendedoras de zumo de naranja natural al momento. Branding, web programada a medida, merchandising y diseño de las máquinas."},
+ {s:"garrotxa-tech",n:"Garrotxa Tech",c:["Branding","Web"],sec:"Asociación tecnológica",url:"https://www.garrotxatech.com",w:"garrotxa",wn:6,d:"Asociación sin ánimo de lucro que impulsa el ecosistema digital de la Garrotxa. Branding y página web con una identidad clara y cercana."},
+ {s:"arsol",n:"Arsol",c:["Web"],sec:"Material dental",url:"https://www.arsol.es",w:"arsol",wn:4,d:"Distribución de material odontológico y equipamiento técnico. Una web clara y funcional para presentar sus productos y servicios."},
+ {s:"brusi",n:"Brusi",c:["Branding"],sec:"Catering",d:"Catering con larga trayectoria en Sant Gervasi, Barcelona. Rebranding completo que mantiene su esencia y proximidad con una imagen más actual."},
+ {s:"filly",n:"Filly",c:["Naming","Branding","Web","App"],sec:"Mundo ecuestre",d:"Plataforma que conecta a personas y profesionales del mundo ecuestre. Naming, identidad visual, diseño de la app y de la página web."},
+ {s:"addicraft",n:"Addicraft",c:["Branding","Web"],sec:"Ingeniería",d:"Ingeniería de optimización topológica y fabricación aditiva. Branding y web con una identidad tecnológica que comunica innovación y precisión."},
+ {s:"mbow",n:"MBOW",c:["Branding","Redes sociales"],sec:"Agencia de contenido",d:"Agencia de redes sociales, travel y creación de contenido. Branding desde cero, elegante y con personalidad, y diseño de sus redes."},
+ {s:"weye",n:"Weye",c:["Packaging","Redes sociales","Web"],sec:"Salud ocular",d:"Productos oftalmológicos para la salud ocular. Packaging, redes sociales, mockups y página web con una identidad cuidada y de confianza."},
+ {s:"gdesk",n:"GDESK",c:["Branding","SaaS"],sec:"SaaS financiero",d:"SaaS para Gesiuris para gestionar operaciones financieras. Diseño completo de la plataforma, logotipo y piezas publicitarias de lanzamiento."},
+ {s:"ax-partners",n:"AX Partners",c:["Web"],sec:"Obra nueva, Sitges",d:"Cala Blanca, promoción de obra nueva en Sitges. Una web visual y elegante para presentar las viviendas y su información comercial."},
+ {s:"alfonso-morales",n:"Alfonso Morales",c:["Web"],sec:"Arquitectura",d:"Estudio de arquitectura. Una web elegante, minimalista y visual que pone en valor los proyectos y la identidad del arquitecto."},
+ {s:"andorra-superhome",n:"Andorra Superhome",c:["Branding"],sec:"Inmobiliaria",d:"Inmobiliaria en Andorra. Identidad visual sólida y coherente que transmite profesionalidad y confianza."},
+ {s:"reclivo",n:"Reclivo",c:["Branding"],sec:"Mobiliario",d:"Mobiliario y soluciones para oficina y hogar. Identidad desde cero: universo visual, sistema gráfico y aplicaciones."},
+ {s:"carnisseries-olivella",n:"Carnisseries Olivella",c:["Branding","Redes sociales"],sec:"Comercio local",d:"Comercio de proximidad de productos cárnicos. Nueva imagen de marca y gestión de su comunicación en redes sociales."},
+ {s:"subasting",n:"Subasting",c:["Branding","Web"],sec:"Con Ayonow",d:"Proyecto junto a la agencia Ayonow. Branding y página web con una identidad sólida y contemporánea."},
+ {s:"estiber-viatges",n:"Estiber Viatges",c:["Branding","Redes sociales"],sec:"Viajes",d:"Agencia de viajes y escapadas. Rebranding y gestión actual de su comunicación en redes sociales."},
+ {s:"club-tennis-barcino",n:"Club Tennis Barcino",c:["Redes sociales"],sec:"Club deportivo",d:"Club deportivo de referencia en Barcelona. Redes sociales y piezas gráficas: pósters, vídeo y fotografía."},
+ {s:"golden-visa",n:"Golden Visa",c:["Branding","Web"],sec:"Inversión y visados",d:"Visados para España mediante inversión. Branding y web con una identidad clara y profesional que transmite confianza."},
+ {s:"veronica-lopera",n:"Veronica Lopera",c:["Naming","Branding","Web"],sec:"Inmobiliaria, Cunit",d:"Nueva inmobiliaria en Cunit. Nuevo naming, imagen renovada y página web con un iframe funcional."}
+];
+// textos completos originales para la ficha
+const FULL = window.LX_FULL || {};
+const $ = (q,r=document)=>r.querySelector(q), $$=(q,r=document)=>[...r.querySelectorAll(q)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lerp=(a,b,t)=>a+(b-a)*t, clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const cover=s=>`img/p/${s}-c.webp`;
+const shots=p=>{const a=[]; if(p.w) for(let i=0;i<p.wn;i++) a.push(`img/w/${p.w}-${i}.webp`); [1,0,2,3,5,6,4].forEach(i=>a.push(`img/p/${p.s}-${i}.webp`)); return a;};
+
+// paleta (3 colores dominantes de la portada)
+const pc={};
+const palette=src=>pc[src]||(pc[src]=new Promise(res=>{const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=48;c.height=24;const x=c.getContext('2d');x.drawImage(im,0,0,48,24);const d=x.getImageData(0,0,48,24).data,b={};for(let i=0;i<d.length;i+=4){const k=(d[i]>>5)+','+(d[i+1]>>5)+','+(d[i+2]>>5);(b[k]||={n:0,r:0,g:0,b:0});b[k].n++;b[k].r+=d[i];b[k].g+=d[i+1];b[k].b+=d[i+2];}res(Object.values(b).sort((a,b)=>b.n-a.n).slice(0,3).map(o=>`rgb(${o.r/o.n|0},${o.g/o.n|0},${o.b/o.n|0})`));}catch(e){res(['#000','#777','#ccc'])}};im.onerror=()=>res(['#000','#777','#ccc']);im.src=src;}));
+
+// bucle
+const ticks=new Set(); let view=[];
+(function raf(){view.forEach(f=>f());requestAnimationFrame(raf)})();
+
+// entradas originales (fade-up al entrar en pantalla)
+let io;
+function fx(root){
+  io&&io.disconnect();
+  io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target;setTimeout(()=>el.classList.add('in'),(+el.dataset.fx||0)*1000);io.unobserve(el);}}),{rootMargin:'0px 0px -18% 0px'});
+  $$('[data-fx]',root).forEach(el=>io.observe(el));
+}
+
+// ---------- HOME: sección trabajos ----------
+function work(list){
+  const n=list.length;
+  const el=document.createElement('section'); el.className='lx-show'; el.style.height=`calc(${n} * 42vh + 100vh)`;
+  el.innerHTML=`<div class="lx-stick">
+    <div class="lx-stage">${list.map((p,i)=>`<a class="lx-card" href="#${p.s}" data-i="${i}" aria-label="${esc(p.n)}"><img src="${cover(p.s)}" alt="${esc(p.n)}" loading="${i<4?'eager':'lazy'}"></a>`).join('')}</div>
+    <div class="lx-info lx-s"></div>
+    <div class="lx-sel"><span class="lx-s lx-mute">Proyectos</span><span class="lx-num"><span>01</span></span><span class="lx-s">/${pad(n)}</span></div>
+    <div class="lx-list">${list.map((p,i)=>`<div role="button" tabindex="0" class="lx-item lx-s" data-j="${i}"><span class="cat">${esc(p.c.join(', '))}</span><span class="t">${esc(p.n)}</span><span class="d"></span><span class="ds">${esc(p.d)}</span></div>`).join('')}</div>
+    <div class="lx-sw"><i></i><i></i><i></i></div>
+    <div class="lx-mobinfo lx-s"><span class="lx-mute cat"></span><span class="t"></span><div class="sw"><i></i><i></i><i></i></div></div>
+    <div class="lx-foot"><span class="lx-s lx-mute">Scroll</span><a href="#portfolio" class="view-more-link">Ver todos</a></div>
+  </div>`;
+  const cards=$$('.lx-card',el), items=$$('.lx-item',el), info=$('.lx-info',el), num=$('.lx-num span',el), list_=$('.lx-list',el), sw=$$('.lx-sw i, .lx-mobinfo .sw i',el), mob=$('.lx-mobinfo',el);
+  let cur=0, act=-1;
+  const set=i=>{
+    const p=list[i]; act=i;
+    info.innerHTML=`<div class="lx-pair"><span class="lx-mute">Servicios</span><span>${p.c.map(esc).join('<br>')}</span></div>
+      <div class="lx-pair c2"><span class="lx-mute">Sector</span><span>${esc(p.sec)}</span></div>
+      <div class="lx-pair"></div>
+      <div class="lx-pair c2"><span class="lx-mute">Estudio</span><span>Lexmake, Barcelona${p.url?`<br><a href="${p.url}" target="_blank" rel="noopener">${esc(p.url.replace(/^https?:\/\/(www\.)?/,''))}</a>`:''}</span></div>`;
+    if(reduce){num.textContent=pad(i+1);}
+    else{num.style.transform='translateY(-100%)';setTimeout(()=>{num.textContent=pad(i+1);num.style.transition='none';num.style.transform='translateY(100%)';void num.offsetHeight;num.style.transition='';num.style.transform='';},300);}
+    items.forEach((b,k)=>b.classList.toggle('on',k===i));
+    $('.cat',mob).textContent=p.c.join(', '); $('.t',mob).textContent=p.n;
+    palette(cover(p.s)).then(c=>{if(act===i) sw.forEach((d,k)=>d.style.background=c[k%3]);});
+  };
+  const jump=j=>{const top=scrollY+el.getBoundingClientRect().top, span=el.offsetHeight-innerHeight; scrollTo({top:top+span*(j/(n-1)),behavior:reduce?'auto':'smooth'});};
+  items.forEach(b=>{const go=()=>{const j=+b.dataset.j; if(Math.abs(j-cur)<.5) location.hash=list[j].s; else jump(j);}; b.addEventListener('click',go); b.addEventListener('keydown',e=>{if(e.key==='Enter')go();});});
+  cards.forEach(c=>c.addEventListener('click',e=>{const i=+c.dataset.i;if(Math.abs(i-cur)>.5){e.preventDefault();jump(i);}}));
+  const tick=()=>{
+    const r=el.getBoundingClientRect(), span=el.offsetHeight-innerHeight;
+    if(r.bottom<-50||r.top>innerHeight+50) return;
+    const target=clamp(-r.top/span,0,1)*(n-1);
+    cur=reduce?target:lerp(cur,target,.09);
+    const vw=innerWidth/100, vh=innerHeight/100, m=innerWidth<=768;
+    cards.forEach((c,i)=>{
+      // geometría medida en huyml: anterior arriba-dcha (+10vw,-38vh), siguiente abajo-izq (-19vw,+55vh),
+      // el resto apiladas detrás como un mazo
+      const a=i-cur, ab=Math.abs(a), t=Math.min(ab,1), extra=Math.max(0,ab-1);
+      let x,y,rz,ry;
+      if(a<0){ x=(m?16:10.2)*vw*t + extra*(m?12:30); y=-(m?48:45)*vh*t - extra*(m?10:22); }
+      else   { x=-(m?22:19)*vw*t - extra*(m?12:30); y=(m?64:55)*vh*t + extra*(m?10:22); }
+      rz=1+t*4.5+Math.min(extra,3)*1.2; ry=-6+t*(a<0?-8:8);
+      const z=-t*40-Math.min(extra,5)*30;
+      c.style.transform=`translate(-50%,-50%) perspective(1400px) translate3d(${x}px,${y}px,${z}px) rotateY(${ry}deg) rotateZ(${rz}deg)`;
+      c.style.opacity=extra>4?0:1;
+      c.style.zIndex=100-Math.round(ab*10);
+    });
+    // lista derecha: el activo queda a la altura de la imagen central
+    list_.style.transform=`translateY(${innerHeight*.5-50-cur*173}px)`;
+    const i=clamp(Math.round(cur),0,n-1); if(i!==act) set(i);
+  };
+  set(0);
+  return {el,tick};
+}
+
+// título del hero: efecto máquina de escribir, letra a letra con cursor
+function heroTitle(){
+  const h=$('.hero__title'); if(!h) return;
+  const chars=[];
+  const wrap=(txt)=>[...txt].map(ch=>`<span class="tc">${ch===' '?' ':esc(ch)}</span>`).join('');
+  $$('.hero__title-line',h).forEach(line=>{
+    const out=[];
+    line.childNodes.forEach(n=>{
+      if(n.nodeType===3){ const t=n.textContent.replace(/\s+/g,' '); if(t.trim()||out.length) out.push(wrap(t)); }
+      else if(n.classList&&n.classList.contains('hero__title-line--cursive')) out.push(`<span class="hero__title-line--cursive" data-astro-cid-ocrortkz>${wrap(n.textContent)}</span>`);
+    });
+    line.innerHTML=out.join('').replace(/^(<span class="tc"> <\/span>)+|(<span class="tc"> <\/span>)+$/g,'');
+  });
+  const hero=h.closest('.hero'); hero.classList.add('lx-ty');
+  const cs=$$('.tc',h), caret=document.createElement('span'); caret.className='lx-caret';
+  if(reduce){cs.forEach(c=>c.classList.add('on'));hero.classList.add('typed');return;}
+  let i=0;
+  const step=()=>{
+    if(i>=cs.length){ hero.classList.add('typed'); setTimeout(()=>caret.classList.add('bye'),1600); return; }
+    const c=cs[i++]; c.classList.add('on'); c.after(caret);
+    const ch=c.textContent, last=c.parentElement!==cs[i]?.parentElement;
+    setTimeout(step, ch===' '?45: last?70 : 16+Math.random()*22);
+  };
+  cs[0].before(caret);
+  setTimeout(step,window.__lxIntro?1650:200);
+}
+
+// efecto máquina de escribir para cualquier título (mantiene cursivas y saltos de línea)
+function typeTitle(el,delay){
+  if(!el) return;
+  const walk=n=>{ [...n.childNodes].forEach(c=>{
+    if(c.nodeType===3){ const t=c.textContent.replace(/\s+/g,' '); if(!t.trim()&&!t.length) return;
+      const f=document.createDocumentFragment(); [...t].forEach(ch=>{const sp=document.createElement('span');sp.className='tc';sp.textContent=ch;f.appendChild(sp);}); c.replaceWith(f); }
+    else if(c.nodeType===1&&c.tagName!=='BR') walk(c); }); };
+  walk(el); el.classList.add('lx-ty');
+  const cs=$$('.tc',el).filter(c=>!(c.textContent===' '&&(!c.previousElementSibling||c.previousElementSibling.tagName==='BR')));
+  if(reduce){cs.forEach(c=>c.classList.add('on'));$$('.tc',el).forEach(c=>c.classList.add('on'));return;}
+  $$('.tc',el).forEach(c=>{ if(!cs.includes(c)) c.classList.add('on'); });
+  const caret=document.createElement('span'); caret.className='lx-caret'; cs[0].before(caret); let i=0;
+  const step=()=>{ if(i>=cs.length){setTimeout(()=>caret.classList.add('bye'),1400);return;}
+    const c=cs[i++]; c.classList.add('on'); c.after(caret); setTimeout(step,c.textContent===' '?45:16+Math.random()*22); };
+  setTimeout(step,delay);
+}
+// entradas con desenfoque, escalonadas
+const stag=(sel,step=.08,base=0,root=document)=>$$(sel,root).forEach((e,i)=>e.setAttribute('data-fx',(base+i*step).toFixed(2)));
+// transición con desenfoque cuando una sección tapa a la anterior
+const blurOver=(cover,targets)=>()=>{ if(reduce||!cover) return; const r=cover.getBoundingClientRect().top; const k=clamp((innerHeight-r)/(innerHeight*.75),0,1);
+  targets.forEach(t=>{ if(!t) return; t.style.filter=k?`blur(${(k*16).toFixed(1)}px)`:''; t.style.opacity=k?(1-k*.8).toFixed(3):''; }); };
+
+// ---------- páginas en el estilo nuevo (contenido sacado de tus páginas originales) ----------
+const tpl=id=>{const d=document.createElement('div'); d.innerHTML=$('#'+id).innerHTML; return d;};
+const pageHead=(titleHTML,sub)=>`<section class="lx-ph"><h2 class="lx-pt">${titleHTML}</h2><p class="lx-s lx-mute">${sub}</p></section>`;
+
+// ilustraciones "vivas": trazo que tiembla como dibujado a mano (boil), cambiando la semilla del ruido a 8 fps
+let boilT;
+function boil(){
+  if(!$('#lx-boil-svg')) document.body.insertAdjacentHTML('beforeend','<svg id="lx-boil-svg" width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="lx-boil" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></svg>');
+  clearInterval(boilT); if(reduce) return;
+  const t=$('#lx-boil feTurbulence'); let k=0; boilT=setInterval(()=>{k=(k+1)%5; t.setAttribute('seed',k+1);},125);
+}
+
+function viewSolutions(){
+  const d=tpl('tpl-solutions');
+  const sv=$$('.folder',d).map((f,i)=>({n:pad(i+1),tab:$('.folder-tab span',f).textContent.trim(),t:$('.folder-text h3',f).textContent.trim(),
+    p:$('.folder-text p:not(.body-cursiva)',f).textContent.trim(),note:$('.folder-text .body-cursiva',f)?.textContent.trim()||'',img:`img/sol/svg-${'adcb'[i]}.svg`}));
+  const steps=$$('.work-plan__item',d).map(li=>li.textContent.trim().replace(/^(\d+)\/\s*/,'$1|').split('|'));
+  $('#app').innerHTML=pageHead('<span class="it">visual</span> solutions<br>THAT WORK','Soluciones a medida')+`
+  <section class="lx-sv">${sv.map(x=>`
+    <article class="lx-svr" data-fx="0">
+      <div class="lx-svn">${x.n}</div>
+      <div class="lx-svi"><img src="${x.img}" alt="${esc(x.t)}" loading="lazy"></div>
+      <div class="lx-svt">
+        <span class="lx-s lx-mute">${esc(x.tab)}</span>
+        <h3>${esc(x.t)}</h3>
+        <p class="lx-s">${esc(x.p)}</p>
+        ${x.note?`<p class="lx-s it">${esc(x.note)}</p>`:''}
+        <a class="lx-visit" href="#contact">Quiero contactar →</a>
+      </div>
+    </article>`).join('')}
+  </section>
+  <section class="lx-plan">
+    <div class="lx-s lx-mute lx-plan-l">Plan de trabajo</div>
+    <ol class="lx-plan-list">${steps.map(([n,t])=>`<li data-fx="0"><span class="lx-mute">${n}</span><span>${esc(t)}</span></li>`).join('')}</ol>
+    <a class="lx-visit lx-plan-go" href="#contact">Empezar →</a>
+  </section>`;
+  stag('.lx-plan-list li',.04);
+  boil();
+  typeTitle($('.lx-pt'),window.__lxIntro?1650:200);
+  view=[];
+}
+
+function viewResources(){
+  const d=tpl('tpl-resources');
+  const rs=$$('.resource-card',d).map(c=>({img:$('img',c).getAttribute('src'),t:$('.resource-card__title',c).textContent.trim(),p:$('.resource-card__description',c).textContent.trim(),
+    href:$('.resource-card__link',c).getAttribute('href')}));
+  $('#app').innerHTML=pageHead('LEXMAKE<br><span class="it">resources</span>','Herramientas')+`
+  <section class="lx-rs">${rs.map((r,i)=>`
+    <article class="lx-rc" data-fx="${(i*.1).toFixed(2)}">
+      <div class="lx-rci"><img src="${r.img}" alt="${esc(r.t)}" loading="lazy"></div>
+      <span class="lx-s lx-mute">${pad(i+1)}</span>
+      <h3>${esc(r.t)}</h3>
+      <p class="lx-s">${esc(r.p)}</p>
+      <a class="lx-s lx-dl" href="${r.href}" target="_blank" rel="noopener">Descargar →</a>
+    </article>`).join('')}
+  </section>`;
+  typeTitle($('.lx-pt'),window.__lxIntro?1650:200);
+  view=[];
+}
+
+function viewContact(){
+  const services=['Web','Branding','Redes Sociales','Video','Asesoramiento'];
+  const fields=[['name','Nombre','text',1],['email','Mail','email',1],['phone','Teléfono','tel'],['project-name','Nombre de tu empresa/marca','text'],['has-website','¿Tienes web?','text'],['budget','Presupuesto','text']];
+  const soc=$('.footer__social')?.outerHTML||'';
+  $('#app').innerHTML=pageHead('<span class="it">Lex</span>make it<br>HAPPEN','Big ideas start with a simple message. Write me!')+`
+  <section class="lx-ct">
+    <aside class="lx-cta lx-s">
+      <div class="row"><span class="lx-mute">Mail</span><span>alexia@lexmake.com</span></div>
+      <div class="row"><span class="lx-mute">Teléfono</span><span>+34 609 408 905</span></div>
+      <div class="row"><span class="lx-mute">Estudio</span><span>Barcelona</span></div>
+      <div class="lx-cta-soc">${soc}</div>
+    </aside>
+    <form class="lx-cf" id="lx-form" novalidate>
+      <div class="lx-s lx-mute">¿Qué puedo hacer por ti?</div>
+      <div class="lx-chips">${services.map((x,i)=>`<button type="button" class="lx-chip" id="sv-${i}" aria-pressed="false">${x}</button>`).join('')}</div>
+      <div class="lx-fg">${fields.map(([id,l,t,r])=>`<label class="lx-f" for="f-${id}"><span class="lx-s lx-mute">${l}${r?' *':''}</span><input id="f-${id}" name="${id}" type="${t}" ${r?'required':''}></label>`).join('')}
+        <label class="lx-f full" for="f-description"><span class="lx-s lx-mute">Describe tu proyecto</span><textarea id="f-description" name="description" rows="4"></textarea></label>
+      </div>
+      <div class="lx-cf-end"><p class="lx-s lx-mute" id="lx-msg" aria-live="polite"></p><button class="lx-send" type="submit">Enviar</button></div>
+    </form>
+  </section>`;
+  stag('.lx-cta .row',.08); stag('.lx-chip',.05,.1); stag('.lx-f',.05,.2);
+  $$('.lx-chip').forEach(b=>b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')));
+  const f=$('#lx-form'), msg=$('#lx-msg');
+  f.addEventListener('submit',e=>{e.preventDefault();
+    const bad=[...f.querySelectorAll('[required]')].find(x=>!x.value.trim()||(x.type==='email'&&!/^\S+@\S+\.\S+$/.test(x.value)));
+    if(bad){msg.textContent='Falta tu '+bad.closest('.lx-f').querySelector('span').textContent.replace(' *','').toLowerCase()+'.';bad.focus();return;}
+    msg.textContent='Vista previa: en tu web real este formulario envía el mensaje.';});
+  typeTitle($('.lx-pt'),window.__lxIntro?1650:200);
+  view=[];
+}
+
+function viewHome(){
+  $('#app').innerHTML=$('#tpl-home').innerHTML;
+  heroTitle();
+  const w=work(P); $('#work-slot').replaceWith(w.el);
+  // el hero se desenfoca y se desvanece mientras entra el portfolio
+  const wk=$('.lx-work'), hs=$('.hero__sticky-container'), hi=$('.hero__images');
+  const blur=()=>{ if(reduce||!wk) return; const r=wk.getBoundingClientRect().top; const k=clamp((innerHeight-r)/(innerHeight*.75),0,1);
+    if(k===0){hs.style.filter=hi.style.filter='';hs.style.opacity=hi.style.opacity='';return;}
+    const f=`blur(${(k*18).toFixed(1)}px)`; hs.style.filter=hi.style.filter=f; hs.style.opacity=hi.style.opacity=(1-k*.85).toFixed(3); };
+  // MY SKILLS: cada palabra pasa de desenfocada a nítida mientras haces scroll, entrando de lados alternos
+  const sk=$$('.skill-item'), sg=$('.skills-grid');
+  sk.forEach(e=>{e.removeAttribute('data-fx');e.classList.add('lx-sk');});
+  const skills=()=>{ if(!sg) return; const r=sg.getBoundingClientRect();
+    const p=clamp((innerHeight*.92-r.top)/(innerHeight*.55+r.height*.6),0,1);
+    sk.forEach((e,i)=>{ const n=sk.length, a=clamp(p*(n+2)-i,0,1), q=reduce?1:a, dir=i%2?1:-1;
+      e.style.opacity=(.12+.88*q).toFixed(3); e.style.filter=q<1?`blur(${((1-q)*8).toFixed(1)}px)`:'';
+      e.style.transform=q<1?`translate3d(${(dir*(1-q)*70).toFixed(1)}px,${((1-q)*14).toFixed(1)}px,0)`:''; }); };
+  view=[w.tick,blur,skills];
+}
+
+function viewPortfolio(){
+  $('#app').innerHTML=$('#tpl-portfolio').innerHTML;
+  // misma sección de proyectos que la home en lugar de la rejilla
+  const g=$('.portfolio-grid'); const w=work(P); g.replaceWith(w.el); $('.lx-foot .view-more-link',w.el)?.remove();
+  view=[w.tick];
+}
+
+function viewProject(slug){
+  const i=P.findIndex(p=>p.s===slug), p=P[i], nx=P[(i+1)%P.length];
+  const imgs=shots(p);
+  const about=FULL[p.s]||p.d;
+  $('#app').innerHTML=`
+  <section class="lx-pj">
+    <aside class="lx-aside lx-s"><div class="blk">
+      <div class="row"><span class="lx-mute">Sobre el proyecto</span><span class="about">${esc(about)}</span></div>
+      <div class="row4"><span class="lx-mute">Servicios</span><span>${p.c.map(esc).join('<br>')}</span><span class="lx-mute">Sector</span><span>${esc(p.sec)}</span></div>
+      <div class="row"><span class="lx-mute">Estudio</span><span>Lexmake, Barcelona</span></div>
+      ${p.url?`<a class="lx-visit" href="${p.url}" target="_blank" rel="noopener">Visitar web →</a>`:''}
+    </div><div class="bot"><span class="lx-mute">Scroll</span></div></aside>
+    <div class="lx-imgs">${imgs.map((src,k)=>`<figure id="im${k}"><img src="${src}" alt="${esc(p.n)}, imagen ${k+1}" loading="${k<2?'eager':'lazy'}"></figure>`).join('')}</div>
+    <nav class="lx-map" aria-label="Imágenes">${imgs.map((src,k)=>`<button data-k="${k}" aria-label="Imagen ${k+1}"><img src="${src}" alt="" loading="lazy"></button>`).join('')}</nav>
+  </section>
+  <a class="lx-next" href="#${nx.s}"><span class="lx-visit" style="margin:0">Siguiente proyecto →</span></a>`;
+  const figs=$$('.lx-imgs figure'), btns=$$('.lx-map button');
+  btns.forEach(b=>b.addEventListener('click',()=>{const f=figs[+b.dataset.k];scrollTo({top:scrollY+f.getBoundingClientRect().top-innerHeight*.466,behavior:reduce?'auto':'smooth'});}));
+  let on=-1;
+  view=[()=>{
+    let best=0,bd=1e9; figs.forEach((f,k)=>{const r=f.getBoundingClientRect();const d=Math.abs(r.top+r.height/2-innerHeight/2);if(d<bd){bd=d;best=k}});
+    if(best!==on){on=best;btns.forEach((b,k)=>b.classList.toggle('on',k===best));}
+  }];
+}
+
+// ---------- router ----------
+const app=$('#app'); let first=true;
+function render(h){
+  if(P.some(p=>p.s===h)) viewProject(h);
+  else if(h==='portfolio') viewPortfolio();
+  else if(h==='solutions') viewSolutions();
+  else if(h==='resources') viewResources();
+  else if(h==='contact') viewContact();
+  else viewHome();
+  scrollTo(0,0);
+  // las mismas entradas que la web original
+  $$('.hero',app).forEach(e=>setTimeout(()=>e.classList.add('gsap-loaded'),100));
+  $$('.home-behind,.home-skills,.home-closing,.portfolio-cta,.solutions-folders,.work-plan,.footer,.header').forEach(e=>e.classList.add('gsap-loaded'));
+  fx(app);
+  const p=P.find(p=>p.s===h); document.title=p?`${p.n} - Portfolio`:({portfolio:'Portfolio',solutions:'Solutions',resources:'Resources',contact:'Contact'}[h]?({portfolio:'Portfolio',solutions:'Solutions',resources:'Resources',contact:'Contact'}[h]+' - LexMake'):'LexMake');
+}
+function route(){
+  const h=location.hash.slice(1); markNav(h);
+  if(first||reduce){first=false;render(h);return;}
+  app.classList.add('fading');
+  setTimeout(()=>{render(h);app.classList.remove('fading');},450);
+}
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+
+// ---------- entrada ----------
+if(!reduce){
+  window.__lxIntro=true;
+  const pre=document.createElement('div'); pre.className='lx-pre';
+  pre.innerHTML='<div class="lg"><img src="logo.svg" alt="Lexmake"></div><span class="lx-s lx-mute pl">From Barcelona — visual solutions with soul</span><span class="lx-s pc">000</span>';
+  document.body.appendChild(pre);
+  const pc=$('.pc',pre), t0=performance.now();
+  setTimeout(()=>pre.classList.add('draw'),120);
+  (function cnt(){const k=Math.min(1,(performance.now()-t0)/1500); pc.textContent=String(Math.round(k*100)).padStart(3,'0'); if(k<1) requestAnimationFrame(cnt);})();
+  setTimeout(()=>pre.classList.add('out'),1700);
+  setTimeout(()=>{pre.remove();window.__lxIntro=false;},3000);
+}
+
+// ---------- menú ----------
+$$('.nav-link').forEach(a=>a.insertAdjacentHTML('afterbegin','<span class="ar" aria-hidden="true">→</span>'));
+const hdr=$('.header'); let lastY=0;
+(function hd(){const y=scrollY; hdr.classList.toggle('lx-scrolled',y>40); if(Math.abs(y-lastY)>6){hdr.classList.toggle('lx-hide',y>lastY&&y>200&&!$('.mobile-overlay.active')); lastY=y;} requestAnimationFrame(hd);})();
+const markNav=h=>{ const sec=(h==='portfolio'||P.some(p=>p.s===h))?'PORTFOLIO':({solutions:'SOLUTIONS',resources:'RESOURCES'}[h]||''); $$('.nav-link').forEach(a=>a.classList.toggle('on',a.dataset.text===sec)); };
+addEventListener('hashchange',route);
+
+// el menú desplegado vive fuera de la cabecera: si no, el desenfoque de la cabecera lo encoge y se queda sin fondo
+document.body.appendChild($('.mobile-overlay'));
+
+// menú desplegado: datos de contacto y redes, mismas bolas que el footer
+(()=>{const nav=$('.mobile-nav'); const soc=$('.footer__social'); if(!nav||!soc) return;
+  const box=document.createElement('div'); box.className='lx-mcontact';
+  box.innerHTML=`<div class="lx-mc-data"><span class="lx-s lx-mute">Contacto</span><span>alexia@lexmake.com</span><span>+34 609 408 905</span><span class="lx-mute">Barcelona</span></div>`;
+  box.appendChild(soc.cloneNode(true)); nav.appendChild(box);})();
+
+// menú móvil original
+const tg=$('.mobile-toggle'), ov=$('.mobile-overlay');
+tg&&tg.addEventListener('click',()=>{const o=!tg.classList.contains('active');tg.classList.toggle('active',o);ov.classList.toggle('active',o);document.body.style.overflow=o?'hidden':'';});
+$$('.mobile-nav__link,.mobile-nav__button').forEach(l=>l.addEventListener('click',()=>{tg.classList.remove('active');ov.classList.remove('active');document.body.style.overflow='';}));
+route();
+})();
+</script>
