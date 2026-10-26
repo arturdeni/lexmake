@@ -1,6 +1,7 @@
 ---
 // src/pages/portfolio/index.astro
 import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/Common/PageHeader.astro";
 import WorkShowcase from "../../components/Common/WorkShowcase.astro";
 ---
 
@@ -8,53 +9,6 @@ import WorkShowcase from "../../components/Common/WorkShowcase.astro";
   title="Portfolio - LexMake"
   description="Explora mis proyectos de diseño gráfico y soluciones creativas."
 >
-  <div class="portfolio">
-    <section class="portfolio-hero">
-      <h2 class="portfolio-title" data-typewriter>
-        DESIGN<br />
-        <span class="portfolio-title-italic">Portfolio</span>
-      </h2>
-      <p class="portfolio-subtitle text-micro text-muted" data-reveal="0.2">Mis proyectos</p>
-    </section>
-
-    <WorkShowcase />
-  </div>
+  <PageHeader subtitle="Mis proyectos">DESIGN<br /><span class="it">Portfolio</span></PageHeader>
+  <WorkShowcase />
 </Layout>
-
-<style>
-  .portfolio {
-    width: 100%;
-  }
-
-  .portfolio-hero {
-    padding: 110px var(--container-padding) 70px;
-    text-align: center;
-    display: grid;
-    gap: 18px;
-    justify-items: center;
-  }
-
-  .portfolio-title {
-    font-family: var(--font-hanken);
-    font-size: var(--h3-size);
-    line-height: 1;
-    margin: 0;
-    color: var(--color-black);
-  }
-
-  .portfolio-title-italic {
-    font-family: var(--font-gallery);
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  @media (max-width: 768px) {
-    .portfolio-hero {
-      padding: 40px var(--container-padding);
-    }
-
-    .portfolio-title {
-      font-size: clamp(26px, 8vw, 40px);
-    }
-  }
-</style>

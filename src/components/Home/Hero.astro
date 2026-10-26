@@ -254,7 +254,7 @@
     transform: translateY(50px);
   }
 
-  .hero.gsap-loaded .hero__image {
+  .hero.is-loaded .hero__image {
     opacity: 1;
     transform: none;
     transition:
@@ -271,7 +271,7 @@
     if (!hero) return;
 
     // Entrada de las imágenes
-    const timer = window.setTimeout(() => hero.classList.add("gsap-loaded"), 100);
+    const timer = window.setTimeout(() => hero.classList.add("is-loaded"), 100);
 
     // El hero se desenfoca y se desvanece mientras sube la sección de proyectos
     const work = document.querySelector<HTMLElement>(".home-work");

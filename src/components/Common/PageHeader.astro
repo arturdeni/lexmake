@@ -1,0 +1,53 @@
+---
+// src/components/Common/PageHeader.astro
+// Cabecera de las subpáginas: título escrito con máquina de escribir (las cursivas van en
+// <span class="it">) y subtítulo pequeño.
+export interface Props {
+  subtitle: string;
+}
+
+const { subtitle } = Astro.props;
+---
+
+<section class="page-header">
+  <h2 class="page-header__title" data-typewriter>
+    <slot />
+  </h2>
+  <p class="page-header__subtitle text-micro text-muted" data-reveal="0.2">{subtitle}</p>
+</section>
+
+<style>
+  .page-header {
+    padding: 110px var(--container-padding) 70px;
+    text-align: center;
+    display: grid;
+    gap: 18px;
+    justify-items: center;
+  }
+
+  .page-header__title {
+    margin: 0;
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    font-size: var(--h3-size);
+    line-height: 1;
+    text-transform: none;
+    color: var(--color-black);
+  }
+
+  .page-header__title :global(.it) {
+    font-family: var(--font-gallery);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding: 40px var(--container-padding);
+    }
+
+    .page-header__title {
+      font-size: clamp(26px, 8vw, 40px);
+    }
+  }
+</style>

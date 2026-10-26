@@ -1,0 +1,244 @@
+---
+// src/components/Solutions/SolutionsList.astro
+// Servicios en filas editoriales: número | ilustración | texto.
+// Las ilustraciones SVG se dibujan al entrar, flotan y su trazo "tiembla" como una animación
+// a mano (filtro feTurbulence + feDisplacementMap cambiando la semilla a 8 fps).
+import { foldersData } from "../../data/foldersData";
+---
+
+<section class="solutions-list">
+  {
+    foldersData.map((folder) => (
+      <article class="solution" data-reveal="0">
+        <div class="solution__number">{folder.content.header}</div>
+        <div class="solution__image">
+          <img src={folder.content.image} alt={folder.content.imageAlt} loading="lazy" />
+        </div>
+        <div class="solution__text">
+          <span class="text-micro text-muted">{folder.title}</span>
+          <h3 class="solution__title">{folder.content.heading}</h3>
+          <p class="text-micro">{folder.content.description}</p>
+          <p class="text-micro solution__advice">{folder.content.advice}</p>
+          <a class="arrow-link solution__link" href={folder.content.link.url}>
+            Quiero contactar →
+          </a>
+        </div>
+      </article>
+    ))
+  }
+</section>
+
+<!-- Filtro del trazo "a mano" -->
+<svg class="boil-filter" width="0" height="0" aria-hidden="true">
+  <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" scale="3.2"></feDisplacementMap>
+  </filter>
+</svg>
+
+<style>
+  .solutions-list {
+    margin: 0 20px;
+  }
+
+  .boil-filter {
+    position: absolute;
+  }
+
+  .solution {
+    display: grid;
+    grid-template-columns: 27.5vw minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+    padding: 56px 0;
+    position: relative;
+  }
+
+  /* Línea superior que se dibuja al entrar */
+  .solution::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.14);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.1s;
+  }
+
+  .solution.is-in::before,
+  :global(html:not(.js)) .solution::before {
+    transform: scaleX(1);
+  }
+
+  .solution__number {
+    font-family: var(--font-hanken);
+    font-weight: 300;
+    font-size: 120px;
+    line-height: 0.8;
+    letter-spacing: -5px;
+    transition:
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s;
+  }
+
+  .solution:hover .solution__number {
+    transform: translateX(14px);
+  }
+
+  .solutions-list:hover .solution:not(:hover) .solution__number {
+    opacity: 0.25;
+  }
+
+  /* Todas las ilustraciones en la misma caja: mismo tamaño visual */
+  .solution__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    animation: float 6.5s ease-in-out infinite;
+  }
+
+  .solution:nth-child(2) .solution__image {
+    animation-delay: -1.6s;
+  }
+  .solution:nth-child(3) .solution__image {
+    animation-delay: -3.2s;
+  }
+  .solution:nth-child(4) .solution__image {
+    animation-delay: -4.8s;
+  }
+
+  .solution__image img {
+    width: auto;
+    height: auto;
+    max-width: 300px;
+    max-height: 290px;
+    mix-blend-mode: multiply;
+    filter: url(#boil) grayscale(1) contrast(1.05);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(18px) rotate(-2deg);
+    transition:
+      clip-path 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.15s,
+      transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+  }
+
+  .solution.is-in .solution__image img,
+  :global(html:not(.js)) .solution__image img {
+    clip-path: inset(-4% -4% -4% -4%);
+    transform: none;
+  }
+
+  .solution.is-in:hover .solution__image img {
+    transform: scale(1.05) rotate(-2deg);
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
+    }
+    25% {
+      transform: translateY(-7px) rotate(1.2deg);
+    }
+    75% {
+      transform: translateY(5px) rotate(-1deg);
+    }
+  }
+
+  .solution__text {
+    display: grid;
+    gap: 12px;
+    max-width: 320px;
+  }
+
+  .solution__title {
+    margin: 0;
+    font-family: var(--font-hanken);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.16px;
+  }
+
+  .solution__text p {
+    margin: 0;
+  }
+
+  .solution__advice {
+    font-family: var(--font-gallery);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+  .solution__link {
+    margin-top: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .solution {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: 40px 0;
+    }
+
+    .solution__number {
+      font-size: 72px;
+      letter-spacing: -3px;
+    }
+
+    .solution__image {
+      justify-content: flex-start;
+      height: 220px;
+    }
+
+    .solution__image img {
+      max-width: 220px;
+      max-height: 210px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .solution__number {
+      font-size: 56px;
+      letter-spacing: -2px;
+    }
+
+    .solution__title {
+      font-size: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .solution__image {
+      animation: none;
+    }
+
+    .solution__image img {
+      clip-path: none;
+      transform: none;
+      filter: grayscale(1);
+    }
+  }
+</style>
+
+<script>
+  import { onPage, prefersReducedMotion } from "../../scripts/lifecycle";
+
+  // Trazo que tiembla: cambia la semilla del ruido cada 125 ms
+  onPage(() => {
+    const turbulence = document.querySelector("#boil feTurbulence");
+    if (!turbulence || prefersReducedMotion()) return;
+    let k = 0;
+    const timer = window.setInterval(() => {
+      k = (k + 1) % 5;
+      turbulence.setAttribute("seed", String(k + 1));
+    }, 125);
+    return () => window.clearInterval(timer);
+  });
+</script>
