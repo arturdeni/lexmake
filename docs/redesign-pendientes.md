@@ -11,6 +11,14 @@ Referencia: el prototipo de Alexia está en `docs/prototipo/` (guía en `docs/pr
       AX Partners (Cala Blanca), Golden Visa, Veronica Lopera, Filly.
       Zumgo y Subasting ya no tienen web (sin enlace ni capturas).
 
+## Hygraph (hecho el 2026-10-26)
+
+- Campos nuevos en Project: `services` (lista), `sector`, `shortDescription`, `websiteUrl`,
+  `webScreenshots` (assets). Rellenados con los datos del prototipo y publicados.
+- `category` ya no lo usa la web nueva. Borrarlo cuando el rediseño esté en producción.
+- La galería de la ficha sale en el orden de `images` en Hygraph (el prototipo las reordenaba a mano):
+  si Alexia quiere otro orden, se cambia arrastrando en Hygraph.
+
 ## Decisiones
 
 - Gallery: hay licencia web.
