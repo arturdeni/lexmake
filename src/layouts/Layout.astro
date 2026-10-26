@@ -24,6 +24,8 @@ import "../styles/global.css";
 // Importar componentes
 import Header from "../components/Layout/Header.astro";
 import Footer from "../components/Layout/Footer.astro";
+import MobileMenu from "../components/Layout/MobileMenu.astro";
+import Preloader from "../components/Layout/Preloader.astro";
 ---
 
 <!doctype html>
@@ -31,6 +33,28 @@ import Footer from "../components/Layout/Footer.astro";
   <head>
     <!-- Client Router for page transitions -->
     <ClientRouter fallback="none" />
+
+    <!-- html.js activa las animaciones de entrada; html.intro muestra el preloader
+         (solo la primera visita de la sesión y sin prefers-reduced-motion) -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+        if (!window.__lexSwapHook) {
+          window.__lexSwapHook = true;
+          document.addEventListener("astro:after-swap", function () {
+            document.documentElement.classList.add("js");
+          });
+        }
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        try {
+          if (!sessionStorage.getItem("lex-intro")) {
+            sessionStorage.setItem("lex-intro", "1");
+            root.classList.add("intro");
+          }
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- Basic Meta Tags -->
     <meta charset="utf-8" />
@@ -78,10 +102,19 @@ import Footer from "../components/Layout/Footer.astro";
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="/fonts/Gallery-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
   </head>
 
   <body>
+    <Preloader />
+
     <!-- Header/Navigation -->
     <Header />
 
@@ -92,6 +125,19 @@ import Footer from "../components/Layout/Footer.astro";
 
     <!-- Footer -->
     <Footer />
+
+    <!-- Menú móvil: fuera del header (ver MobileMenu.astro) -->
+    <MobileMenu />
+
+    <script>
+      import "../scripts/reveal";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+      // Los ScrollTrigger de la página anterior apuntan a nodos que ya no existen
+      document.addEventListener("astro:before-swap", () => {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      });
+    </script>
 
     <!-- Script global para reinicializar componentes después de transiciones -->
     <script>

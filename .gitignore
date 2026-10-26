@@ -29,3 +29,4 @@ pnpm-debug.log*
 # prototipo de referencia: las imágenes ya están en Hygraph / public
 docs/prototipo/img/
 docs/prototipo/fonts/
+.playwright-mcp/

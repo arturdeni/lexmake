@@ -1,0 +1,96 @@
+---
+// src/components/Layout/Preloader.astro
+// Entrada: el logo se dibuja con clip-path y un contador 000→100; después sube con desenfoque (~1,7 s).
+// Solo en la primera visita de la sesión: el script inline del <head> (Layout.astro) añade
+// html.intro si no se ha visto todavía. Sin esa clase el preloader no se muestra.
+---
+
+<div class="preloader" aria-hidden="true">
+  <div class="preloader__logo"><img src="/logo.svg" alt="" /></div>
+  <span class="preloader__tagline text-micro text-muted">From Barcelona — visual solutions with soul</span>
+  <span class="preloader__count text-micro">000</span>
+</div>
+
+<style>
+  .preloader {
+    display: none;
+  }
+
+  :global(html.intro) .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--color-grey);
+    display: grid;
+    place-items: center;
+    transition:
+      transform 1.1s cubic-bezier(0.76, 0, 0.24, 1),
+      filter 1.1s ease,
+      opacity 1.1s ease;
+  }
+
+  .preloader__logo {
+    width: min(300px, 62vw);
+    clip-path: inset(-10% 100% -10% 0);
+    transition:
+      clip-path 1.2s cubic-bezier(0.65, 0, 0.35, 1),
+      transform 1.1s cubic-bezier(0.76, 0, 0.24, 1),
+      filter 0.9s ease;
+  }
+
+  .preloader__logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .preloader.is-drawing .preloader__logo {
+    clip-path: inset(-10% -2% -10% 0);
+  }
+
+  .preloader__count,
+  .preloader__tagline {
+    position: absolute;
+    bottom: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .preloader__count {
+    right: 20px;
+  }
+
+  .preloader__tagline {
+    left: 20px;
+  }
+
+  .preloader.is-leaving {
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+
+  .preloader.is-leaving .preloader__logo {
+    transform: translateY(40vh) scale(0.9);
+    filter: blur(12px);
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const preloader = document.querySelector<HTMLElement>(".preloader");
+
+  if (preloader && root.classList.contains("intro")) {
+    const count = preloader.querySelector<HTMLElement>(".preloader__count");
+    const start = performance.now();
+
+    const tick = () => {
+      const k = Math.min(1, (performance.now() - start) / 1500);
+      if (count) count.textContent = String(Math.round(k * 100)).padStart(3, "0");
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+
+    setTimeout(() => preloader.classList.add("is-drawing"), 120);
+    setTimeout(() => preloader.classList.add("is-leaving"), 1700);
+    setTimeout(() => root.classList.remove("intro"), 3000);
+  }
+</script>

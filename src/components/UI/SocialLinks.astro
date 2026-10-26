@@ -1,0 +1,75 @@
+---
+// src/components/UI/SocialLinks.astro
+// Redes sociales en círculos (footer, menú móvil y contacto)
+import { socials } from "../../data/site";
+
+export interface Props {
+  size?: "default" | "small";
+  class?: string;
+}
+
+const { size = "default", class: className = "" } = Astro.props;
+---
+
+<div class={`social social--${size} ${className}`}>
+  {
+    socials.map((social) => (
+      <a
+        href={social.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social__link"
+        aria-label={social.label}
+      >
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d={social.icon} fill="currentColor" />
+        </svg>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .social {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+
+  .social__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--color-black);
+    color: var(--color-black);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .social__link:hover {
+    background-color: var(--color-black);
+    color: var(--color-grey);
+  }
+
+  .social__link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .social--small {
+    gap: 10px;
+  }
+
+  .social--small .social__link {
+    width: 34px;
+    height: 34px;
+  }
+
+  .social--small .social__link svg {
+    width: 15px;
+    height: 15px;
+  }
+</style>

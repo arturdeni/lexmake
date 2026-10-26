@@ -1,24 +1,40 @@
 ---
 // src/components/Layout/Navigation.astro
-// Navegación principal para desktop
+// Navegación principal para desktop. La sección activa lleva una flecha delante.
 import Button from "../UI/Button.astro";
+
+const links = [
+  { href: "/solutions", label: "SOLUTIONS" },
+  { href: "/portfolio", label: "PORTFOLIO" },
+  { href: "/resources", label: "RESOURCES" },
+];
+
+const path = Astro.url.pathname;
 ---
 
 <nav class="navigation">
   <ul class="nav-list">
-    <li class="nav-item">
-      <a href="/solutions" class="nav-link" data-text="SOLUTIONS">SOLUTIONS</a>
-    </li>
-    <li class="nav-item">
-      <a href="/portfolio" class="nav-link" data-text="PORTFOLIO">PORTFOLIO</a>
-    </li>
-    <li class="nav-item">
-      <a href="/resources" class="nav-link" data-text="RESOURCES">RESOURCES</a>
-    </li>
+    {
+      links.map((link) => {
+        const active = path === link.href || path.startsWith(`${link.href}/`);
+        return (
+          <li class="nav-item">
+            <a
+              href={link.href}
+              class:list={["nav-link", { "is-active": active }]}
+              aria-current={active ? "page" : undefined}
+            >
+              <span class="nav-link__arrow" aria-hidden="true">→</span>
+              {link.label}
+            </a>
+          </li>
+        );
+      })
+    }
   </ul>
 
   <!-- Botón Contact usando el componente Button -->
-  <Button href="/contact" class="contact-button-wrapper">CONTACT</Button>
+  <Button href="/contact" size="nav" class="contact-button-wrapper">CONTACT</Button>
 </nav>
 
 <style>
@@ -41,7 +57,7 @@ import Button from "../UI/Button.astro";
   .nav-list {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xl);
+    gap: 36px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -52,44 +68,40 @@ import Button from "../UI/Button.astro";
 
   .nav-item {
     position: relative;
-    min-width: 120px;
-    overflow: hidden;
   }
 
   .nav-link {
     font-family: var(--font-hanken);
-    font-size: 20px;
+    font-size: 13px;
     font-weight: 500;
+    letter-spacing: 0.04em;
     color: var(--color-black);
     text-decoration: none;
-    padding: var(--spacing-sm) 0;
     display: block;
     position: relative;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Pseudo-elemento con el texto italic (inicialmente oculto debajo) */
-  .nav-link::before {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    font-family: var(--font-gallery);
-    font-style: italic;
-    color: var(--color-black);
-    transform: translateY(100%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: var(--spacing-sm) 0;
+    transition: opacity 0.3s ease;
   }
 
   .nav-link:hover {
-    transform: translateY(-100%);
+    opacity: 0.45;
   }
 
-  .nav-link:hover::before {
-    transform: translateY(50);
+  .nav-link__arrow {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    margin-right: 8px;
+    font-weight: 300;
+    opacity: 0;
+    transform: translate(-6px, -50%);
+    transition:
+      opacity 0.4s,
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-link.is-active .nav-link__arrow {
+    opacity: 1;
+    transform: translate(0, -50%);
   }
 
   /* Wrapper para el botón Contact alineado a la derecha */

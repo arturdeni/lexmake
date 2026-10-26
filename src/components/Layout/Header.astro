@@ -1,5 +1,8 @@
 ---
 // src/components/Layout/Header.astro
+// Cabecera compacta: se esconde al bajar y reaparece al subir.
+// El menú móvil (MobileMenu.astro) vive fuera del <header>: si estuviera dentro,
+// el backdrop-filter de la cabecera lo encerraría en sus 56px.
 import Navigation from "./Navigation.astro";
 ---
 
@@ -16,22 +19,15 @@ import Navigation from "./Navigation.astro";
     <Navigation />
 
     <!-- Mobile Menu Toggle -->
-    <button class="mobile-toggle" aria-label="Toggle mobile menu">
+    <button
+      class="mobile-toggle"
+      aria-label="Abrir menú"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
       <span class="hamburger-line"></span>
       <span class="hamburger-line"></span>
     </button>
-  </div>
-
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-overlay">
-    <nav class="mobile-nav">
-      <ul class="mobile-nav__list">
-        <li><a href="/solutions" class="mobile-nav__link" data-astro-reload>SOLUTIONS</a></li>
-        <li><a href="/portfolio" class="mobile-nav__link" data-astro-reload>PORTFOLIO</a></li>
-        <li><a href="/resources" class="mobile-nav__link" data-astro-reload>RESOURCES</a></li>
-        <li><a href="/contact" class="mobile-nav__button" data-astro-reload>CONTACT</a></li>
-      </ul>
-    </nav>
   </div>
 </header>
 
@@ -41,15 +37,29 @@ import Navigation from "./Navigation.astro";
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10;
+    z-index: 901; /* por encima del menú móvil (900) para que se vea el botón de cerrar */
     background-color: var(--color-grey);
+    transition:
+      transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+      background-color 0.5s ease,
+      backdrop-filter 0.5s ease;
+  }
+
+  .header.is-scrolled {
+    background-color: rgba(237, 237, 237, 0.72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  .header.is-hidden {
+    transform: translateY(-100%);
   }
 
   .header__container {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 var(--container-padding);
-    height: 80px; /* Altura fija del header */
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -67,7 +77,7 @@ import Navigation from "./Navigation.astro";
   }
 
   .logo {
-    height: 40px; /* Ajusta según el tamaño de tu logo */
+    height: 28px;
     width: auto;
     display: block;
   }
@@ -86,7 +96,6 @@ import Navigation from "./Navigation.astro";
     padding: 0;
     gap: 6px;
     position: relative;
-    z-index: 11;
   }
 
   .hamburger-line {
@@ -110,162 +119,58 @@ import Navigation from "./Navigation.astro";
     transform: rotate(-45deg) translate(4px, -4px);
   }
 
-  /* === MOBILE OVERLAY === */
-  .mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--color-grey);
-    z-index: 9;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-100%);
-    transition: all 0.4s ease;
-  }
-
-  .mobile-overlay.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .mobile-nav {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 80px; /* Espacio para el header */
-  }
-
-  .mobile-nav__list {
-    list-style: none;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
-  }
-
-  .mobile-nav__link {
-    font-family: var(--font-hanken);
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--color-black);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: block;
-    padding: var(--spacing-md);
-  }
-
-  .mobile-nav__link:hover {
-    font-family: var(--font-gallery);
-    font-style: italic;
-  }
-
-  .mobile-nav__button {
-    font-family: var(--font-hanken);
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--color-grey);
-    background-color: var(--color-black);
-    text-decoration: none;
-    padding: var(--spacing-md) var(--spacing-xl);
-    border: 1px solid var(--color-black);
-    display: inline-block;
-    margin-top: var(--spacing-lg);
-    transition: all 0.3s ease;
-  }
-
-  .mobile-nav__button:hover {
-    background-color: var(--color-grey);
-    color: var(--color-black);
-  }
-
   /* === RESPONSIVE === */
   @media (max-width: 768px) {
-    .header__container {
-      height: 60px;
-    }
-    .logo {
-      height: 25px; /* Ajusta el tamaño del logo en móvil */
-    }
     .mobile-toggle {
       display: flex;
     }
 
-    /* Agregar padding-top al body para compensar el header fixed */
+    /* Compensar el header fixed */
     :global(body) {
       padding-top: 80px;
     }
   }
 
   @media (min-width: 769px) {
-    /* En desktop, agregar padding-top al body */
     :global(body) {
-      padding-top: 80px;
+      padding-top: 56px;
     }
   }
 </style>
 
 <script>
-  // Funcionalidad del menú móvil
-  function initMobileMenu() {
-    const mobileToggle = document.querySelector<HTMLElement>(".mobile-toggle");
-    const mobileOverlay = document.querySelector<HTMLElement>(".mobile-overlay");
-    const body = document.body;
+  // Cabecera: fondo translúcido al hacer scroll y se esconde al bajar.
+  // Un único listener para toda la sesión: la cabecera se busca en cada evento
+  // porque el ClientRouter la sustituye al navegar.
+  let lastY = window.scrollY;
+  let ticking = false;
 
-    if (mobileToggle && mobileOverlay) {
-      // Remover listeners antiguos clonando los elementos
-      const newMobileToggle = mobileToggle.cloneNode(true) as HTMLElement;
-      mobileToggle.parentNode?.replaceChild(newMobileToggle, mobileToggle);
-
-      newMobileToggle.addEventListener("click", () => {
-        const isActive = newMobileToggle.classList?.contains("active") || false;
-
-        if (isActive) {
-          // Cerrar menú
-          newMobileToggle.classList?.remove("active");
-          mobileOverlay.classList?.remove("active");
-          body.style.overflow = "";
-        } else {
-          // Abrir menú
-          newMobileToggle.classList?.add("active");
-          mobileOverlay.classList?.add("active");
-          body.style.overflow = "hidden";
-        }
-      });
-
-      // Cerrar menú al hacer click en los links
-      const mobileLinks = document.querySelectorAll<HTMLElement>(
-        ".mobile-nav__link, .mobile-nav__button"
-      );
-      mobileLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          newMobileToggle.classList?.remove("active");
-          mobileOverlay.classList?.remove("active");
-          body.style.overflow = "";
-        });
-      });
+  const update = () => {
+    ticking = false;
+    const header = document.querySelector<HTMLElement>(".header");
+    if (!header) return;
+    const y = window.scrollY;
+    header.classList.toggle("is-scrolled", y > 40);
+    if (Math.abs(y - lastY) > 6) {
+      const menuOpen = document.documentElement.classList.contains("menu-open");
+      header.classList.toggle("is-hidden", y > lastY && y > 200 && !menuOpen);
+      lastY = y;
     }
-  }
+  };
 
-  // Cerrar menú con ESC (listener global, solo se añade una vez)
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      const mobileToggle = document.querySelector<HTMLElement>(".mobile-toggle");
-      const mobileOverlay = document.querySelector<HTMLElement>(".mobile-overlay");
-      if (mobileToggle?.classList?.contains("active")) {
-        mobileToggle.classList?.remove("active");
-        mobileOverlay?.classList?.remove("active");
-        document.body.style.overflow = "";
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
       }
-    }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener("astro:page-load", () => {
+    lastY = window.scrollY;
+    update();
   });
-
-  // Ejecutar en carga inicial
-  document.addEventListener("DOMContentLoaded", initMobileMenu);
-
-  // Ejecutar después de transiciones de página
-  document.addEventListener("astro:page-load", initMobileMenu);
 </script>

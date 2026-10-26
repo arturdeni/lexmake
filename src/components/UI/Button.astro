@@ -4,7 +4,7 @@ export interface Props {
   href?: string;
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary";
-  size?: "default" | "small" | "large";
+  size?: "default" | "small" | "large" | "nav";
   disabled?: boolean;
   class?: string;
   [key: string]: any;
@@ -119,6 +119,13 @@ const elementProps = href ? { href, ...rest } : { type, disabled, ...rest };
   .lexmake-button--large {
     font-size: 24px;
     padding: var(--spacing-lg) var(--spacing-xl);
+  }
+
+  /* Cabecera y menú móvil */
+  .lexmake-button--nav {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    padding: 9px 16px;
   }
 
   /* === DISABLED STATE === */
