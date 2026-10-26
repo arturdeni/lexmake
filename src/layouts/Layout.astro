@@ -132,6 +132,17 @@ import Preloader from "../components/Layout/Preloader.astro";
     <script>
       import "../scripts/reveal";
       import { ScrollTrigger } from "gsap/ScrollTrigger";
+      import { onPage, introDelay } from "../scripts/lifecycle";
+      import { typewriter } from "../scripts/typewriter";
+
+      // Títulos con efecto máquina de escribir
+      onPage(() => {
+        const delay = introDelay();
+        const cleanups = [...document.querySelectorAll<HTMLElement>("[data-typewriter]")].map((el) =>
+          typewriter(el, delay)
+        );
+        return () => cleanups.forEach((cleanup) => cleanup?.());
+      });
 
       // Los ScrollTrigger de la página anterior apuntan a nodos que ya no existen
       document.addEventListener("astro:before-swap", () => {

@@ -11,7 +11,9 @@ export const hygraph = new GraphQLClient(
   }
 );
 
-// Query para obtener todos los proyectos (para la página de portfolio)
+// Query con todos los proyectos y todos sus datos.
+// Se usa en la home y el portfolio (WorkShowcase) y en getStaticPaths de la ficha,
+// así cada build hace una sola petición para los proyectos.
 export const GET_ALL_PROJECTS = `
   query GetAllProjects {
     projects(orderBy: date_DESC, first: 100) {
@@ -19,26 +21,10 @@ export const GET_ALL_PROJECTS = `
       slug
       title
       description
-      category
-      date
-      mainImage {
-        url
-        width
-        height
-      }
-    }
-  }
-`;
-
-// Query para obtener un proyecto específico por slug (para la página de detalle)
-export const GET_PROJECT_BY_SLUG = `
-  query GetProjectBySlug($slug: String!) {
-    project(where: { slug: $slug }) {
-      id
-      slug
-      title
-      description
-      category
+      shortDescription
+      services
+      sector
+      websiteUrl
       date
       mainImage {
         url
@@ -46,6 +32,11 @@ export const GET_PROJECT_BY_SLUG = `
         height
       }
       images {
+        url
+        width
+        height
+      }
+      webScreenshots {
         url
         width
         height

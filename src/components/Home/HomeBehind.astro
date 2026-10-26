@@ -6,23 +6,23 @@
   <div class="home-behind__container">
     <div class="home-behind__content">
       <!-- Imagen izquierda -->
-      <div class="home-behind__image">
+      <div class="home-behind__image" data-reveal>
         <img src="/assets/behind/lexmake-behind.gif" alt="Behind lexmake" />
       </div>
 
       <!-- Texto derecha -->
       <div class="home-behind__text">
         <h3 class="home-behind__title">
-          <span>Behind</span>
-          <span class="h3-cursiva">lexmake</span>
+          <span data-reveal>Behind</span>
+          <span class="h3-cursiva" data-reveal="0.15">lexmake</span>
         </h3>
 
-        <p class="home-behind__description">
+        <p data-reveal="0.00" class="home-behind__description">
           Hola, soy Alexia — la mente, el pulso y el caos creativo detrás de
           Lexmake.
         </p>
 
-        <p class="home-behind__description">
+        <p data-reveal="0.12" class="home-behind__description">
           Fundé este estudio con una idea muy sencilla (y un poco ambiciosa):
           que el diseño de calidad no debería ser un lujo reservado para unos
           pocos con presupuestos infinitos y reuniones eternas. Todos, desde
@@ -30,7 +30,7 @@
           merecen verse tan increíbles como lo que ofrecen.
         </p>
 
-        <p class="home-behind__description">
+        <p data-reveal="0.24" class="home-behind__description">
           Mi superpoder es traducir lo que tienes en la cabeza (aunque venga con
           notas de voz, dibujos en servilletas o frases como "algo minimalista
           pero que impacte") en una identidad visual clara, coherente y
@@ -38,7 +38,7 @@
           cuentan historias, sin clichés ni plantillas genéricas.
         </p>
 
-        <p class="home-behind__description body-cursiva">
+        <p data-reveal="0.36" class="home-behind__description body-cursiva">
           Porque sí: un buen diseño puede (y debe) emocionar, conectar y, por
           qué no, dejar a tu competencia un poquito nerviosa
         </p>
@@ -123,6 +123,11 @@
   }
 
   @media (max-width: 768px) {
+    .home-behind__title span {
+      font-size: clamp(24px, 7.5vw, 34px);
+      line-height: 1.05;
+    }
+
     .home-behind {
       padding: var(--spacing-xl) 0;
     }
@@ -148,77 +153,5 @@
       text-align: center;
     }
   }
-
-  /* === PREPARAR PARA ANIMACIONES GSAP === */
-  /* Por defecto los elementos son visibles */
-  /* GSAP los ocultará antes de animar con gsap.set() */
 </style>
 
-<script>
-  // Importar GSAP y ScrollTrigger
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  // Registrar el plugin ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Función para inicializar las animaciones
-  const initHomeBehindAnimations = () => {
-    // Verificar que el elemento existe
-    const homeBehind = document.querySelector(".home-behind");
-    if (!homeBehind) return;
-
-    // Establecer estado inicial de los elementos (ocultos)
-    gsap.set(".home-behind__image", { opacity: 0, y: 50 });
-    gsap.set(".home-behind__title span", { opacity: 0, y: 30 });
-    gsap.set(".home-behind__description", { opacity: 0, y: 20 });
-
-    // Animar la imagen
-    gsap.to(".home-behind__image", {
-      opacity: 1,
-      y: 0,
-      duration: 0.9,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-behind__image",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Animar el título con stagger entre los spans
-    gsap.to(".home-behind__title span", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-behind__title",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Animar los párrafos de descripción con stagger
-    gsap.to(".home-behind__description", {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-behind__text",
-        start: "top 75%",
-        toggleActions: "play none none none",
-      },
-    });
-  };
-
-  // Ejecutar cuando el DOM esté listo
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initHomeBehindAnimations);
-  } else {
-    initHomeBehindAnimations();
-  }
-</script>

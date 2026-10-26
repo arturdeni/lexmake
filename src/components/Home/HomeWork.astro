@@ -1,0 +1,84 @@
+---
+// src/components/Home/HomeWork.astro
+// Proyectos en la home: sube por encima del hero (que se desenfoca, ver Hero.astro)
+// con el borde superior difuminado en lugar de una caja con borde recto.
+import WorkShowcase from "../Common/WorkShowcase.astro";
+---
+
+<section class="home-work">
+  <div class="home-work__header">
+    <h3 class="home-work__title">
+      <span data-reveal>DESIGN</span>
+      <span class="h3-cursiva" data-reveal="0.2">Portfolio</span>
+    </h3>
+  </div>
+
+  <WorkShowcase showAllLink />
+</section>
+
+<style>
+  .home-work {
+    background: var(--color-grey);
+    position: relative;
+    z-index: 10;
+    margin-top: -300px;
+  }
+
+  /* Borde superior difuminado */
+  .home-work::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -280px;
+    height: 280px;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(237, 237, 237, 0),
+      rgba(237, 237, 237, 0.85) 75%,
+      var(--color-grey)
+    );
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 60%);
+    mask-image: linear-gradient(to bottom, transparent, #000 60%);
+  }
+
+  .home-work__header {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--container-padding) 0;
+  }
+
+  .home-work__title {
+    margin: var(--spacing-lg);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .home-work__title span:first-child {
+    font-family: var(--font-hanken);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @media (max-width: 768px) {
+    .home-work {
+      margin-top: -200px;
+    }
+
+    .home-work__title {
+      flex-direction: column;
+      gap: 0;
+      text-align: center;
+      align-items: center;
+    }
+
+    .home-work__title span {
+      font-size: clamp(24px, 7.5vw, 34px);
+      line-height: 1.05;
+    }
+  }
+</style>

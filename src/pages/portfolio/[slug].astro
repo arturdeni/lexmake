@@ -1,321 +1,345 @@
 ---
 // src/pages/portfolio/[slug].astro
+// Ficha de proyecto (estructura de huyml.co): datos a la izquierda, imágenes en el centro
+// y miniaturas a la derecha.
 import Layout from "../../layouts/Layout.astro";
-import {
-  hygraph,
-  GET_PROJECT_BY_SLUG,
-  GET_ALL_PROJECTS,
-} from "../../lib/hygraph.ts";
-import { optimizeHygraphImage, IMAGE_PRESETS } from "../../lib/imageUtils.ts";
-import type { ProjectResponse, ProjectsResponse } from "../../types/project.ts";
+import { getProjects, displayUrl } from "../../lib/projects";
+import { optimizeHygraphImage } from "../../lib/imageUtils";
+import type { Project } from "../../types/project";
 
-// Esta función genera todas las rutas estáticas en build time
 export async function getStaticPaths() {
-  const data = await hygraph.request<ProjectsResponse>(GET_ALL_PROJECTS);
-
-  return data.projects.map((project) => ({
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
     params: { slug: project.slug },
+    props: { project, next: projects[(i + 1) % projects.length] },
   }));
 }
 
-// Obtener el slug de la URL
-const { slug } = Astro.params;
-
-// Fetch del proyecto específico
-const data = await hygraph.request<ProjectResponse>(GET_PROJECT_BY_SLUG, {
-  slug,
-});
-const project = data.project;
-
-// Si no existe el proyecto, mostrar 404
-if (!project) {
-  return Astro.redirect("/404");
+interface Props {
+  project: Project;
+  next: Project;
 }
+
+const { project, next } = Astro.props;
+const title = project.title.replace(/\s+/g, " ").trim();
+
+// Primero las capturas de la web real y después la galería
+const images = [...project.webScreenshots, ...project.images];
 ---
 
-<Layout
-  title={`${project.title} - Portfolio`}
-  description={project.description}
->
-  <main class="project-detail">
-    <!-- Hero del proyecto -->
-    <section class="project-hero">
-      <div class="project-hero__container">
-        <!-- Información del proyecto en 2 columnas -->
-        <div class="project-header">
-          <!-- Columna izquierda: Título y Categoría -->
-          <div class="project-header__left">
-            <h1 class="project-title">{project.title}</h1>
-            <h4 class="project-category">{project.category}</h4>
-          </div>
+<Layout title={`${title} - Portfolio`} description={project.shortDescription || project.description}>
+  <article class="project">
+    <h1 class="visually-hidden">{title}</h1>
 
-          <!-- Columna derecha: Descripción -->
-          <div class="project-header__right">
-            <p class="project-description">{project.description}</p>
-          </div>
+    <!-- Izquierda: datos del proyecto -->
+    <aside class="project__aside text-micro">
+      <div class="project__info">
+        <div class="project__row">
+          <span class="text-muted">Sobre el proyecto</span>
+          <p class="project__about">{project.description}</p>
         </div>
-      </div>
-    </section>
 
-    <!-- Galería de imágenes -->
-    <section class="project-gallery">
-      <div class="gallery-grid">
+        <div class="project__row project__row--split">
+          <span class="text-muted">Servicios</span>
+          <span>
+            {
+              project.services.map((service, k) => (
+                <>
+                  {k > 0 && <br />}
+                  {service}
+                </>
+              ))
+            }
+          </span>
+          {project.sector && <span class="text-muted">Sector</span>}
+          {project.sector && <span>{project.sector}</span>}
+        </div>
+
+        <div class="project__row">
+          <span class="text-muted">Estudio</span>
+          <span>Lexmake, Barcelona</span>
+        </div>
+
         {
-          project.images &&
-            project.images.map((image) => (
-              <div class="gallery-item">
-                <img
-                  src={optimizeHygraphImage(image.url, IMAGE_PRESETS.blur)}
-                  data-src={optimizeHygraphImage(image.url, IMAGE_PRESETS.gallery)}
-                  alt={project.title}
-                  class="gallery-image blur-placeholder"
-                />
-              </div>
-            ))
+          project.websiteUrl && (
+            <a
+              class="arrow-link project__visit"
+              href={project.websiteUrl}
+              target="_blank"
+              rel="noopener"
+              aria-label={`Visitar web: ${displayUrl(project.websiteUrl)}`}
+            >
+              Visitar web →
+            </a>
+          )
         }
       </div>
-    </section>
-  </main>
+      <span class="project__scroll text-muted">Scroll</span>
+    </aside>
+
+    <!-- Centro: imágenes -->
+    <div class="project__images">
+      {
+        images.map((image, k) => (
+          <figure class="project__figure" id={`imagen-${k + 1}`}>
+            <img
+              src={optimizeHygraphImage(image.url, { width: 1400, quality: 75 })}
+              width={image.width}
+              height={image.height}
+              alt={`${title}, imagen ${k + 1}`}
+              loading={k < 2 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </figure>
+        ))
+      }
+    </div>
+
+    <!-- Derecha: miniaturas -->
+    <nav class="project__map" aria-label="Imágenes del proyecto">
+      {
+        images.map((image, k) => (
+          <button
+            type="button"
+            class:list={["project__thumb", { "is-active": k === 0 }]}
+            data-index={k}
+            aria-label={`Ir a la imagen ${k + 1}`}
+          >
+            <img src={optimizeHygraphImage(image.url, { width: 100, quality: 60 })} alt="" loading="lazy" />
+          </button>
+        ))
+      }
+    </nav>
+  </article>
+
+  <a class="project__next" href={`/portfolio/${next.slug}`}>
+    <span class="arrow-link">Siguiente proyecto →</span>
+  </a>
 </Layout>
 
 <style>
-  .project-detail {
-    width: 100%;
-    min-height: 100vh;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
-  /* === HERO === */
-  .project-hero {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: var(--spacing-4xl) var(--container-padding) var(--spacing-xxxl);
-  }
-
-  .project-hero__container {
-    width: 100%;
-  }
-
-  /* Header con 2 columnas */
-  .project-header {
+  .project {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-4xl);
+    grid-template-columns: 27.5vw 45vw 27.5vw;
+    position: relative;
+  }
+
+  /* === IZQUIERDA === */
+  .project__aside {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: start;
+  }
+
+  .project__info {
+    position: absolute;
+    left: 20px;
+    top: 37vh;
+    width: calc(27.5vw - 40px);
+    display: grid;
+    gap: 46px;
+  }
+
+  .project__row {
+    display: grid;
+    grid-template-columns: 104px 1fr;
     align-items: start;
   }
 
-  .project-header__left {
+  .project__row--split {
+    grid-template-columns: 104px 108px 56px 1fr;
+  }
+
+  .project__about {
+    margin: 0;
+    max-width: 225px;
+    font: inherit;
+  }
+
+  .project__visit {
+    margin-left: 104px;
+  }
+
+  .project__scroll {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+  }
+
+  /* === CENTRO === */
+  .project__images {
     display: flex;
     flex-direction: column;
+    gap: 85px;
+    padding: 46.6vh 0 22vh;
   }
 
-  .project-title {
-    font-family: var(--font-hanken);
-    font-size: clamp(32px, 4vw, 48px);
-    font-weight: 500;
-    line-height: 1.2;
+  .project__figure {
     margin: 0;
-    color: var(--color-black);
-  }
-
-  .project-category {
-    font-family: var(--font-hanken);
-    font-size: 14px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--color-black);
-    margin: 0;
-  }
-
-  .project-header__right {
-    display: flex;
-    align-items: flex-start;
-  }
-
-  .project-description {
-    font-family: var(--font-hanken);
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.1;
-    color: var(--color-black);
-    margin: 0;
-  }
-
-  /* === GALERÍA === */
-  .project-gallery {
-    max-width: var(--max-width);
-    margin: 0 auto;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    gap: var(--spacing-md);
     width: 100%;
-  }
-
-  .gallery-item {
-    width: 100%;
+    background: #dcdcdc;
     overflow: hidden;
-    position: relative;
-    background-color: #f0f0f0;
   }
 
-  .gallery-image {
+  .project__figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* === DERECHA === */
+  .project__map {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 7px;
+    padding-right: 47px;
+  }
+
+  .project__thumb {
+    width: 43px;
+    height: 31px;
+    padding: 0;
+    border: 0;
+    background: #ddd;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .project__thumb.is-active,
+  .project__thumb:hover {
+    opacity: 1;
+  }
+
+  .project__thumb img {
     width: 100%;
     height: 100%;
-    display: block;
     object-fit: cover;
-    transition: filter 0.4s ease;
+    display: block;
   }
 
-  /* Blur placeholder effect */
-  .gallery-image.blur-placeholder {
-    filter: blur(20px);
-    transform: scale(1.1);
-  }
-
-  .gallery-image.loaded {
-    filter: blur(0);
-    transform: scale(1);
-  }
-
-  /* Layout específico para las 7 imágenes */
-  .gallery-item:nth-child(1) {
-    grid-area: 1 / 1 / 4 / 5;
-  }
-
-  .gallery-item:nth-child(2) {
-    grid-area: 1 / 5 / 4 / 10;
-  }
-
-  .gallery-item:nth-child(3) {
-    grid-area: 4 / 1 / 6 / 4;
-  }
-
-  .gallery-item:nth-child(4) {
-    grid-area: 6 / 1 / 9 / 4;
-  }
-
-  .gallery-item:nth-child(5) {
-    grid-area: 4 / 4 / 9 / 7;
-  }
-
-  .gallery-item:nth-child(6) {
-    grid-area: 4 / 7 / 6 / 10;
-  }
-
-  .gallery-item:nth-child(7) {
-    grid-area: 6 / 7 / 9 / 10;
+  /* === SIGUIENTE === */
+  .project__next {
+    display: flex;
+    justify-content: center;
+    padding: 40px var(--container-padding) 140px;
+    text-decoration: none;
   }
 
   /* === RESPONSIVE === */
-  @media (max-width: 768px) {
-    .project-hero {
-      padding: var(--spacing-md) var(--container-padding) var(--spacing-xl);
-    }
-
-    .project-header {
+  @media (max-width: 900px) {
+    .project {
       grid-template-columns: 1fr;
-      gap: var(--spacing-xl);
-    }
-
-    .project-gallery {
       padding: 0 var(--container-padding);
-      overflow: hidden;
     }
 
-    .gallery-grid {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: auto;
-      gap: var(--spacing-sm);
+    .project__aside {
+      position: relative;
+      height: auto;
     }
 
-    /* Layout mobile: 2 columnas */
-    .gallery-item:nth-child(1) {
-      grid-area: auto;
-      grid-column: span 2;
+    .project__info {
+      position: static;
+      width: auto;
+      padding: 110px 0 40px;
+      gap: 28px;
     }
 
-    .gallery-item:nth-child(2) {
-      grid-area: auto;
-      grid-column: span 2;
+    .project__row {
+      grid-template-columns: 90px 1fr;
     }
 
-    .gallery-item:nth-child(3),
-    .gallery-item:nth-child(4) {
-      grid-area: auto;
-      grid-column: span 1;
+    .project__row--split {
+      grid-template-columns: 90px 1fr 56px 1fr;
     }
 
-    .gallery-item:nth-child(5) {
-      grid-area: auto;
-      grid-column: span 2;
+    .project__visit {
+      margin-left: 90px;
     }
 
-    .gallery-item:nth-child(6),
-    .gallery-item:nth-child(7) {
-      grid-area: auto;
-      grid-column: span 1;
+    .project__scroll,
+    .project__map {
+      display: none;
+    }
+
+    .project__images {
+      padding: 0 0 60px;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .project__info {
+      padding-top: 40px;
     }
   }
 </style>
 
 <script>
-  function initGalleryImages() {
-    const images = document.querySelectorAll(".gallery-image");
+  import { onPage, prefersReducedMotion } from "../../scripts/lifecycle";
 
-    // Configuración del Intersection Observer para lazy loading
-    const imageObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const img = entry.target as HTMLImageElement;
-            const highResSrc = img.getAttribute("data-src");
+  onPage(() => {
+    const figures = [...document.querySelectorAll<HTMLElement>(".project__figure")];
+    const thumbs = [...document.querySelectorAll<HTMLButtonElement>(".project__thumb")];
+    if (!figures.length) return;
 
-            if (highResSrc) {
-              // Crear una nueva imagen para precargar
-              const highResImage = new Image();
+    // Clic en una miniatura: scroll hasta esa imagen
+    const onThumb = (e: Event) => {
+      const k = Number((e.currentTarget as HTMLElement).dataset.index);
+      const top = window.scrollY + figures[k].getBoundingClientRect().top - window.innerHeight * 0.466;
+      window.scrollTo({ top, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+    };
+    thumbs.forEach((t) => t.addEventListener("click", onThumb));
 
-              highResImage.onload = () => {
-                // Cuando la imagen de alta resolución esté lista, cambiar src y quitar blur
-                img.src = highResSrc;
-                img.classList.remove("blur-placeholder");
-                img.classList.add("loaded");
-              };
-
-              // Iniciar la carga de la imagen de alta resolución
-              highResImage.src = highResSrc;
-              img.removeAttribute("data-src");
-            }
-
-            // Dejar de observar esta imagen
-            observer.unobserve(img);
-          }
-        });
-      },
-      {
-        // Cargar cuando la imagen esté a 300px de entrar en el viewport
-        rootMargin: "300px",
-        threshold: 0,
+    // Se marca la imagen más cercana al centro de la pantalla
+    let active = 0;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      let best = 0;
+      let bestDistance = Infinity;
+      figures.forEach((f, k) => {
+        const r = f.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - window.innerHeight / 2);
+        if (d < bestDistance) {
+          bestDistance = d;
+          best = k;
+        }
+      });
+      if (best !== active) {
+        active = best;
+        thumbs.forEach((t, k) => t.classList.toggle("is-active", k === best));
       }
-    );
-
-    // Observar todas las imágenes
-    images.forEach((img) => {
-      const imageElement = img as HTMLImageElement;
-
-      // Si tiene data-src, observar para lazy loading
-      if (imageElement.getAttribute("data-src")) {
-        imageObserver.observe(imageElement);
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
       }
-    });
-  }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-  // Ejecutar en carga inicial
-  document.addEventListener("DOMContentLoaded", initGalleryImages);
-
-  // Ejecutar después de transiciones de página
-  document.addEventListener("astro:page-load", initGalleryImages);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      thumbs.forEach((t) => t.removeEventListener("click", onThumb));
+    };
+  });
 </script>

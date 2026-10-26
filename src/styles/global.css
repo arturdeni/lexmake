@@ -333,6 +333,11 @@ html.js [data-reveal].is-in {
   filter: none;
 }
 
+/* Títulos con máquina de escribir: ocultos hasta que el script los prepara (evita el parpadeo) */
+html.js [data-typewriter]:not([data-typed]) {
+  visibility: hidden;
+}
+
 /* Cursor de escritura (títulos con efecto máquina de escribir) */
 .type-char {
   opacity: 0;
@@ -379,5 +384,9 @@ html.js [data-reveal].is-in {
 
   .type-char {
     opacity: 1;
+  }
+
+  html.js [data-typewriter]:not([data-typed]) {
+    visibility: visible;
   }
 }

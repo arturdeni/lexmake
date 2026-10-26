@@ -1,123 +1,43 @@
 ---
-// src/pages/portfolio.astro
+// src/pages/portfolio/index.astro
 import Layout from "../../layouts/Layout.astro";
-import { hygraph, GET_ALL_PROJECTS } from "../../lib/hygraph.ts";
-import { optimizeHygraphImage, IMAGE_PRESETS } from "../../lib/imageUtils.ts";
-import type { ProjectsResponse } from "../../types/project.ts";
-
-// Fetch proyectos desde Hygraph
-const data = await hygraph.request<ProjectsResponse>(GET_ALL_PROJECTS);
-const projects = data.projects;
-
-// Definir patrones de grid (anchos de columnas por fila)
-// Cada array representa una fila con los anchos de sus columnas
-const gridPatterns = [
-  [66.66, 33.33], // Fila 1: 2/3 + 1/3
-  [33.33, 33.33, 33.33], // Fila 2: 1/3 + 1/3 + 1/3
-  [40, 60], // Fila 3: 40% + 60%
-  [25, 45, 30], // Fila 4: 25% + 45% + 30%
-  [50, 50], // Fila 5: 50% + 50%
-  [60, 40], // Fila 6: 60% + 40%
-];
-
-// Distribuir proyectos en filas seg�n los patrones
-interface ProjectRow {
-  projects: typeof projects;
-  widths: number[];
-}
-
-const rows: ProjectRow[] = [];
-let projectIndex = 0;
-
-// Iterar sobre los patrones y asignar proyectos
-while (projectIndex < projects.length) {
-  const patternIndex = rows.length % gridPatterns.length;
-  const pattern = gridPatterns[patternIndex];
-
-  const rowProjects = projects.slice(
-    projectIndex,
-    projectIndex + pattern.length
-  );
-
-  if (rowProjects.length > 0) {
-    rows.push({
-      projects: rowProjects,
-      widths: pattern.slice(0, rowProjects.length),
-    });
-  }
-
-  projectIndex += pattern.length;
-}
+import WorkShowcase from "../../components/Common/WorkShowcase.astro";
 ---
 
 <Layout
   title="Portfolio - LexMake"
   description="Explora mis proyectos de diseño gráfico y soluciones creativas."
 >
-  <main class="portfolio">
-    <!-- Hero Section -->
+  <div class="portfolio">
     <section class="portfolio-hero">
-      <h2 class="portfolio-title">
+      <h2 class="portfolio-title" data-typewriter>
         DESIGN<br />
         <span class="portfolio-title-italic">Portfolio</span>
       </h2>
-      <p class="portfolio-subtitle">Mis proyectos</p>
+      <p class="portfolio-subtitle text-micro text-muted" data-reveal="0.2">Mis proyectos</p>
     </section>
 
-    <!-- Projects Grid -->
-    <section class="portfolio-grid">
-      {
-        rows.map((row) => (
-          <div class="grid-row">
-            {row.projects.map((project, index) => (
-              <a
-                href={`/portfolio/${project.slug}`}
-                class="project-card"
-                style={`width: ${row.widths[index]}%`}
-              >
-                <div class="project-image-wrapper">
-                  <img
-                    src={optimizeHygraphImage(
-                      project.mainImage.url,
-                      IMAGE_PRESETS.blur
-                    )}
-                    data-src={optimizeHygraphImage(
-                      project.mainImage.url,
-                      IMAGE_PRESETS.thumbnail
-                    )}
-                    alt={project.title}
-                    class="project-image blur-placeholder"
-                  />
-                </div>
-                <div class="project-info">
-                  <span class="project-category">{project.category}</span>
-                  <h5 class="project-title">{project.title}</h5>
-                </div>
-              </a>
-            ))}
-          </div>
-        ))
-      }
-    </section>
-  </main>
+    <WorkShowcase />
+  </div>
 </Layout>
 
 <style>
   .portfolio {
     width: 100%;
-    min-height: 100vh;
   }
 
-  /* === HERO SECTION === */
   .portfolio-hero {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: var(--spacing-4xl) var(--container-padding);
+    padding: 110px var(--container-padding) 70px;
     text-align: center;
+    display: grid;
+    gap: 18px;
+    justify-items: center;
   }
 
   .portfolio-title {
     font-family: var(--font-hanken);
+    font-size: var(--h3-size);
+    line-height: 1;
     margin: 0;
     color: var(--color-black);
   }
@@ -125,199 +45,16 @@ while (projectIndex < projects.length) {
   .portfolio-title-italic {
     font-family: var(--font-gallery);
     font-style: italic;
-    display: block;
-  }
-
-  .portfolio-subtitle {
-    font-family: var(--font-hanken);
-    font-size: 18px;
     font-weight: 400;
-    color: var(--color-black);
-    margin-top: var(--spacing-xl);
   }
 
-  /* === PORTFOLIO GRID === */
-  .portfolio-grid {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--spacing-xl);
-  }
-
-  .grid-row {
-    display: flex;
-    height: 355px;
-    gap: var(--spacing-xxl);
-    margin-bottom: var(--spacing-xxl);
-  }
-
-  .project-card {
-    position: relative;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    cursor:
-      url("/assets/cursor/BLANCO.svg") 32 32,
-      pointer;
-  }
-
-  .project-image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 355px;
-    overflow: hidden;
-    background-color: #f0f0f0;
-  }
-
-  .project-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition:
-      filter 0.4s ease,
-      transform 0.6s ease;
-  }
-
-  /* Blur placeholder effect */
-  .project-image.blur-placeholder {
-    filter: blur(20px);
-    transform: scale(1.1);
-  }
-
-  .project-image.loaded {
-    filter: blur(0);
-    transform: scale(1);
-  }
-
-  .project-card:hover .project-image.loaded {
-    transform: scale(1.05);
-  }
-
-  /* Información del proyecto debajo de la imagen */
-  .project-info {
-    display: block;
-    padding: 0;
-    margin-top: var(--spacing-sm);
-  }
-
-  .project-category {
-    font-family: var(--font-hanken);
-    font-size: 15px;
-    font-weight: 300;
-    text-transform: uppercase;
-    display: block;
-    color: var(--color-black);
-  }
-
-  .project-title {
-    font-family: var(--font-hanken);
-    margin: 0;
-    color: var(--color-black);
-    text-transform: uppercase;
-  }
-
-  /* === RESPONSIVE === */
   @media (max-width: 768px) {
     .portfolio-hero {
-      padding: var(--spacing-2xl) var(--container-padding);
+      padding: 40px var(--container-padding);
     }
 
-    .portfolio-subtitle {
-      margin: var(--spacing-md) 0 var(--spacing-xxxl);
-    }
-
-    .portfolio-grid {
-      margin: var(--spacing-md);
-      padding: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-md);
-    }
-
-    .grid-row {
-      display: contents;
-    }
-
-    .project-card {
-      width: 100% !important;
-      aspect-ratio: auto;
-      overflow: visible;
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-sm);
-    }
-
-    .project-image-wrapper {
-      height: auto;
-      overflow: hidden;
-    }
-
-    /* Ajustes de tamaño para mobile */
-    .project-category {
-      font-size: 11px;
-    }
-
-    .project-title {
-      font-size: 16px;
+    .portfolio-title {
+      font-size: clamp(26px, 8vw, 40px);
     }
   }
 </style>
-
-<script>
-  function initPortfolioImages() {
-    const images = document.querySelectorAll(".project-image");
-
-    // Configuración del Intersection Observer para lazy loading
-    const imageObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const img = entry.target as HTMLImageElement;
-            const highResSrc = img.getAttribute("data-src");
-
-            if (highResSrc) {
-              // Crear una nueva imagen para precargar
-              const highResImage = new Image();
-
-              highResImage.onload = () => {
-                // Cuando la imagen de alta resolución esté lista, cambiar src y quitar blur
-                img.src = highResSrc;
-                img.classList.remove("blur-placeholder");
-                img.classList.add("loaded");
-              };
-
-              // Iniciar la carga de la imagen de alta resolución
-              highResImage.src = highResSrc;
-              img.removeAttribute("data-src");
-            }
-
-            // Dejar de observar esta imagen
-            observer.unobserve(img);
-          }
-        });
-      },
-      {
-        // Cargar cuando la imagen esté a 200px de entrar en el viewport
-        rootMargin: "200px",
-        threshold: 0,
-      }
-    );
-
-    // Observar todas las imágenes
-    images.forEach((img) => {
-      const imageElement = img as HTMLImageElement;
-
-      // Si tiene data-src, observar para lazy loading
-      if (imageElement.getAttribute("data-src")) {
-        imageObserver.observe(imageElement);
-      }
-    });
-  }
-
-  // Ejecutar en carga inicial
-  document.addEventListener("DOMContentLoaded", initPortfolioImages);
-
-  // Ejecutar después de transiciones de página
-  document.addEventListener("astro:page-load", initPortfolioImages);
-</script>

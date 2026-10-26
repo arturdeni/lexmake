@@ -5,7 +5,7 @@
 <section class="home-closing">
   <div class="home-closing__container">
     <div class="home-closing__content">
-      <p class="home-closing__text">
+      <p class="home-closing__text" data-reveal>
         Quiero ayudar a personas y empresas a tener la imagen que se merecen, a
         mostrar al mundo qué saben hacer.
         <span class="home-closing__text--italic"
@@ -14,7 +14,7 @@
       </p>
 
       <div class="home-closing__cta">
-        <a href="/contact" class="normal-link">Contactar</a>
+        <a href="/contact" class="normal-link" data-reveal="0.3">Contactar</a>
       </div>
     </div>
   </div>
@@ -84,69 +84,13 @@
     }
 
     .home-closing__text {
-      font-size: calc(var(--h3-size) * 0.75);
+      font-size: clamp(20px, 6vw, 26px);
+      line-height: 1.15;
     }
 
     .home-closing__cta {
       margin-top: var(--spacing-xxxl);
     }
   }
-
-  /* === PREPARAR PARA ANIMACIONES GSAP === */
-  /* Por defecto los elementos son visibles */
-  /* GSAP los ocultará antes de animar con gsap.set() */
 </style>
 
-<script>
-  // Importar GSAP y ScrollTrigger
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  // Registrar el plugin ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Función para inicializar las animaciones
-  const initHomeClosingAnimations = () => {
-    // Verificar que el elemento existe
-    const homeClosing = document.querySelector(".home-closing");
-    if (!homeClosing) return;
-
-    // Establecer estado inicial de los elementos (ocultos)
-    gsap.set(".home-closing__text", { opacity: 0, y: 30 });
-    gsap.set(".home-closing__cta .normal-link", { opacity: 0, y: 20 });
-
-    // Animar el texto principal
-    gsap.to(".home-closing__text", {
-      opacity: 1,
-      y: 0,
-      duration: 0.9,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-closing__text",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Animar el enlace
-    gsap.to(".home-closing__cta .normal-link", {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-      delay: 0.3,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".home-closing__cta",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-  };
-
-  // Ejecutar cuando el DOM esté listo
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initHomeClosingAnimations);
-  } else {
-    initHomeClosingAnimations();
-  }
-</script>

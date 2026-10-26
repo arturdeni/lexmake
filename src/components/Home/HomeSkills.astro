@@ -1,15 +1,12 @@
 ---
 // src/components/Home/HomeSkills.astro
-import PortfolioCTA from "../Common/PortfolioCTA.astro";
 ---
 
 <section class="home-skills">
   <div class="home-skills__container">
-    <PortfolioCTA />
-
     <!-- Sección MY SKILLS -->
     <div class="home-skills__skills-section">
-      <h4 class="skills-header">MY SKILLS</h4>
+      <h4 class="skills-header" data-reveal>MY SKILLS</h4>
 
       <div class="skills-grid">
         <!-- Fila 1 -->
@@ -35,8 +32,7 @@ import PortfolioCTA from "../Common/PortfolioCTA.astro";
   .home-skills {
     background-color: var(--color-grey);
     position: relative;
-    z-index: 10; /* Para pasar por encima del hero sticky */
-    margin-top: -300px; /* Para superponer con el hero */
+    z-index: 10;
     padding: var(--spacing-xl) 0;
   }
 
@@ -111,10 +107,6 @@ import PortfolioCTA from "../Common/PortfolioCTA.astro";
       padding: var(--spacing-xl) 0;
     }
 
-    .home-skills__container {
-      gap: 0:
-    }
-
     .skills-grid {
       gap: var(--spacing-md);
       text-align: center;
@@ -131,61 +123,55 @@ import PortfolioCTA from "../Common/PortfolioCTA.astro";
     }
   }
 
-  /* === PREPARAR PARA ANIMACIONES GSAP === */
-  /* Por defecto los elementos son visibles */
-  /* GSAP los ocultará antes de animar con gsap.set() */
+  .skill-item {
+    will-change: transform, filter, opacity;
+  }
 </style>
 
 <script>
-  // Importar GSAP y ScrollTrigger
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  // MY SKILLS: cada palabra pasa de desenfocada a nítida mientras haces scroll,
+  // entrando de lados alternos
+  import { onPage, prefersReducedMotion, clamp } from "../../scripts/lifecycle";
 
-  // Registrar el plugin ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
+  onPage(() => {
+    const grid = document.querySelector<HTMLElement>(".skills-grid");
+    if (!grid || prefersReducedMotion()) return;
+    const skills = [...grid.querySelectorAll<HTMLElement>(".skill-item")];
+    const n = skills.length;
 
-  // Función para inicializar las animaciones
-  const initHomeSkillsAnimations = () => {
-    // Verificar que el elemento exists
-    const homeSkills = document.querySelector(".home-skills");
-    if (!homeSkills) return;
+    const update = () => {
+      const r = grid.getBoundingClientRect();
+      const progress = clamp(
+        (window.innerHeight * 0.92 - r.top) / (window.innerHeight * 0.55 + r.height * 0.6),
+        0,
+        1
+      );
+      skills.forEach((el, i) => {
+        const q = clamp(progress * (n + 2) - i, 0, 1);
+        const dir = i % 2 ? 1 : -1;
+        el.style.opacity = (0.12 + 0.88 * q).toFixed(3);
+        el.style.filter = q < 1 ? `blur(${((1 - q) * 8).toFixed(1)}px)` : "";
+        el.style.transform =
+          q < 1 ? `translate3d(${(dir * (1 - q) * 70).toFixed(1)}px, ${((1 - q) * 14).toFixed(1)}px, 0)` : "";
+      });
+    };
 
-    // Establecer estado inicial de los elementos (ocultos)
-    gsap.set(".skills-header", { opacity: 0, y: 30 });
-    gsap.set(".skill-item", { opacity: 0, y: 20 });
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        update();
+      });
+    };
 
-    // Animar el header de skills
-    gsap.to(".skills-header", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".skills-header",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    // Animar los skill items con stagger
-    gsap.to(".skill-item", {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger: 0.08,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".skills-grid",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
-  };
-
-  // Ejecutar cuando el DOM esté listo
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initHomeSkillsAnimations);
-  } else {
-    initHomeSkillsAnimations();
-  }
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  });
 </script>

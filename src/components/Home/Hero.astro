@@ -16,7 +16,7 @@
       </div>
 
       <!-- Título principal centrado -->
-      <h1 class="hero__title">
+      <h1 class="hero__title" data-typewriter>
         <span class="hero__title-line">Elevating</span>
         <span class="hero__title-line">
           <span class="hero__title-line--cursive">ideas</span> through
@@ -105,12 +105,17 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: 0;
     max-width: 800px;
   }
 
   .hero__title-line {
     display: block; /* Cada línea en su propia fila */
+    margin-top: -0.03em;
+  }
+
+  .hero__title-line:first-child {
+    margin-top: 0;
   }
 
   .hero__title-line--cursive {
@@ -124,6 +129,15 @@
     margin: 0;
     text-align: center;
     max-width: 600px;
+    font-size: 15px;
+    line-height: 1.12;
+    font-weight: 300;
+  }
+
+  /* Se desenfocan mientras sube la sección de proyectos (ver script) */
+  .hero__sticky-container,
+  .hero__images {
+    will-change: filter, opacity;
   }
 
   /* === IMÁGENES === */
@@ -183,6 +197,8 @@
     /* Ajustar título para mobile */
     .hero__title {
       max-width: 100%;
+      font-size: clamp(34px, 10.5vw, 54px);
+      line-height: 1;
     }
 
     .hero__subtitle {
@@ -232,35 +248,12 @@
     }
   }
 
-  /* === PREPARAR PARA ANIMACIONES GSAP === */
-  .hero__title-line {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .hero__subtitle {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  .hero__side-text {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-
-  .hero__side-text--right {
-    transform: translateX(20px);
-  }
-
+  /* === ENTRADA DE LAS IMÁGENES === */
   .hero__image {
     opacity: 0;
     transform: translateY(50px);
   }
 
-  /* Clase para cuando GSAP haya cargado */
-  .hero.gsap-loaded .hero__title-line,
-  .hero.gsap-loaded .hero__subtitle,
-  .hero.gsap-loaded .hero__side-text,
   .hero.gsap-loaded .hero__image {
     opacity: 1;
     transform: none;
@@ -271,21 +264,47 @@
 </style>
 
 <script>
-  // Script básico para hero
-  function initHero() {
-    const hero = document.querySelector(".hero");
+  import { onPage, prefersReducedMotion, clamp } from "../../scripts/lifecycle";
 
-    // Fallback si GSAP no está cargado aún
-    setTimeout(() => {
-      if (hero && !hero.classList.contains("gsap-loaded")) {
-        hero.classList.add("gsap-loaded");
-      }
-    }, 100);
-  }
+  onPage(() => {
+    const hero = document.querySelector<HTMLElement>(".hero");
+    if (!hero) return;
 
-  // Ejecutar en carga inicial
-  document.addEventListener("DOMContentLoaded", initHero);
+    // Entrada de las imágenes
+    const timer = window.setTimeout(() => hero.classList.add("gsap-loaded"), 100);
 
-  // Ejecutar después de transiciones de página
-  document.addEventListener("astro:page-load", initHero);
+    // El hero se desenfoca y se desvanece mientras sube la sección de proyectos
+    const work = document.querySelector<HTMLElement>(".home-work");
+    const targets = [
+      hero.querySelector<HTMLElement>(".hero__sticky-container"),
+      hero.querySelector<HTMLElement>(".hero__images"),
+    ].filter(Boolean) as HTMLElement[];
+    if (!work || prefersReducedMotion()) return () => window.clearTimeout(timer);
+
+    const update = () => {
+      const top = work.getBoundingClientRect().top;
+      const k = clamp((window.innerHeight - top) / (window.innerHeight * 0.75), 0, 1);
+      targets.forEach((el) => {
+        el.style.filter = k ? `blur(${(k * 18).toFixed(1)}px)` : "";
+        el.style.opacity = k ? (1 - k * 0.85).toFixed(3) : "";
+      });
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        update();
+      });
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  });
 </script>

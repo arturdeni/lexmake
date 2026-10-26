@@ -12,16 +12,16 @@ export interface Project {
   slug: string;
   title: string;
   description: string;
-  category: string;
+  shortDescription: string | null;
+  services: string[];
+  sector: string | null;
+  websiteUrl: string | null;
   date: string;
   mainImage: HygraphAsset;
   images: HygraphAsset[];
+  webScreenshots: HygraphAsset[];
 }
 
 export interface ProjectsResponse {
   projects: Project[];
-}
-
-export interface ProjectResponse {
-  project: Project;
 }
