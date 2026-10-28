@@ -11,12 +11,18 @@ export function typewriter(el: HTMLElement | null, delay = 200) {
   const label = (el.textContent || "").replace(/\s+/g, " ").trim();
   el.setAttribute("aria-label", label);
 
+  const isBlock = (node: Node | null) =>
+    node instanceof Element && !getComputedStyle(node).display.startsWith("inline");
+
   // Envolver cada carácter de los nodos de texto en un span
   const wrap = (node: Node) => {
     [...node.childNodes].forEach((child) => {
       if (child.nodeType === Node.TEXT_NODE) {
         const text = (child.textContent || "").replace(/\s+/g, " ");
         if (!text.length) return;
+        // El espacio en blanco entre bloques (p. ej. entre las líneas del hero) no se escribe:
+        // si el cursor se pusiera ahí, crearía una línea extra
+        if (!text.trim() && (isBlock(child.previousSibling) || isBlock(child.nextSibling))) return;
         const fragment = document.createDocumentFragment();
         [...text].forEach((ch) => {
           const span = document.createElement("span");
@@ -50,21 +56,23 @@ export function typewriter(el: HTMLElement | null, delay = 200) {
     return;
   }
 
-  const caret = document.createElement("span");
-  caret.className = "type-caret";
-  caret.setAttribute("aria-hidden", "true");
-  chars[0].before(caret);
+  // El cursor es un pseudo-elemento de la letra actual (ver .type-char.is-caret en global.css):
+  // no se inserta nada entre las letras, así el texto no se mueve ni pierde el kerning
+  let current: HTMLElement = chars[0];
+  current.classList.add("is-caret-start");
 
   let i = 0;
   let timer = 0;
   const step = () => {
     if (i >= chars.length) {
-      timer = window.setTimeout(() => caret.classList.add("is-done"), 1500);
+      el.classList.add("is-typed");
+      timer = window.setTimeout(() => current.classList.remove("is-caret"), 2100);
       return;
     }
     const c = chars[i++];
-    c.classList.add("is-on");
-    c.after(caret);
+    current.classList.remove("is-caret", "is-caret-start");
+    c.classList.add("is-on", "is-caret");
+    current = c;
     // pausa un poco más al final de cada línea / bloque
     const endOfBlock = c.parentElement !== chars[i]?.parentElement;
     const wait = c.textContent === " " ? 45 : endOfBlock ? 70 : 16 + Math.random() * 22;

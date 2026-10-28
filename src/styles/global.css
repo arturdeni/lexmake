@@ -338,29 +338,50 @@ html.js [data-typewriter]:not([data-typed]) {
   visibility: hidden;
 }
 
-/* Cursor de escritura (títulos con efecto máquina de escribir) */
+/* Máquina de escribir: las letras ocultas son transparentes (no opacity) para que el
+   cursor, que es un pseudo-elemento de la letra actual, se vea antes de escribirla */
 .type-char {
-  opacity: 0;
+  color: transparent;
 }
 
 .type-char.is-on {
-  opacity: 1;
+  color: inherit;
 }
 
-.type-caret {
-  display: inline-block;
+.type-char.is-caret,
+.type-char.is-caret-start {
+  position: relative;
+}
+
+/* Cursor: barra absoluta pegada a la letra actual, no ocupa espacio en la línea */
+.type-char.is-caret::after,
+.type-char.is-caret-start::before {
+  content: "";
+  position: absolute;
+  bottom: 0.25em;
   width: 2px;
   height: 0.82em;
   background: var(--color-black);
-  margin: 0 0.03em 0 0.04em;
-  vertical-align: -0.04em;
   animation: caret-blink 1s steps(1) infinite;
 }
 
-.type-caret.is-done {
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  animation: none;
+.type-char.is-caret::after {
+  right: -0.06em;
+}
+
+.type-char.is-caret-start::before {
+  left: -0.06em;
+}
+
+/* Al terminar, el cursor se desvanece */
+.is-typed .type-char.is-caret::after {
+  animation: caret-fade 0.6s ease 1.5s forwards;
+}
+
+@keyframes caret-fade {
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes caret-blink {
@@ -383,7 +404,7 @@ html.js [data-typewriter]:not([data-typed]) {
   }
 
   .type-char {
-    opacity: 1;
+    color: inherit;
   }
 
   html.js [data-typewriter]:not([data-typed]) {

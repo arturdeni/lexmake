@@ -141,6 +141,8 @@ const cleanTitle = (title: string) => title.replace(/\s+/g, " ").trim();
     height: 100vh;
     overflow: hidden;
     perspective: 1400px;
+    /* fondo propio: el contador se mezcla (mix-blend-mode) dentro de este contexto */
+    background: var(--color-grey);
   }
 
   .work__stage {
@@ -220,28 +222,38 @@ const cleanTitle = (title: string) => title.replace(/\s+/g, " ").trim();
   }
 
   /* === NÚMERO === */
+  /* Por encima de las tarjetas (z-index hasta 100) y con color inverso:
+     blanco + difference = casi negro sobre el gris y claro sobre imágenes oscuras */
   .work__counter {
     position: absolute;
     left: 13.75vw;
     bottom: 24px;
-    z-index: 4;
+    z-index: 200;
     display: flex;
     align-items: flex-start;
     gap: 12px;
     pointer-events: none;
+    color: #fff;
+    mix-blend-mode: difference;
   }
 
   .work__counter .text-micro {
     margin-top: 8px;
+    color: #fff;
   }
 
+  /* Máscara del número: se alarga por arriba (--num-extra) sin mover el número,
+     para que el que sale suba más antes de cortarse */
   .work__num {
+    --num-extra: 60px;
     font-family: var(--font-hanken);
     font-weight: 300;
     font-size: 180px;
     line-height: 153px;
     letter-spacing: -7.2px;
-    height: 153px;
+    height: calc(153px + var(--num-extra));
+    padding-top: var(--num-extra);
+    margin-top: calc(-1 * var(--num-extra));
     overflow: hidden;
     display: block;
     font-variant-numeric: tabular-nums;
@@ -376,9 +388,10 @@ const cleanTitle = (title: string) => title.replace(/\s+/g, " ").trim();
     }
 
     .work__num {
+      --num-extra: 28px;
       font-size: 84px;
       line-height: 72px;
-      height: 72px;
+      height: calc(72px + var(--num-extra));
       letter-spacing: -3px;
     }
 
@@ -449,7 +462,7 @@ const cleanTitle = (title: string) => title.replace(/\s+/g, " ").trim();
         num.textContent = pad(i + 1);
         return;
       }
-      num.style.transform = "translateY(-100%)";
+      num.style.transform = "translateY(calc(-100% - var(--num-extra)))";
       numTimer = window.setTimeout(() => {
         num.textContent = pad(i + 1);
         num.style.transition = "none";
